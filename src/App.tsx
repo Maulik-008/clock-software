@@ -8,6 +8,9 @@ import NotFound from "./pages/NotFound";
 import PomodoroTechnique from "./pages/PomodoroTechnique";
 import StudyClockGuide from "./pages/StudyClockGuide";
 import AboutUs from "./pages/AboutUs";
+import StudyTimer from "./pages/StudyTimer";
+import Counter from "./pages/Counter";
+import PomodoroTimerPage from "./pages/PomodoroTimer";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +22,9 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/study-timer" element={<StudyTimer />} />
+          <Route path="/counter" element={<Counter />} />
+          <Route path="/pomodoro-timer" element={<PomodoroTimerPage />} />
           <Route path="/pomodoro-technique" element={<PomodoroTechnique />} />
           <Route path="/study-clock-guide" element={<StudyClockGuide />} />
           <Route path="/about-us" element={<AboutUs />} />

@@ -6,6 +6,7 @@ import ParticleBackground from "../components/ParticleBackground";
 import Navigation from "../components/Navigation";
 import { Helmet } from "react-helmet";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 type AppMode = "timer" | "countdown" | "pomodoro";
 type PomodoroMode = "pomodoro" | "shortBreak" | "longBreak";
@@ -29,39 +30,36 @@ const Index = () => {
   const getTitle = () => {
     switch (mode) {
       case "timer":
-        return "Clock Timer";
+        return "Focus Timer & Time Tracker";
       case "countdown":
         return "Countdown Timer";
       case "pomodoro":
         return pomodoroMode === "pomodoro"
-          ? "Pomodoro Timer"
+          ? "Study With Me Pomodoro Timer"
           : pomodoroMode === "shortBreak"
-          ? "Short Break Timer"
-          : "Long Break Timer";
+          ? "5-Minute Break Timer – Recharge & Refocus"
+          : "15-Minute Long Break Timer – Reset & Refresh";
     }
   };
 
   const getDescription = () => {
     switch (mode) {
       case "timer":
-        return "Track your study sessions with StudyClock.com's beautiful dark mode clock timer. Perfect for pomodoro technique and academic productivity tracking.";
+        return "Track your study time with StudyClock.com's sleek focus timer. Ideal for deep work, time blocking, and maximizing productivity with the Pomodoro method.";
       case "countdown":
-        return "Set focused study sessions with StudyClock.com's countdown timer. Beautiful dark mode themes help you concentrate and stay productive.";
+        return "Boost concentration with StudyClock.com's countdown timer. Great for students, professionals, and anyone managing focus-driven sessions.";
       case "pomodoro":
         return pomodoroMode === "pomodoro"
-          ? "Boost your productivity with StudyClock.com's Pomodoro technique. Focus for 25 minutes, then take a short break to maximize learning efficiency."
+          ? "Start your Pomodoro session with StudyClock.com – 25 minutes of focused work followed by strategic breaks. Perfect for students and remote workers."
           : pomodoroMode === "shortBreak"
-          ? "Take a 5-minute short break between your focus sessions to recharge with StudyClock.com. Maintain peak mental performance."
-          : "Take a 15-minute long break after completing multiple focus sessions with StudyClock.com. Reset your mind for continued productivity.";
+          ? "Take a short 5-minute break after deep focus sessions with StudyClock.com. Recharge for the next Pomodoro cycle."
+          : "Take a longer 15-minute break after multiple Pomodoro cycles to refresh your mind and maintain peak productivity on StudyClock.com.";
     }
   };
-
   return (
     <>
       <Helmet>
-        <title>
-          {getTitle()} - StudyClock.com | Boost Your Academic Success
-        </title>
+        <title>{getTitle()} - StudyClock.com</title>
         <meta name="description" content={getDescription()} />
         <meta
           name="viewport"
@@ -127,11 +125,68 @@ const Index = () => {
           </div>
         </main>
 
+        {/* Internal Navigation Links */}
+        <section className="relative z-10 pt-4 pb-8 px-4 max-w-4xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-6 text-center">
+            Choose Your Productivity Tool
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-black/50 backdrop-blur-lg rounded-xl border border-cyan-900/50 p-5 flex flex-col items-center">
+              <h3 className="text-xl font-semibold text-cyan-400 mb-3">
+                Study Timer
+              </h3>
+              <p className="text-gray-300 text-center mb-4">
+                Track your study sessions with our aesthetic timer app. Perfect
+                for "study with me" sessions and continuous focus time tracking.
+              </p>
+              <Link
+                to="/study-timer"
+                className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 text-center"
+              >
+                Open Study Timer
+              </Link>
+            </div>
+
+            <div className="bg-black/50 backdrop-blur-lg rounded-xl border border-purple-900/50 p-5 flex flex-col items-center">
+              <h3 className="text-xl font-semibold text-purple-400 mb-3">
+                Countdown Timer
+              </h3>
+              <p className="text-gray-300 text-center mb-4">
+                Set focused intervals with our break timer. Perfect for timed
+                study sessions, exam preparation, and task-based timing.
+              </p>
+              <Link
+                to="/counter"
+                className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-600 text-white font-medium hover:from-purple-400 hover:to-pink-500 transition-all duration-300 text-center"
+              >
+                Open Countdown Timer
+              </Link>
+            </div>
+
+            <div className="bg-black/50 backdrop-blur-lg rounded-xl border border-red-900/50 p-5 flex flex-col items-center">
+              <h3 className="text-xl font-semibold text-rose-400 mb-3">
+                Pomodoro Timer
+              </h3>
+              <p className="text-gray-300 text-center mb-4">
+                Boost productivity with the 25/5 tomato technique. Structured
+                focus and break intervals for optimal concentration.
+              </p>
+              <Link
+                to="/pomodoro-timer"
+                className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-red-500 to-rose-600 text-white font-medium hover:from-red-400 hover:to-rose-500 transition-all duration-300 text-center"
+              >
+                Open Pomodoro Timer
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* StudyClock Information Section */}
         <section className="relative z-10 py-8 px-4 max-w-4xl mx-auto text-gray-200">
           <div className="bg-black/60 backdrop-blur-xl p-5 sm:p-8 rounded-xl border border-gray-800 shadow-xl">
             <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-4">
-              StudyClock.com – Your Academic & Professional Edge
+              StudyClock.com – Best Study & Productivity Timer | Pomodoro, Task
+              Tracking & Focus Toolsmote Work
             </h2>
 
             <div className="space-y-6 text-base sm:text-lg">

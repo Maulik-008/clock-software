@@ -79,7 +79,7 @@ const AboutUs = () => {
                 <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                   <div className="w-full md:w-1/3 flex justify-center">
                     <div className="w-48 h-48 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center text-white text-7xl font-bold">
-                      RJ
+                      MJ
                     </div>
                   </div>
 
