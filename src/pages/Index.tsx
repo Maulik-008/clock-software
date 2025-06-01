@@ -230,7 +230,19 @@ const Index = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
                   <div className="flex items-start space-x-2">
                     <div className="h-6 w-6 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xs">
-                      ✓
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3.5 w-3.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                      </svg>
                     </div>
                     <div>
                       <h4 className="font-medium text-white">
@@ -246,7 +258,21 @@ const Index = () => {
 
                   <div className="flex items-start space-x-2">
                     <div className="h-6 w-6 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center text-white text-xs">
-                      ✓
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3.5 w-3.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M12 3c.53 0 1.039.211 1.414.586s.586.884.586 1.414c0 .53-.211 1.039-.586 1.414s-.884.586-1.414.586c-.53 0-1.039-.211-1.414-.586s-.586-.884-.586-1.414c0-.53.211-1.039.586-1.414s.884-.586 1.414-.586z"></path>
+                        <path d="M18 12c.53 0 1.039.211 1.414.586s.586.884.586 1.414c0 .53-.211 1.039-.586 1.414s-.884.586-1.414.586c-.53 0-1.039-.211-1.414-.586s-.586-.884-.586-1.414c0-.53.211-1.039.586-1.414s.884-.586 1.414-.586z"></path>
+                        <path d="M6 12c.53 0 1.039.211 1.414.586s.586.884.586 1.414c0 .53-.211 1.039-.586 1.414s-.884.586-1.414.586c-.53 0-1.039-.211-1.414-.586s-.586-.884-.586-1.414c0-.53.211-1.039.586-1.414s.884-.586 1.414-.586z"></path>
+                        <path d="M12 18c.53 0 1.039.211 1.414.586s.586.884.586 1.414c0 .53-.211 1.039-.586 1.414s-.884.586-1.414.586c-.53 0-1.039-.211-1.414-.586s-.586-.884-.586-1.414c0-.53.211-1.039.586-1.414s.884-.586 1.414-.586z"></path>
+                      </svg>
                     </div>
                     <div>
                       <h4 className="font-medium text-white">
@@ -261,7 +287,19 @@ const Index = () => {
 
                   <div className="flex items-start space-x-2">
                     <div className="h-6 w-6 rounded-full bg-gradient-to-r from-red-500 to-rose-600 flex items-center justify-center text-white text-xs">
-                      ✓
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3.5 w-3.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
                     </div>
                     <div>
                       <h4 className="font-medium text-white">
@@ -276,7 +314,19 @@ const Index = () => {
 
                   <div className="flex items-start space-x-2">
                     <div className="h-6 w-6 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 flex items-center justify-center text-white text-xs">
-                      ✓
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3.5 w-3.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+                        <path d="M9 12h6"></path>
+                      </svg>
                     </div>
                     <div>
                       <h4 className="font-medium text-white">
@@ -291,7 +341,26 @@ const Index = () => {
 
                   <div className="flex items-start space-x-2">
                     <div className="h-6 w-6 rounded-full bg-gradient-to-r from-purple-500 to-violet-600 flex items-center justify-center text-white text-xs">
-                      ✓
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3.5 w-3.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <rect
+                          width="14"
+                          height="20"
+                          x="5"
+                          y="2"
+                          rx="2"
+                          ry="2"
+                        ></rect>
+                        <path d="M12 18h.01"></path>
+                      </svg>
                     </div>
                     <div>
                       <h4 className="font-medium text-white">
@@ -306,7 +375,18 @@ const Index = () => {
 
                   <div className="flex items-start space-x-2">
                     <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-rose-600 flex items-center justify-center text-white text-xs">
-                      ✓
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3.5 w-3.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                      </svg>
                     </div>
                     <div>
                       <h4 className="font-medium text-white">

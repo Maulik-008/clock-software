@@ -438,10 +438,10 @@ const ClockTimer = () => {
           </h1>
 
           {/* Enhanced Format Toggle */}
-          <div className="flex justify-center mb-3 sm:mb-4">
+          <div className="flex justify-center mb-3 sm:mb-4 mt-4 ">
             <button
               onClick={() => setFormat24h(!format24h)}
-              className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-black/50 border border-white/20 text-white/90 text-xs hover:bg-white/10 transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/20 backdrop-blur-xl"
+              className=" px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-black/50 border border-white/20 text-white/90 text-xs hover:bg-white/10 transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/20 backdrop-blur-xl"
             >
               {format24h ? "24H" : "12H"} FORMAT
             </button>
@@ -449,9 +449,9 @@ const ClockTimer = () => {
 
           {/* Enhanced Timer Display - Adjust for desktop and mobile */}
           <div className="my-6 sm:my-5 md:my-6 px-4 sm:px-2">
-            <div className="flex items-center justify-center space-x-2 sm:space-x-2 text-5xl sm:text-5xl md:text-6xl lg:text-6xl font-mono font-bold">
+            <div className="flex items-center justify-center space-x-1 sm:space-x-2 text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-mono font-bold">
               {/* Hours */}
-              <div className="relative group px-2 sm:px-1">
+              <div className="relative group px-1 sm:px-1">
                 <div
                   className={`drop-shadow-2xl transform transition-all duration-500 hover:scale-110 ${
                     styles.timeText
@@ -473,7 +473,7 @@ const ClockTimer = () => {
 
               {/* Enhanced Colon */}
               <div
-                className={`transition-all duration-300 transform px-1 ${
+                className={`transition-all duration-300 transform px-0 sm:px-1 ${
                   isRunning ? "animate-pulse scale-110" : "scale-100"
                 } ${styles.colon}`}
               >
@@ -481,7 +481,7 @@ const ClockTimer = () => {
               </div>
 
               {/* Minutes */}
-              <div className="relative group px-2 sm:px-1">
+              <div className="relative group px-1 sm:px-1">
                 <div
                   className={`drop-shadow-2xl transform transition-all duration-500 hover:scale-110 ${
                     styles.timeText
@@ -503,7 +503,7 @@ const ClockTimer = () => {
 
               {/* Enhanced Colon */}
               <div
-                className={`transition-all duration-300 transform px-1 ${
+                className={`transition-all duration-300 transform px-0 sm:px-1 ${
                   isRunning ? "animate-pulse scale-110" : "scale-100"
                 } ${styles.colon}`}
               >
@@ -511,7 +511,7 @@ const ClockTimer = () => {
               </div>
 
               {/* Seconds */}
-              <div className="relative group px-2 sm:px-1">
+              <div className="relative group px-1 sm:px-1">
                 <div
                   className={`drop-shadow-2xl transform transition-all duration-500 hover:scale-110 ${
                     styles.timeText
@@ -534,7 +534,7 @@ const ClockTimer = () => {
               {/* AM/PM for 12h format */}
               {!format24h && timeDisplay.ampm && (
                 <div
-                  className={`text-sm sm:text-base md:text-lg self-start mt-2 sm:mt-3 opacity-80 ${styles.colon} ml-2`}
+                  className={`text-sm sm:text-base md:text-lg self-start mt-2 sm:mt-3 opacity-80 ${styles.colon} ml-1 sm:ml-2`}
                 >
                   {timeDisplay.ampm}
                 </div>
