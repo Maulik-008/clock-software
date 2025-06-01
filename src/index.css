@@ -99,3 +99,80 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Additional animations and responsive improvements */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Improved responsive design */
+@media (max-width: 640px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Optimize for touch devices */
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Better tablet support */
+@media (min-width: 641px) and (max-width: 1024px) {
+  html,
+  body {
+    font-size: 16px;
+  }
+}
+
+/* Landscape mode optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .main-container {
+    padding-top: 60px;
+    padding-bottom: 10px;
+  }
+
+  .timer-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+/* High resolution screens */
+@media (min-width: 1920px) {
+  html,
+  body {
+    font-size: 18px;
+  }
+}
+
+/* Dark mode optimization */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
