@@ -5,6 +5,7 @@ import PomodoroTimer from "../components/PomodoroTimer";
 import ParticleBackground from "../components/ParticleBackground";
 import Navigation from "../components/Navigation";
 import { Helmet } from "react-helmet";
+import Footer from "../components/Footer";
 
 type AppMode = "timer" | "countdown" | "pomodoro";
 type PomodoroMode = "pomodoro" | "shortBreak" | "longBreak";
@@ -81,7 +82,7 @@ const Index = () => {
             mode === "pomodoro" ? setPomodoroMode : undefined
           }
         />
-        <main className="relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-20 sm:pt-22 md:pt-24">
+        <main className="relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-16 sm:pt-18 md:pt-20">
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
             {mode === "timer" ? (
               <section aria-label="Clock Timer" className="fade-in">
@@ -364,9 +365,7 @@ const Index = () => {
           </div>
         </section>
 
-        <footer className="relative z-10 pb-4 text-center text-gray-500 text-sm">
-          <p>StudyClock.com - Focus Better, Achieve More</p>
-        </footer>
+        <Footer />
       </div>
     </>
   );

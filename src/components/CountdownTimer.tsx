@@ -5,7 +5,7 @@ import CountdownStyleSelector from "./CountdownStyleSelector";
 const CountdownTimer = () => {
   const [time, setTime] = useState(10);
   const [isRunning, setIsRunning] = useState(false);
-  const [countdownStyle, setCountdownStyle] = useState("pulse");
+  const [countdownStyle, setCountdownStyle] = useState("hologram");
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -441,7 +441,7 @@ const CountdownTimer = () => {
   return (
     <div className="relative w-full">
       <div
-        className={`relative rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl transform transition-all duration-700 hover:scale-[1.02] ${styles.container}`}
+        className={`relative rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 lg:p-8 shadow-2xl transform transition-all duration-700 hover:scale-[1.02] ${styles.container}`}
       >
         {/* Enhanced Glow Effect */}
         <div
@@ -481,14 +481,14 @@ const CountdownTimer = () => {
         <div className="relative z-10 text-center">
           {/* Title */}
           <h1
-            className={`font-bold mb-4 sm:mb-6 md:mb-8 uppercase relative z-10 
+            className={`font-bold mb-2 sm:mb-3 md:mb-4 uppercase relative z-10 
             ${styles.title} transition-all duration-300 hover:scale-105
             drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] tracking-wider
             ${countdownStyle === "neon" ? "animate-pulse-slow" : ""}`}
             aria-label="10 Second Countdown"
           >
-            <div className="absolute -inset-1 sm:-inset-2 border-t border-b border-white/10 opacity-70 rounded-lg"></div>
-            <span className="relative inline-block">
+            <div className="absolute -inset-1 border-t border-b border-white/10 opacity-70 rounded-lg"></div>
+            <span className="relative inline-block text-xs sm:text-sm md:text-base">
               <span
                 className={`absolute -inset-1 blur-sm opacity-50 bg-gradient-to-r from-transparent via-white/10 to-transparent rounded-lg ${
                   countdownStyle === "neon"
@@ -553,15 +553,15 @@ const CountdownTimer = () => {
             )}
           </h1>
 
-          {/* Countdown Display - Larger font with more space */}
-          <div className="my-10 sm:my-12 md:my-16 px-4">
+          {/* Countdown Display - Make more compact for desktop */}
+          <div className="my-4 sm:my-5 md:my-6 px-2">
             <div
               className={`flex items-center justify-center ${styles.numberContainer}`}
             >
-              {/* Main Number - Larger size with better spacing */}
+              {/* Main Number - Adjust size for desktop */}
               <div className={`relative ${styles.animation}`}>
                 <div
-                  className={`drop-shadow-2xl transform transition-all duration-500 font-bold text-6xl sm:text-7xl md:text-8xl lg:text-9xl px-8 py-6 ${
+                  className={`drop-shadow-2xl transform transition-all duration-500 font-bold text-5xl sm:text-5xl md:text-6xl lg:text-7xl px-4 py-2 ${
                     time <= 3 && time > 0 ? "animate-bounce scale-110" : ""
                   } ${
                     time === 0 ? "text-red-400 animate-pulse" : styles.number
@@ -570,12 +570,12 @@ const CountdownTimer = () => {
                   {time === 0 ? "Time's up!" : time}
                 </div>
                 <div
-                  className={`absolute inset-0 blur-lg sm:blur-2xl animate-pulse text-6xl sm:text-7xl md:text-8xl lg:text-9xl ${styles.numberGlow}`}
+                  className={`absolute inset-0 blur-lg sm:blur-2xl animate-pulse text-5xl sm:text-5xl md:text-6xl lg:text-7xl ${styles.numberGlow}`}
                 >
                   {time === 0 ? "Time's up!" : time}
                 </div>
                 <div
-                  className={`absolute inset-0 blur-2xl sm:blur-3xl opacity-50 text-6xl sm:text-7xl md:text-8xl lg:text-9xl ${styles.numberGlow}`}
+                  className={`absolute inset-0 blur-2xl sm:blur-3xl opacity-50 text-5xl sm:text-5xl md:text-6xl lg:text-7xl ${styles.numberGlow}`}
                 >
                   {time === 0 ? "Time's up!" : time}
                 </div>
@@ -585,20 +585,20 @@ const CountdownTimer = () => {
                   <div className="absolute inset-0 border-2 border-blue-400/30 rounded-full animate-ping"></div>
                 )}
                 {countdownStyle === "matrix" && time <= 5 && time > 0 && (
-                  <div className="absolute -inset-2 sm:-inset-4 border border-green-400/40 rounded-lg animate-pulse"></div>
+                  <div className="absolute -inset-2 border border-green-400/40 rounded-lg animate-pulse"></div>
                 )}
                 {countdownStyle === "neon" && time <= 3 && time > 0 && (
                   <>
-                    <div className="absolute -inset-4 sm:-inset-8 bg-pink-500/20 rounded-full blur-xl animate-ping"></div>
-                    <div className="absolute -inset-6 sm:-inset-12 bg-purple-500/10 rounded-full blur-2xl animate-pulse"></div>
+                    <div className="absolute -inset-4 bg-pink-500/20 rounded-full blur-xl animate-ping"></div>
+                    <div className="absolute -inset-6 bg-purple-500/10 rounded-full blur-2xl animate-pulse"></div>
                   </>
                 )}
                 {countdownStyle === "plasma" && time <= 5 && time > 0 && (
-                  <div className="absolute -inset-4 sm:-inset-8 bg-orange-500/30 rounded-full blur-2xl animate-pulse"></div>
+                  <div className="absolute -inset-4 bg-orange-500/30 rounded-full blur-2xl animate-pulse"></div>
                 )}
                 {countdownStyle === "cosmic" && isRunning && (
                   <div
-                    className="absolute -inset-6 sm:-inset-12 border border-violet-400/20 rounded-full animate-spin"
+                    className="absolute -inset-6 border border-violet-400/20 rounded-full animate-spin"
                     style={{ animationDuration: "4s" }}
                   ></div>
                 )}
@@ -607,15 +607,15 @@ const CountdownTimer = () => {
                 )}
                 {countdownStyle === "pulse" && (
                   <>
-                    <div className="absolute -inset-4 sm:-inset-8 bg-cyan-500/10 rounded-full blur-xl animate-pulse-slow"></div>
+                    <div className="absolute -inset-4 bg-cyan-500/10 rounded-full blur-xl animate-pulse-slow"></div>
                     {time <= 5 && time > 0 && (
                       <>
                         <div
-                          className="absolute -inset-8 sm:-inset-16 border border-cyan-400/30 rounded-full animate-pulse-slow"
+                          className="absolute -inset-8 border border-cyan-400/30 rounded-full animate-pulse-slow"
                           style={{ animationDuration: "3s" }}
                         ></div>
                         <div
-                          className="absolute -inset-12 sm:-inset-24 border border-blue-400/20 rounded-full animate-pulse-slow"
+                          className="absolute -inset-12 border border-cyan-400/20 rounded-full animate-pulse-slow"
                           style={{
                             animationDuration: "4s",
                             animationDelay: "0.5s",
@@ -629,7 +629,7 @@ const CountdownTimer = () => {
                         {[...Array(8)].map((_, i) => (
                           <div
                             key={`beam-${i}`}
-                            className="absolute h-[150px] sm:h-[200px] w-[2px] bg-gradient-to-b from-cyan-400/60 to-transparent animate-pulse"
+                            className="absolute h-[100px] sm:h-[120px] w-[2px] bg-gradient-to-b from-cyan-400/60 to-transparent animate-pulse"
                             style={{
                               transformOrigin: "center bottom",
                               transform: `rotate(${i * 45}deg)`,
@@ -647,25 +647,25 @@ const CountdownTimer = () => {
 
             {/* Completion Message */}
             {time === 0 && (
-              <div className="mt-4 sm:mt-6 md:mt-8 text-red-400 text-lg sm:text-xl md:text-2xl font-bold animate-bounce">
+              <div className="mt-2 sm:mt-3 text-red-400 text-sm sm:text-base font-bold animate-bounce">
                 TIME'S UP!
               </div>
             )}
           </div>
 
-          {/* Enhanced Control Buttons with improved styling */}
-          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
+          {/* Control Buttons - more compact for desktop */}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
             {!isRunning ? (
               <button
                 onClick={handleStart}
                 disabled={time === 0}
-                className={`group relative flex items-center justify-center px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-4 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${styles.buttons.start}`}
+                className={`group relative flex items-center justify-center px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${styles.buttons.start}`}
               >
                 <Play
-                  className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white mr-2"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white mr-2"
                   fill="currentColor"
                 />
-                <span className="text-white font-medium text-sm sm:text-base">
+                <span className="text-white font-medium text-xs sm:text-sm">
                   Start
                 </span>
                 <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -673,13 +673,13 @@ const CountdownTimer = () => {
             ) : (
               <button
                 onClick={handlePause}
-                className={`group relative flex items-center justify-center px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-4 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.pause}`}
+                className={`group relative flex items-center justify-center px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.pause}`}
               >
                 <Pause
-                  className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white mr-2"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white mr-2"
                   fill="currentColor"
                 />
-                <span className="text-white font-medium text-sm sm:text-base">
+                <span className="text-white font-medium text-xs sm:text-sm">
                   Pause
                 </span>
                 <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -688,10 +688,10 @@ const CountdownTimer = () => {
 
             <button
               onClick={handleReset}
-              className={`group relative flex items-center justify-center px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-4 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.reset}`}
+              className={`group relative flex items-center justify-center px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.reset}`}
             >
-              <RotateCcw className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white mr-2" />
-              <span className="text-white font-medium text-sm sm:text-base">
+              <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white mr-2" />
+              <span className="text-white font-medium text-xs sm:text-sm">
                 Reset
               </span>
               <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -699,9 +699,9 @@ const CountdownTimer = () => {
           </div>
 
           {/* Status Indicator */}
-          <div className="flex items-center justify-center space-x-2 sm:space-x-3 mb-6">
+          <div className="flex items-center justify-center space-x-2 mb-2 sm:mb-3">
             <div
-              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-500 ${
+              className={`w-2 h-2 rounded-full transition-all duration-500 ${
                 isRunning
                   ? `${
                       styles.buttons.start.includes("green")
@@ -715,13 +715,13 @@ const CountdownTimer = () => {
                   : "bg-gray-600"
               }`}
             ></div>
-            <span className="text-white/80 text-xs sm:text-sm tracking-[0.2em] font-light">
+            <span className="text-white/80 text-xs tracking-[0.2em] font-light">
               {isRunning ? "COUNTING DOWN" : time === 0 ? "FINISHED" : "READY"}
             </span>
           </div>
 
-          {/* Moved Countdown Style Selector to bottom */}
-          <div className="mt-4">
+          {/* Style Selector with better visibility */}
+          <div className="mt-2 bg-black/20 backdrop-blur-sm py-1.5 px-1 rounded-xl border border-white/10">
             <CountdownStyleSelector
               currentStyle={countdownStyle}
               onStyleChange={setCountdownStyle}
@@ -730,11 +730,11 @@ const CountdownTimer = () => {
         </div>
       </div>
 
-      {/* Enhanced Floating Animation Elements */}
-      <div className="absolute -top-2 sm:-top-4 -left-2 sm:-left-4 w-4 h-4 sm:w-8 sm:h-8 bg-cyan-400/20 rounded-full blur-sm animate-bounce"></div>
-      <div className="absolute -top-1 sm:-top-2 -right-3 sm:-right-6 w-3 h-3 sm:w-6 sm:h-6 bg-purple-400/20 rounded-full blur-sm animate-pulse"></div>
-      <div className="absolute -bottom-2 sm:-bottom-4 -left-3 sm:-left-6 w-5 h-5 sm:w-10 sm:h-10 bg-blue-400/20 rounded-full blur-sm animate-ping"></div>
-      <div className="absolute -bottom-1 sm:-bottom-2 -right-2 sm:-right-4 w-2 h-2 sm:w-4 sm:h-4 bg-pink-400/20 rounded-full blur-sm animate-bounce"></div>
+      {/* Enhanced Floating Animation Elements - smaller for desktop */}
+      <div className="absolute -top-2 -left-2 w-4 h-4 bg-cyan-400/20 rounded-full blur-sm animate-bounce"></div>
+      <div className="absolute -top-1 -right-3 w-3 h-3 bg-purple-400/20 rounded-full blur-sm animate-pulse"></div>
+      <div className="absolute -bottom-2 -left-3 w-5 h-5 bg-blue-400/20 rounded-full blur-sm animate-ping"></div>
+      <div className="absolute -bottom-1 -right-2 w-2 h-2 bg-pink-400/20 rounded-full blur-sm animate-bounce"></div>
     </div>
   );
 };
