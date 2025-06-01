@@ -43,26 +43,30 @@ const Index = () => {
   const getDescription = () => {
     switch (mode) {
       case "timer":
-        return "Track your study sessions with our beautiful dark mode clock timer. Perfect for pomodoro technique and productivity tracking.";
+        return "Track your study sessions with StudyClock's beautiful dark mode clock timer. Perfect for pomodoro technique and productivity tracking.";
       case "countdown":
-        return "Set focused study sessions with our countdown timer. Beautiful dark mode themes help you concentrate and stay productive.";
+        return "Set focused study sessions with StudyClock's countdown timer. Beautiful dark mode themes help you concentrate and stay productive.";
       case "pomodoro":
         return pomodoroMode === "pomodoro"
-          ? "Boost your productivity with the Pomodoro technique. Focus for 25 minutes, then take a short break."
+          ? "Boost your productivity with StudyClock's Pomodoro technique. Focus for 25 minutes, then take a short break."
           : pomodoroMode === "shortBreak"
-          ? "Take a 5-minute short break between your focus sessions to recharge."
-          : "Take a 15-minute long break after completing multiple focus sessions.";
+          ? "Take a 5-minute short break between your focus sessions to recharge with StudyClock."
+          : "Take a 15-minute long break after completing multiple focus sessions with StudyClock.";
     }
   };
 
   return (
     <>
       <Helmet>
-        <title>{getTitle()} - Study Timer App | Focus Better</title>
+        <title>{getTitle()} - StudyClock | Boost Your Productivity</title>
         <meta name="description" content={getDescription()} />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <link
+          rel="canonical"
+          href={`https://studyclock.com/${mode === "timer" ? "clock" : mode}`}
         />
       </Helmet>
       <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
@@ -80,7 +84,7 @@ const Index = () => {
             {mode === "timer" ? (
               <section aria-label="Clock Timer" className="fade-in">
                 <h1 className="sr-only">
-                  Clock Timer - Track Your Study Sessions
+                  Clock Timer - Track Your Study Sessions with StudyClock
                 </h1>
                 <ClockTimer />
                 <div className="mt-4 text-center text-gray-400 text-base">
@@ -93,7 +97,7 @@ const Index = () => {
             ) : mode === "countdown" ? (
               <section aria-label="Countdown Timer" className="fade-in">
                 <h1 className="sr-only">
-                  Countdown Timer - Set Focused Study Sessions
+                  Countdown Timer - Set Focused Study Sessions with StudyClock
                 </h1>
                 <CountdownTimer />
                 <div className="mt-4 text-center text-gray-400 text-base">
@@ -106,7 +110,7 @@ const Index = () => {
             ) : (
               <section aria-label="Pomodoro Timer" className="fade-in">
                 <h1 className="sr-only">
-                  {getTitle()} - Boost Your Productivity
+                  {getTitle()} - Boost Your Productivity with StudyClock
                 </h1>
                 <PomodoroTimer initialMode={pomodoroMode} />
                 <div className="mt-4 text-center text-gray-400 text-base">
@@ -120,23 +124,23 @@ const Index = () => {
           </div>
         </main>
 
-        {/* Study Timer Information Section */}
+        {/* StudyClock Information Section */}
         <section className="relative z-10 py-8 px-4 max-w-4xl mx-auto text-gray-200">
           <div className="bg-black/60 backdrop-blur-xl p-5 sm:p-8 rounded-xl border border-gray-800 shadow-xl">
             <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-4">
-              Elevate Your Productivity with Study Timer
+              Elevate Your Productivity with StudyClock
             </h2>
 
             <div className="space-y-6 text-base sm:text-lg">
               <div>
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  What is Study Timer?
+                  What is StudyClock?
                 </h3>
                 <p className="text-gray-300 leading-relaxed">
-                  Study Timer is a sophisticated time management application
+                  StudyClock is a sophisticated time management application
                   designed to maximize your productivity and focus. With its
-                  elegant dark mode interface and multiple timer options, Study
-                  Timer helps you structure your work sessions effectively,
+                  elegant dark mode interface and multiple timer options,
+                  StudyClock helps you structure your work sessions effectively,
                   whether you're studying, coding, writing, or working on any
                   creative project.
                 </p>
@@ -150,14 +154,14 @@ const Index = () => {
                   Our application incorporates scientifically-backed time
                   management techniques, including the popular Pomodoro method.
                   By alternating focused work sessions with strategic breaks,
-                  Study Timer helps you maintain peak mental performance while
+                  StudyClock helps you maintain peak mental performance while
                   preventing burnout and mental fatigue.
                 </p>
               </div>
 
               <div>
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  How to Use Study Timer
+                  How to Use StudyClock
                 </h3>
                 <ul className="list-disc pl-5 text-gray-300 space-y-2">
                   <li>
@@ -282,7 +286,7 @@ const Index = () => {
                 </h3>
                 <p className="text-gray-300 leading-relaxed">
                   Research shows that our brains work best in focused bursts
-                  rather than extended periods. The Study Timer approach helps
+                  rather than extended periods. The StudyClock approach helps
                   you harness your natural cognitive rhythms, leading to
                   improved concentration, better work quality, and reduced
                   mental fatigue. By structuring your work and break periods
@@ -295,7 +299,7 @@ const Index = () => {
         </section>
 
         <footer className="relative z-10 pb-4 text-center text-gray-500 text-sm">
-          <p>Study Timer - Focus Better, Achieve More</p>
+          <p>StudyClock.com - Focus Better, Achieve More</p>
         </footer>
       </div>
     </>

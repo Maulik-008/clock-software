@@ -18,6 +18,12 @@ const Navigation: React.FC<NavigationProps> = ({
 }) => {
   return (
     <div className="fixed top-3 sm:top-4 md:top-6 left-1/2 transform -translate-x-1/2 z-20 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg px-3 sm:px-4">
+      <div className="flex flex-col items-center mb-2">
+        <h1 className="text-lg sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-2">
+          StudyClock.com
+        </h1>
+      </div>
+
       <div className="flex flex-wrap sm:flex-nowrap justify-center gap-1.5 p-1.5 bg-black/70 backdrop-blur-xl rounded-xl md:rounded-2xl border border-white/20 shadow-2xl">
         <button
           onClick={() => onModeChange("pomodoro")}
