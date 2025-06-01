@@ -176,7 +176,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
 
   return (
     <div
-      className="relative p-5 rounded-2xl w-full max-w-md mx-auto transition-all duration-500 transform shadow-2xl"
+      className=" mt-5 relative p-5 rounded-2xl w-full max-w-md mx-auto transition-all duration-500 transform shadow-2xl"
       style={{
         backgroundColor: colors.background,
         borderColor: colors.border,
@@ -234,7 +234,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
             : "Long Break"}
         </h2>
 
-        <div className="relative mb-6">
+        <div className="relative mb-4">
           <div
             className="text-8xl sm:text-9xl font-bold"
             style={{
@@ -246,10 +246,10 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
           </div>
         </div>
 
-        {/* Start and End Time Display - Only shown when we have them */}
+        {/* Start and End Time Display - Fixed layout to prevent overlap */}
         {(startTime || endTime) && (
           <div
-            className="mt-2 mb-5 flex items-center justify-center space-x-6 text-base"
+            className="mt-1 mb-4 flex flex-col sm:flex-row items-center justify-center sm:space-x-6 space-y-2 sm:space-y-0 text-sm sm:text-base"
             style={{ color: colors.clockText }}
           >
             {startTime && (
@@ -275,19 +275,19 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
         {!isRunning ? (
           <button
             onClick={handleStart}
-            className="flex items-center justify-center p-5 rounded-full transition-transform hover:scale-105 shadow-lg"
+            className="flex items-center justify-center p-4 sm:p-5 rounded-full transition-transform hover:scale-105 shadow-lg"
             style={{
               background: `linear-gradient(to bottom right, ${colors.primary}, ${colors.secondary})`,
               boxShadow: `0 4px 12px ${colors.shadow}`,
             }}
             aria-label="Start Timer"
           >
-            <Play className="w-8 h-8 text-white" fill="white" />
+            <Play className="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="white" />
           </button>
         ) : (
           <button
             onClick={handlePause}
-            className="flex items-center justify-center p-5 rounded-full transition-transform hover:scale-105 shadow-lg"
+            className="flex items-center justify-center p-4 sm:p-5 rounded-full transition-transform hover:scale-105 shadow-lg"
             style={{
               background: `linear-gradient(to bottom right, ${colors.primary}, ${colors.secondary})`,
               boxShadow: `0 4px 12px ${colors.shadow}`,
@@ -295,7 +295,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
             aria-label="Pause Timer"
           >
             <svg
-              className="w-8 h-8 text-white"
+              className="w-7 h-7 sm:w-8 sm:h-8 text-white"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -308,14 +308,14 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
 
         <button
           onClick={handleReset}
-          className="flex items-center justify-center p-5 rounded-full transition-transform hover:scale-105 shadow-lg"
+          className="flex items-center justify-center p-4 sm:p-5 rounded-full transition-transform hover:scale-105 shadow-lg"
           style={{
             background: `linear-gradient(to bottom right, #9333ea, #7e22ce)`,
             boxShadow: `0 4px 12px rgba(147, 51, 234, 0.5)`,
           }}
           aria-label="Reset Timer"
         >
-          <RotateCcw className="w-8 h-8 text-white" />
+          <RotateCcw className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
         </button>
       </div>
     </div>

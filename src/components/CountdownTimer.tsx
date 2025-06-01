@@ -554,14 +554,14 @@ const CountdownTimer = () => {
           </h1>
 
           {/* Countdown Display - Make more compact for desktop */}
-          <div className="my-4 sm:my-5 md:my-6 px-2">
+          <div className="my-6 sm:my-5 md:my-6 px-4 sm:px-2">
             <div
               className={`flex items-center justify-center ${styles.numberContainer}`}
             >
               {/* Main Number - Adjust size for desktop */}
               <div className={`relative ${styles.animation}`}>
                 <div
-                  className={`drop-shadow-2xl transform transition-all duration-500 font-bold text-5xl sm:text-5xl md:text-6xl lg:text-7xl px-4 py-2 ${
+                  className={`drop-shadow-2xl transform transition-all duration-500 font-bold text-6xl sm:text-5xl md:text-6xl lg:text-7xl px-5 sm:px-4 py-3 sm:py-2 ${
                     time <= 3 && time > 0 ? "animate-bounce scale-110" : ""
                   } ${
                     time === 0 ? "text-red-400 animate-pulse" : styles.number
@@ -570,12 +570,12 @@ const CountdownTimer = () => {
                   {time === 0 ? "Time's up!" : time}
                 </div>
                 <div
-                  className={`absolute inset-0 blur-lg sm:blur-2xl animate-pulse text-5xl sm:text-5xl md:text-6xl lg:text-7xl ${styles.numberGlow}`}
+                  className={`absolute inset-0 blur-lg sm:blur-2xl animate-pulse text-6xl sm:text-5xl md:text-6xl lg:text-7xl ${styles.numberGlow}`}
                 >
                   {time === 0 ? "Time's up!" : time}
                 </div>
                 <div
-                  className={`absolute inset-0 blur-2xl sm:blur-3xl opacity-50 text-5xl sm:text-5xl md:text-6xl lg:text-7xl ${styles.numberGlow}`}
+                  className={`absolute inset-0 blur-2xl sm:blur-3xl opacity-50 text-6xl sm:text-5xl md:text-6xl lg:text-7xl ${styles.numberGlow}`}
                 >
                   {time === 0 ? "Time's up!" : time}
                 </div>
@@ -654,18 +654,19 @@ const CountdownTimer = () => {
           </div>
 
           {/* Control Buttons - more compact for desktop */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-3 mb-4 sm:mb-4">
             {!isRunning ? (
               <button
                 onClick={handleStart}
                 disabled={time === 0}
-                className={`group relative flex items-center justify-center px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${styles.buttons.start}`}
+                className={`group relative flex items-center justify-center p-3 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${styles.buttons.start}`}
+                aria-label="Start"
               >
                 <Play
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white mr-2"
+                  className="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white"
                   fill="currentColor"
                 />
-                <span className="text-white font-medium text-xs sm:text-sm">
+                <span className="hidden sm:inline-block text-white font-medium text-sm ml-2">
                   Start
                 </span>
                 <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -673,13 +674,14 @@ const CountdownTimer = () => {
             ) : (
               <button
                 onClick={handlePause}
-                className={`group relative flex items-center justify-center px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.pause}`}
+                className={`group relative flex items-center justify-center p-3 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.pause}`}
+                aria-label="Pause"
               >
                 <Pause
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white mr-2"
+                  className="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white"
                   fill="currentColor"
                 />
-                <span className="text-white font-medium text-xs sm:text-sm">
+                <span className="hidden sm:inline-block text-white font-medium text-sm ml-2">
                   Pause
                 </span>
                 <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -688,10 +690,11 @@ const CountdownTimer = () => {
 
             <button
               onClick={handleReset}
-              className={`group relative flex items-center justify-center px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.reset}`}
+              className={`group relative flex items-center justify-center p-3 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.reset}`}
+              aria-label="Reset"
             >
-              <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white mr-2" />
-              <span className="text-white font-medium text-xs sm:text-sm">
+              <RotateCcw className="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" />
+              <span className="hidden sm:inline-block text-white font-medium text-sm ml-2">
                 Reset
               </span>
               <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>

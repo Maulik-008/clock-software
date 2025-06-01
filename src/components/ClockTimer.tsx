@@ -447,11 +447,11 @@ const ClockTimer = () => {
             </button>
           </div>
 
-          {/* Enhanced Timer Display - Adjust for desktop */}
-          <div className="my-4 sm:my-5 md:my-6 px-2">
-            <div className="flex items-center justify-center space-x-1 sm:space-x-2 text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-mono font-bold">
+          {/* Enhanced Timer Display - Adjust for desktop and mobile */}
+          <div className="my-6 sm:my-5 md:my-6 px-4 sm:px-2">
+            <div className="flex items-center justify-center space-x-2 sm:space-x-2 text-5xl sm:text-5xl md:text-6xl lg:text-6xl font-mono font-bold">
               {/* Hours */}
-              <div className="relative group px-1">
+              <div className="relative group px-2 sm:px-1">
                 <div
                   className={`drop-shadow-2xl transform transition-all duration-500 hover:scale-110 ${
                     styles.timeText
@@ -481,7 +481,7 @@ const ClockTimer = () => {
               </div>
 
               {/* Minutes */}
-              <div className="relative group px-1">
+              <div className="relative group px-2 sm:px-1">
                 <div
                   className={`drop-shadow-2xl transform transition-all duration-500 hover:scale-110 ${
                     styles.timeText
@@ -511,7 +511,7 @@ const ClockTimer = () => {
               </div>
 
               {/* Seconds */}
-              <div className="relative group px-1">
+              <div className="relative group px-2 sm:px-1">
                 <div
                   className={`drop-shadow-2xl transform transition-all duration-500 hover:scale-110 ${
                     styles.timeText
@@ -543,18 +543,19 @@ const ClockTimer = () => {
           </div>
 
           {/* Enhanced Control Buttons - more compact for desktop */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-4 sm:mb-5">
             {/* Start/Pause Button */}
             {!isRunning ? (
               <button
                 onClick={handleStart}
-                className={`group relative flex items-center justify-center px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.start}`}
+                className={`group relative flex items-center justify-center p-3 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.start}`}
+                aria-label="Start"
               >
                 <Play
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white mr-2"
+                  className="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white"
                   fill="currentColor"
                 />
-                <span className="text-white font-medium text-xs sm:text-sm">
+                <span className="hidden sm:inline-block text-white font-medium text-sm ml-2">
                   Start
                 </span>
                 <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -562,13 +563,14 @@ const ClockTimer = () => {
             ) : (
               <button
                 onClick={handlePause}
-                className={`group relative flex items-center justify-center px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.pause}`}
+                className={`group relative flex items-center justify-center p-3 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.pause}`}
+                aria-label="Pause"
               >
                 <Pause
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white mr-2"
+                  className="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white"
                   fill="currentColor"
                 />
-                <span className="text-white font-medium text-xs sm:text-sm">
+                <span className="hidden sm:inline-block text-white font-medium text-sm ml-2">
                   Pause
                 </span>
                 <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -578,10 +580,11 @@ const ClockTimer = () => {
             {/* Reset Button */}
             <button
               onClick={handleReset}
-              className={`group relative flex items-center justify-center px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.reset}`}
+              className={`group relative flex items-center justify-center p-3 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r transition-all duration-500 transform hover:scale-110 hover:shadow-lg ${styles.buttons.reset}`}
+              aria-label="Reset"
             >
-              <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white mr-2" />
-              <span className="text-white font-medium text-xs sm:text-sm">
+              <RotateCcw className="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" />
+              <span className="hidden sm:inline-block text-white font-medium text-sm ml-2">
                 Reset
               </span>
               <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
