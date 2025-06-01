@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ClockTimer from "../components/ClockTimer";
 import CountdownTimer from "../components/CountdownTimer";
 import PomodoroTimer from "../components/PomodoroTimer";
@@ -10,8 +10,20 @@ type AppMode = "timer" | "countdown" | "pomodoro";
 type PomodoroMode = "pomodoro" | "shortBreak" | "longBreak";
 
 const Index = () => {
-  const [mode, setMode] = useState<AppMode>("timer");
+  const [mode, setMode] = useState<AppMode>("pomodoro");
   const [pomodoroMode, setPomodoroMode] = useState<PomodoroMode>("pomodoro");
+
+  useEffect(() => {
+    document.documentElement.classList.add("text-base", "md:text-lg");
+
+    const viewportMeta = document.querySelector('meta[name="viewport"]');
+    if (viewportMeta) {
+      viewportMeta.setAttribute(
+        "content",
+        "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      );
+    }
+  }, []);
 
   const getTitle = () => {
     switch (mode) {
@@ -63,7 +75,7 @@ const Index = () => {
             mode === "pomodoro" ? setPomodoroMode : undefined
           }
         />
-        <main className="relative z-10 min-h-screen flex items-center justify-center p-2 sm:p-4 pt-16 sm:pt-20 md:pt-24">
+        <main className="relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-20 sm:pt-22 md:pt-24">
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
             {mode === "timer" ? (
               <section aria-label="Clock Timer" className="fade-in">
@@ -71,7 +83,7 @@ const Index = () => {
                   Clock Timer - Track Your Study Sessions
                 </h1>
                 <ClockTimer />
-                <div className="mt-4 text-center text-gray-400 text-sm">
+                <div className="mt-4 text-center text-gray-400 text-base">
                   <p className="hidden">
                     Track your study and work sessions with our elegant clock
                     timer. Perfect for the pomodoro technique.
@@ -84,7 +96,7 @@ const Index = () => {
                   Countdown Timer - Set Focused Study Sessions
                 </h1>
                 <CountdownTimer />
-                <div className="mt-4 text-center text-gray-400 text-sm">
+                <div className="mt-4 text-center text-gray-400 text-base">
                   <p className="hidden">
                     Set focused study sessions with our beautiful countdown
                     timer. Multiple themes to match your style.
@@ -97,7 +109,7 @@ const Index = () => {
                   {getTitle()} - Boost Your Productivity
                 </h1>
                 <PomodoroTimer initialMode={pomodoroMode} />
-                <div className="mt-4 text-center text-gray-400 text-sm">
+                <div className="mt-4 text-center text-gray-400 text-base">
                   <p className="hidden">
                     Use the Pomodoro technique to boost your productivity.
                     25-minute focus sessions with short and long breaks.
@@ -109,13 +121,13 @@ const Index = () => {
         </main>
 
         {/* Study Timer Information Section */}
-        <section className="relative z-10 py-12 px-4 max-w-4xl mx-auto text-gray-200">
-          <div className="bg-black/60 backdrop-blur-xl p-6 sm:p-8 rounded-xl border border-gray-800 shadow-xl">
-            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-4">
+        <section className="relative z-10 py-8 px-4 max-w-4xl mx-auto text-gray-200">
+          <div className="bg-black/60 backdrop-blur-xl p-5 sm:p-8 rounded-xl border border-gray-800 shadow-xl">
+            <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-4">
               Elevate Your Productivity with Study Timer
             </h2>
 
-            <div className="space-y-6 text-sm sm:text-base">
+            <div className="space-y-6 text-base sm:text-lg">
               <div>
                 <h3 className="text-xl font-semibold text-white mb-2">
                   What is Study Timer?
@@ -149,8 +161,8 @@ const Index = () => {
                 </h3>
                 <ul className="list-disc pl-5 text-gray-300 space-y-2">
                   <li>
-                    Choose your preferred timer mode: Clock Timer, Countdown
-                    Timer, or Pomodoro Timer
+                    Choose your preferred timer mode: Pomodoro Timer, Clock
+                    Timer, or Countdown Timer
                   </li>
                   <li>
                     For Pomodoro sessions, use the 25-minute focus intervals
@@ -184,8 +196,8 @@ const Index = () => {
                       <h4 className="font-medium text-white">
                         Multiple Timer Modes
                       </h4>
-                      <p className="text-gray-400 text-sm">
-                        Clock, Countdown, and Pomodoro timers for different
+                      <p className="text-gray-400">
+                        Pomodoro, Clock, and Countdown timers for different
                         needs
                       </p>
                     </div>
@@ -199,7 +211,7 @@ const Index = () => {
                       <h4 className="font-medium text-white">
                         Beautiful Dark Themes
                       </h4>
-                      <p className="text-gray-400 text-sm">
+                      <p className="text-gray-400">
                         Eye-friendly interface with dynamic color schemes
                       </p>
                     </div>
@@ -211,7 +223,7 @@ const Index = () => {
                     </div>
                     <div>
                       <h4 className="font-medium text-white">Visual Effects</h4>
-                      <p className="text-gray-400 text-sm">
+                      <p className="text-gray-400">
                         Subtle animations and particle backgrounds for a focused
                         atmosphere
                       </p>
@@ -226,7 +238,7 @@ const Index = () => {
                       <h4 className="font-medium text-white">
                         Zero Distractions
                       </h4>
-                      <p className="text-gray-400 text-sm">
+                      <p className="text-gray-400">
                         Clean, minimalist interface that keeps you focused on
                         your work
                       </p>
@@ -239,11 +251,11 @@ const Index = () => {
                     </div>
                     <div>
                       <h4 className="font-medium text-white">
-                        Mobile & Desktop
+                        Mobile Optimized
                       </h4>
-                      <p className="text-gray-400 text-sm">
-                        Works seamlessly across all your devices with responsive
-                        design
+                      <p className="text-gray-400">
+                        Fully responsive design that works perfectly on all
+                        devices
                       </p>
                     </div>
                   </div>
@@ -256,7 +268,7 @@ const Index = () => {
                       <h4 className="font-medium text-white">
                         Completely Free
                       </h4>
-                      <p className="text-gray-400 text-sm">
+                      <p className="text-gray-400">
                         All features available at no cost, no account required
                       </p>
                     </div>
@@ -282,7 +294,7 @@ const Index = () => {
           </div>
         </section>
 
-        <footer className="relative z-10 pb-4 text-center text-gray-500 text-xs">
+        <footer className="relative z-10 pb-4 text-center text-gray-500 text-sm">
           <p>Study Timer - Focus Better, Achieve More</p>
         </footer>
       </div>

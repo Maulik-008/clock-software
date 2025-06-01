@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Play, Pause, RotateCcw, Coffee, Timer, Zap } from "lucide-react";
+import {
+  Play,
+  Pause,
+  RotateCcw,
+  Coffee,
+  Timer,
+  Zap,
+  Clock,
+} from "lucide-react";
 import { Button } from "./ui/button";
 
 type PomodoroMode = "pomodoro" | "shortBreak" | "longBreak";
@@ -14,6 +22,8 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
   const [mode, setMode] = useState<PomodoroMode>(initialMode);
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [startTime, setStartTime] = useState<Date | null>(null);
+  const [endTime, setEndTime] = useState<Date | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Timer durations in seconds
@@ -27,15 +37,34 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
   useEffect(() => {
     setTime(durations[mode]);
     setIsRunning(false);
+    setStartTime(null);
+    setEndTime(null);
   }, [mode]);
 
   // Timer logic
   useEffect(() => {
     if (isRunning && time > 0) {
+      // Set start time if not already set
+      if (!startTime) {
+        const now = new Date();
+        setStartTime(now);
+
+        // Calculate and set end time
+        const end = new Date(now.getTime() + time * 1000);
+        setEndTime(end);
+      }
+
       intervalRef.current = setInterval(() => {
         setTime((prevTime) => {
           if (prevTime <= 1) {
             setIsRunning(false);
+            // Play sound notification when timer ends
+            try {
+              const audio = new Audio("/notification.mp3");
+              audio.play();
+            } catch (error) {
+              console.log("Audio notification not supported");
+            }
             return 0;
           }
           return prevTime - 1;
@@ -52,13 +81,25 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
         clearInterval(intervalRef.current);
       }
     };
-  }, [isRunning, time]);
+  }, [isRunning, time, startTime]);
 
   const handleStart = () => setIsRunning(true);
-  const handlePause = () => setIsRunning(false);
+
+  const handlePause = () => {
+    setIsRunning(false);
+    // Recalculate end time when paused
+    if (startTime && time > 0) {
+      const now = new Date();
+      const newEnd = new Date(now.getTime() + time * 1000);
+      setEndTime(newEnd);
+    }
+  };
+
   const handleReset = () => {
     setIsRunning(false);
     setTime(durations[mode]);
+    setStartTime(null);
+    setEndTime(null);
   };
 
   const formatTime = (seconds: number) => {
@@ -69,115 +110,123 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
       .padStart(2, "0")}`;
   };
 
-  // Get style based on current mode
-  const getStylesForMode = () => {
+  const formatClockTime = (date: Date) => {
+    return date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
+  // Get colors based on current mode
+  const getColors = () => {
     switch (mode) {
       case "pomodoro":
         return {
-          container:
-            "backdrop-blur-2xl bg-red-950/90 border border-red-500/50 shadow-2xl shadow-red-500/40",
-          glow: "bg-gradient-to-r from-red-500/40 via-rose-500/40 to-pink-500/40",
-          title:
-            "text-red-400 font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl",
-          timeText:
-            "text-transparent bg-clip-text bg-gradient-to-b from-red-400 to-rose-600",
-          timeGlow: "text-red-400/50",
-          button:
-            "from-red-500 to-rose-600 hover:from-red-400 hover:to-rose-500 shadow-red-500/40",
+          primary: "#b50028", // Tailwind red-500
+          secondary: "#940020", // Darker shade for gradient
+          background: "rgba(181, 0, 40, 0.2)",
+          border: "rgba(181, 0, 40, 0.3)",
+          shadow: "rgba(181, 0, 40, 0.5)",
+          tabActive: "#b50028",
+          tabText: "#fff",
+          clockText: "rgba(255, 255, 255, 0.7)",
+          timeText: "#b50028",
         };
       case "shortBreak":
         return {
-          container:
-            "backdrop-blur-2xl bg-emerald-950/90 border border-emerald-500/50 shadow-2xl shadow-emerald-500/40",
-          glow: "bg-gradient-to-r from-emerald-500/40 via-green-500/40 to-teal-500/40",
-          title:
-            "text-emerald-400 font-medium text-xl sm:text-2xl md:text-3xl lg:text-4xl",
-          timeText:
-            "text-transparent bg-clip-text bg-gradient-to-b from-emerald-400 to-green-600",
-          timeGlow: "text-emerald-400/50",
-          button:
-            "from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 shadow-emerald-500/40",
+          primary: "#4ade80", // Green
+          secondary: "#22c55e",
+          background: "rgba(16, 185, 129, 0.2)",
+          border: "rgba(74, 222, 128, 0.3)",
+          shadow: "rgba(74, 222, 128, 0.5)",
+          tabActive: "#4ade80",
+          tabText: "#fff",
+          clockText: "rgba(255, 255, 255, 0.7)",
+          timeText: "#4ade80",
         };
       case "longBreak":
         return {
-          container:
-            "backdrop-blur-2xl bg-blue-950/85 border border-blue-400/50 shadow-2xl shadow-blue-500/30",
-          glow: "bg-gradient-to-r from-blue-500/30 via-indigo-500/30 to-purple-500/30",
-          title:
-            "text-blue-300 font-light text-xl sm:text-2xl md:text-3xl lg:text-4xl",
-          timeText:
-            "text-transparent bg-clip-text bg-gradient-to-b from-blue-300 to-indigo-500",
-          timeGlow: "text-blue-400/60",
-          button:
-            "from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 shadow-blue-500/40",
+          primary: "#3b82f6", // Blue
+          secondary: "#2563eb",
+          background: "rgba(37, 99, 235, 0.2)",
+          border: "rgba(59, 130, 246, 0.3)",
+          shadow: "rgba(59, 130, 246, 0.5)",
+          tabActive: "#3b82f6",
+          tabText: "#fff",
+          clockText: "rgba(255, 255, 255, 0.7)",
+          timeText: "#3b82f6",
         };
       default:
         return {
-          container:
-            "backdrop-blur-2xl bg-red-950/90 border border-red-500/50 shadow-2xl shadow-red-500/40",
-          glow: "bg-gradient-to-r from-red-500/40 via-rose-500/40 to-pink-500/40",
-          title:
-            "text-red-400 font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl",
-          timeText:
-            "text-transparent bg-clip-text bg-gradient-to-b from-red-400 to-rose-600",
-          timeGlow: "text-red-400/50",
-          button:
-            "from-red-500 to-rose-600 hover:from-red-400 hover:to-rose-500 shadow-red-500/40",
+          primary: "#b50028", // Tailwind red-500
+          secondary: "#940020", // Darker shade for gradient
+          background: "rgba(181, 0, 40, 0.2)",
+          border: "rgba(181, 0, 40, 0.3)",
+          shadow: "rgba(181, 0, 40, 0.5)",
+          tabActive: "#b50028",
+          tabText: "#fff",
+          clockText: "rgba(255, 255, 255, 0.7)",
+          timeText: "#b50028",
         };
     }
   };
 
-  const styles = getStylesForMode();
+  const colors = getColors();
 
   return (
     <div
-      className={`relative p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl md:rounded-4xl w-full max-w-md mx-auto transition-all duration-500 transform ${styles.container}`}
+      className="relative p-5 rounded-2xl w-full max-w-md mx-auto transition-all duration-500 transform shadow-2xl"
+      style={{
+        backgroundColor: colors.background,
+        borderColor: colors.border,
+        borderWidth: "1px",
+        borderStyle: "solid",
+        boxShadow: `0 0 30px ${colors.shadow}`,
+      }}
     >
-      {/* Glow effect */}
-      <div
-        className={`absolute inset-0 -z-10 blur-3xl opacity-20 rounded-full ${styles.glow}`}
-      ></div>
-
-      {/* Mode Selector */}
-      <div className="flex justify-center mb-6 gap-2 sm:gap-3">
-        <Button
-          className={`px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-xs sm:text-sm bg-gradient-to-r ${
-            mode === "pomodoro" ? styles.button : "bg-white/5 hover:bg-white/10"
-          }`}
+      {/* Mode Selector - Redesigned to match image */}
+      <div className="flex justify-center mb-8 overflow-hidden rounded-xl bg-black/20 border border-white/10">
+        <button
           onClick={() => setMode("pomodoro")}
+          className={`flex-1 py-3 px-3 text-center text-sm font-medium transition-all duration-300`}
+          style={{
+            backgroundColor:
+              mode === "pomodoro" ? colors.tabActive : "transparent",
+            color: mode === "pomodoro" ? "#fff" : "rgba(255, 255, 255, 0.6)",
+          }}
         >
-          <Timer className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
           Pomodoro
-        </Button>
+        </button>
 
-        <Button
-          className={`px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-xs sm:text-sm bg-gradient-to-r ${
-            mode === "shortBreak"
-              ? styles.button
-              : "bg-white/5 hover:bg-white/10"
-          }`}
+        <button
           onClick={() => setMode("shortBreak")}
+          className={`flex-1 py-3 px-3 text-center text-sm font-medium transition-all duration-300`}
+          style={{
+            backgroundColor:
+              mode === "shortBreak" ? colors.tabActive : "transparent",
+            color: mode === "shortBreak" ? "#fff" : "rgba(255, 255, 255, 0.6)",
+          }}
         >
-          <Zap className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
           Short Break
-        </Button>
+        </button>
 
-        <Button
-          className={`px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-xs sm:text-sm bg-gradient-to-r ${
-            mode === "longBreak"
-              ? styles.button
-              : "bg-white/5 hover:bg-white/10"
-          }`}
+        <button
           onClick={() => setMode("longBreak")}
+          className={`flex-1 py-3 px-3 text-center text-sm font-medium transition-all duration-300`}
+          style={{
+            backgroundColor:
+              mode === "longBreak" ? colors.tabActive : "transparent",
+            color: mode === "longBreak" ? "#fff" : "rgba(255, 255, 255, 0.6)",
+          }}
         >
-          <Coffee className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
           Long Break
-        </Button>
+        </button>
       </div>
 
       {/* Timer Display */}
-      <div className="flex flex-col items-center justify-center py-4 sm:py-6 md:py-8">
-        <h2 className={`mb-4 ${styles.title}`}>
+      <div className="flex flex-col items-center justify-center py-4">
+        <h2 className="mb-4 text-xl font-medium text-white/90">
           {mode === "pomodoro"
             ? "Focus Time"
             : mode === "shortBreak"
@@ -185,46 +234,88 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
             : "Long Break"}
         </h2>
 
-        <div className="relative group">
-          <div className="text-7xl sm:text-8xl md:text-9xl font-bold relative z-10">
-            <span className={styles.timeText}>{formatTime(time)}</span>
-          </div>
-
-          {/* Glow effect for time */}
+        <div className="relative mb-6">
           <div
-            className={`absolute top-0 left-0 text-7xl sm:text-8xl md:text-9xl font-bold blur-md -z-10 ${styles.timeGlow}`}
+            className="text-8xl sm:text-9xl font-bold"
+            style={{
+              color: colors.timeText,
+              textShadow: `0 0 15px ${colors.shadow}`,
+            }}
           >
             {formatTime(time)}
           </div>
         </div>
+
+        {/* Start and End Time Display - Only shown when we have them */}
+        {(startTime || endTime) && (
+          <div
+            className="mt-2 mb-5 flex items-center justify-center space-x-6 text-base"
+            style={{ color: colors.clockText }}
+          >
+            {startTime && (
+              <div className="flex items-center">
+                <span className="mr-1 opacity-80">Start:</span>
+                <span className="font-medium">
+                  {formatClockTime(startTime)}
+                </span>
+              </div>
+            )}
+            {endTime && (
+              <div className="flex items-center">
+                <span className="mr-1 opacity-80">End:</span>
+                <span className="font-medium">{formatClockTime(endTime)}</span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Controls */}
-      <div className="flex items-center justify-center space-x-3 sm:space-x-4 mt-4 sm:mt-6">
+      <div className="flex items-center justify-center space-x-4 mt-2">
         {!isRunning ? (
           <button
             onClick={handleStart}
-            className={`flex items-center justify-center p-3 sm:p-4 rounded-full bg-gradient-to-r ${styles.button} transform transition-all duration-300 hover:scale-105 shadow-lg`}
+            className="flex items-center justify-center p-5 rounded-full transition-transform hover:scale-105 shadow-lg"
+            style={{
+              background: `linear-gradient(to bottom right, ${colors.primary}, ${colors.secondary})`,
+              boxShadow: `0 4px 12px ${colors.shadow}`,
+            }}
             aria-label="Start Timer"
           >
-            <Play className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+            <Play className="w-8 h-8 text-white" fill="white" />
           </button>
         ) : (
           <button
             onClick={handlePause}
-            className={`flex items-center justify-center p-3 sm:p-4 rounded-full bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-400 hover:to-orange-500 shadow-lg shadow-yellow-500/40 transform transition-all duration-300 hover:scale-105`}
+            className="flex items-center justify-center p-5 rounded-full transition-transform hover:scale-105 shadow-lg"
+            style={{
+              background: `linear-gradient(to bottom right, ${colors.primary}, ${colors.secondary})`,
+              boxShadow: `0 4px 12px ${colors.shadow}`,
+            }}
             aria-label="Pause Timer"
           >
-            <Pause className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+            <svg
+              className="w-8 h-8 text-white"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="6" y="5" width="4" height="14" rx="1" fill="white" />
+              <rect x="14" y="5" width="4" height="14" rx="1" fill="white" />
+            </svg>
           </button>
         )}
 
         <button
           onClick={handleReset}
-          className={`flex items-center justify-center p-3 sm:p-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-400 hover:to-pink-500 shadow-lg shadow-purple-500/40 transform transition-all duration-300 hover:scale-105`}
+          className="flex items-center justify-center p-5 rounded-full transition-transform hover:scale-105 shadow-lg"
+          style={{
+            background: `linear-gradient(to bottom right, #9333ea, #7e22ce)`,
+            boxShadow: `0 4px 12px rgba(147, 51, 234, 0.5)`,
+          }}
           aria-label="Reset Timer"
         >
-          <RotateCcw className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+          <RotateCcw className="w-8 h-8 text-white" />
         </button>
       </div>
     </div>
