@@ -1,5 +1,5 @@
 # Study Timer - Clock Software
-# https://studytimer.lovable.dev/
+# https://www.studyclock.com/
 
 User-agent: Googlebot
 Allow: /
@@ -21,4 +21,4 @@ Allow: /
 # Disallow: /admin/
 
 # Sitemap location
-Sitemap: https://studytimer.lovable.dev/sitemap.xml
+Sitemap: https://www.studyclock.com/sitemap.xml

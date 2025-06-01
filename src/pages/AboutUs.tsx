@@ -9,11 +9,11 @@ const AboutUs = () => {
     <>
       <Helmet>
         <title>
-          About StudyClock.com - Created by Ripal Joshi | Productivity Timer
+          About StudyClock.com - Created by Maulik Joshi | Productivity Timer
         </title>
         <meta
           name="description"
-          content="Learn about StudyClock.com, a productivity timer created by software engineer Ripal Joshi to help students and professionals maximize focus and efficiency using research-backed time management techniques."
+          content="Learn about StudyClock.com, a productivity timer created by software engineer Maulik Joshi to help students and professionals maximize focus and efficiency using research-backed time management techniques."
         />
         <meta
           name="viewport"
@@ -22,7 +22,7 @@ const AboutUs = () => {
         <link rel="canonical" href="https://studyclock.com/about-us" />
         <meta
           name="keywords"
-          content="studyclock, productivity timer, time management app, pomodoro technique, Ripal Joshi, software engineer, focus timer, study timer, student productivity tool"
+          content="studyclock, productivity timer, time management app, pomodoro technique, Maulik Joshi, software engineer, focus timer, study timer, student productivity tool"
         />
       </Helmet>
       <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
@@ -85,19 +85,19 @@ const AboutUs = () => {
 
                   <div className="w-full md:w-2/3">
                     <h3 className="text-xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-2">
-                      Ripal Joshi
+                      Maulik Joshi
                     </h3>
                     <p className="text-white font-medium mb-1">
                       Software Engineer
                     </p>
                     <p className="text-gray-300 leading-relaxed mb-4">
-                      Ripal is a passionate software engineer with expertise in
+                      Maulik is a passionate software engineer with expertise in
                       creating intuitive web applications that solve real-world
                       problems. With a background in both software development
-                      and productivity research, Ripal created StudyClock.com to
-                      address the challenges faced by students and professionals
-                      in maintaining focus in our distraction-filled digital
-                      world.
+                      and productivity research, Maulik created StudyClock.com
+                      to address the challenges faced by students and
+                      professionals in maintaining focus in our
+                      distraction-filled digital world.
                     </p>
 
                     <p className="text-gray-300 leading-relaxed">
@@ -239,7 +239,7 @@ const AboutUs = () => {
                 <p className="text-gray-300 leading-relaxed">
                   Ready to transform your productivity habits? Start using
                   StudyClock.com today, completely free. Questions, suggestions,
-                  or just want to share your success story? Contact Ripal at{" "}
+                  or just want to share your success story? Contact Maulik at{" "}
                   <a
                     href="mailto:mb.dev08@gmail.com"
                     className="text-cyan-400 hover:text-cyan-300 transition-colors"
