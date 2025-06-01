@@ -1,4 +1,37 @@
-# Welcome to your Lovable project
+# Study Timer - Dark Mode Clock & Countdown Timer
+
+A beautiful dark mode study timer application designed to boost productivity and focus. This elegant timer features multiple visual styles, animations, and both clock and countdown timer modes.
+
+**URL**: https://lovable.dev/projects/e9d94065-e0dd-419e-a2da-cc0e9e7d83ca
+
+## Features
+
+- **Dark Mode Interface**: Easy on the eyes for extended use
+- **Multiple Timer Styles**: Choose from various visually stunning themes including:
+  - Neon
+  - Matrix
+  - Hologram
+  - Cyberpunk
+  - Quantum
+  - Plasma
+  - Cosmic
+  - Aurora
+- **Dual Modes**:
+  - Clock Timer: Track how long you've been studying
+  - Countdown Timer: Set a specific duration for your study session
+- **Visual Effects**: Beautiful animations and effects for each theme
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
+
+## SEO Information
+
+This project has been optimized for search engines with:
+
+- Comprehensive meta tags
+- Open Graph and Twitter card support
+- Structured data (Schema.org)
+- XML sitemap
+- Enhanced robots.txt
+- Semantic HTML structure
 
 ## Project info
 

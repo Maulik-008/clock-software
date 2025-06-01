@@ -1,18 +1,17 @@
-
-import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, RotateCcw } from 'lucide-react';
-import CountdownStyleSelector from './CountdownStyleSelector';
+import React, { useState, useEffect, useRef } from "react";
+import { Play, Pause, RotateCcw } from "lucide-react";
+import CountdownStyleSelector from "./CountdownStyleSelector";
 
 const CountdownTimer = () => {
   const [time, setTime] = useState(10);
   const [isRunning, setIsRunning] = useState(false);
-  const [countdownStyle, setCountdownStyle] = useState('pulse');
+  const [countdownStyle, setCountdownStyle] = useState("pulse");
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (isRunning && time > 0) {
       intervalRef.current = setInterval(() => {
-        setTime(prevTime => {
+        setTime((prevTime) => {
           if (prevTime <= 1) {
             setIsRunning(false);
             return 0;
@@ -42,218 +41,395 @@ const CountdownTimer = () => {
 
   const getCountdownStyles = () => {
     switch (countdownStyle) {
-      case 'matrix':
+      case "matrix":
         return {
-          container: 'backdrop-blur-2xl bg-black/95 border border-green-500/40 shadow-2xl shadow-green-500/30',
-          glow: 'bg-gradient-to-r from-green-500/30 via-lime-500/30 to-green-500/30',
-          title: 'text-green-400 tracking-[0.4em] font-mono text-xl sm:text-2xl md:text-3xl lg:text-4xl',
-          numberContainer: 'relative group',
-          number: time === 0 ? 'text-red-400 font-mono text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse' : 'text-green-400 font-mono text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          numberGlow: time === 0 ? 'text-red-400/60 font-mono text-4xl sm:text-6xl md:text-8xl lg:text-9xl' : 'text-green-400/60 font-mono text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          animation: isRunning ? 'animate-bounce' : '',
-          specialEffect: 'matrix-rain',
+          container:
+            "backdrop-blur-2xl bg-black/95 border border-green-500/40 shadow-2xl shadow-green-500/30",
+          glow: "bg-gradient-to-r from-green-500/30 via-lime-500/30 to-green-500/30",
+          title:
+            "text-green-400 font-mono text-xl sm:text-2xl md:text-3xl lg:text-4xl",
+          numberContainer: "relative group",
+          number:
+            time === 0
+              ? "text-red-400 font-mono text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse"
+              : "text-green-400 font-mono text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          numberGlow:
+            time === 0
+              ? "text-red-400/60 font-mono text-4xl sm:text-6xl md:text-8xl lg:text-9xl"
+              : "text-green-400/60 font-mono text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          animation: isRunning ? "animate-bounce" : "",
+          specialEffect: "matrix-rain",
           buttons: {
-            start: 'from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 shadow-green-500/40',
-            pause: 'from-lime-500 to-green-600 hover:from-lime-400 hover:to-green-500 shadow-lime-500/40',
-            reset: 'from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40'
-          }
+            start:
+              "from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 shadow-green-500/40",
+            pause:
+              "from-lime-500 to-green-600 hover:from-lime-400 hover:to-green-500 shadow-lime-500/40",
+            reset:
+              "from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40",
+          },
         };
-      case 'neon':
+      case "neon":
         return {
-          container: 'backdrop-blur-2xl bg-purple-950/90 border border-pink-500/50 shadow-2xl shadow-pink-500/40',
-          glow: 'bg-gradient-to-r from-pink-500/40 via-purple-500/40 to-cyan-500/40',
-          title: 'text-pink-400 tracking-[0.4em] text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold',
-          numberContainer: 'relative group',
-          number: time === 0 ? 'text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse' : 'text-transparent bg-clip-text bg-gradient-to-b from-pink-400 to-purple-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          numberGlow: time === 0 ? 'text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl' : 'text-pink-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          animation: isRunning ? 'animate-pulse' : '',
-          specialEffect: 'neon-rings',
+          container:
+            "backdrop-blur-2xl bg-purple-950/90 border border-pink-500/50 shadow-2xl shadow-pink-500/40",
+          glow: "bg-gradient-to-r from-pink-500/40 via-purple-500/40 to-cyan-500/40",
+          title:
+            "text-pink-400 font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl",
+          numberContainer: "relative group",
+          number:
+            time === 0
+              ? "text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse"
+              : "text-transparent bg-clip-text bg-gradient-to-b from-pink-400 to-purple-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          numberGlow:
+            time === 0
+              ? "text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl"
+              : "text-pink-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          animation: isRunning ? "animate-pulse" : "",
+          specialEffect: "neon-rings",
           buttons: {
-            start: 'from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 shadow-pink-500/40',
-            pause: 'from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 shadow-cyan-500/40',
-            reset: 'from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40'
-          }
+            start:
+              "from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 shadow-pink-500/40",
+            pause:
+              "from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 shadow-cyan-500/40",
+            reset:
+              "from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40",
+          },
         };
-      case 'hologram':
+      case "hologram":
         return {
-          container: 'backdrop-blur-2xl bg-blue-950/85 border border-blue-400/50 shadow-2xl shadow-blue-500/30',
-          glow: 'bg-gradient-to-r from-blue-500/30 via-indigo-500/30 to-purple-500/30',
-          title: 'text-blue-300 tracking-[0.3em] text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light',
-          numberContainer: 'relative group',
-          number: time === 0 ? 'text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse' : 'text-transparent bg-clip-text bg-gradient-to-b from-blue-300 to-indigo-500 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          numberGlow: time === 0 ? 'text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl' : 'text-blue-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          animation: isRunning ? 'animate-spin' : '',
-          specialEffect: 'hologram-scan',
+          container:
+            "backdrop-blur-2xl bg-blue-950/85 border border-blue-400/50 shadow-2xl shadow-blue-500/30",
+          glow: "bg-gradient-to-r from-blue-500/30 via-indigo-500/30 to-purple-500/30",
+          title:
+            "text-blue-300 font-light text-xl sm:text-2xl md:text-3xl lg:text-4xl",
+          numberContainer: "relative group",
+          number:
+            time === 0
+              ? "text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse"
+              : "text-transparent bg-clip-text bg-gradient-to-b from-blue-300 to-indigo-500 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          numberGlow:
+            time === 0
+              ? "text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl"
+              : "text-blue-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          animation: isRunning ? "animate-spin" : "",
+          specialEffect: "hologram-scan",
           buttons: {
-            start: 'from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 shadow-blue-500/40',
-            pause: 'from-purple-500 to-blue-600 hover:from-purple-400 hover:to-blue-500 shadow-purple-500/40',
-            reset: 'from-pink-500 to-red-600 hover:from-pink-400 hover:to-red-500 shadow-pink-500/40'
-          }
+            start:
+              "from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 shadow-blue-500/40",
+            pause:
+              "from-purple-500 to-blue-600 hover:from-purple-400 hover:to-blue-500 shadow-purple-500/40",
+            reset:
+              "from-pink-500 to-red-600 hover:from-pink-400 hover:to-red-500 shadow-pink-500/40",
+          },
         };
-      case 'plasma':
+      case "plasma":
         return {
-          container: 'backdrop-blur-2xl bg-red-950/90 border border-orange-500/50 shadow-2xl shadow-orange-500/40',
-          glow: 'bg-gradient-to-r from-red-500/40 via-orange-500/40 to-yellow-500/40',
-          title: 'text-orange-400 tracking-[0.4em] text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold',
-          numberContainer: 'relative group',
-          number: time === 0 ? 'text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse' : 'text-transparent bg-clip-text bg-gradient-to-b from-orange-400 to-red-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          numberGlow: time === 0 ? 'text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl' : 'text-orange-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          animation: isRunning ? 'animate-pulse' : '',
-          specialEffect: 'plasma-fire',
+          container:
+            "backdrop-blur-2xl bg-red-950/90 border border-orange-500/50 shadow-2xl shadow-orange-500/40",
+          glow: "bg-gradient-to-r from-red-500/40 via-orange-500/40 to-yellow-500/40",
+          title:
+            "text-orange-400 font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl",
+          numberContainer: "relative group",
+          number:
+            time === 0
+              ? "text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse"
+              : "text-transparent bg-clip-text bg-gradient-to-b from-orange-400 to-red-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          numberGlow:
+            time === 0
+              ? "text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl"
+              : "text-orange-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          animation: isRunning ? "animate-pulse" : "",
+          specialEffect: "plasma-fire",
           buttons: {
-            start: 'from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 shadow-orange-500/40',
-            pause: 'from-yellow-500 to-orange-600 hover:from-yellow-400 hover:to-orange-500 shadow-yellow-500/40',
-            reset: 'from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40'
-          }
+            start:
+              "from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 shadow-orange-500/40",
+            pause:
+              "from-yellow-500 to-orange-600 hover:from-yellow-400 hover:to-orange-500 shadow-yellow-500/40",
+            reset:
+              "from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40",
+          },
         };
-      case 'cosmic':
+      case "cosmic":
         return {
-          container: 'backdrop-blur-2xl bg-indigo-950/90 border border-violet-500/50 shadow-2xl shadow-violet-500/40',
-          glow: 'bg-gradient-to-r from-violet-500/40 via-purple-500/40 to-indigo-500/40',
-          title: 'text-violet-400 tracking-[0.4em] text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light',
-          numberContainer: 'relative group',
-          number: time === 0 ? 'text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse' : 'text-transparent bg-clip-text bg-gradient-to-b from-violet-400 to-purple-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          numberGlow: time === 0 ? 'text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl' : 'text-violet-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          animation: isRunning ? 'animate-spin' : '',
-          specialEffect: 'cosmic-rings',
+          container:
+            "backdrop-blur-2xl bg-indigo-950/90 border border-violet-500/50 shadow-2xl shadow-violet-500/40",
+          glow: "bg-gradient-to-r from-violet-500/40 via-purple-500/40 to-indigo-500/40",
+          title:
+            "text-violet-400 font-light text-xl sm:text-2xl md:text-3xl lg:text-4xl",
+          numberContainer: "relative group",
+          number:
+            time === 0
+              ? "text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse"
+              : "text-transparent bg-clip-text bg-gradient-to-b from-violet-400 to-purple-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          numberGlow:
+            time === 0
+              ? "text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl"
+              : "text-violet-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          animation: isRunning ? "animate-spin" : "",
+          specialEffect: "cosmic-rings",
           buttons: {
-            start: 'from-violet-500 to-purple-600 hover:from-violet-400 hover:to-purple-500 shadow-violet-500/40',
-            pause: 'from-indigo-500 to-blue-600 hover:from-indigo-400 hover:to-blue-500 shadow-indigo-500/40',
-            reset: 'from-pink-500 to-red-600 hover:from-pink-400 hover:to-red-500 shadow-pink-500/40'
-          }
+            start:
+              "from-violet-500 to-purple-600 hover:from-violet-400 hover:to-purple-500 shadow-violet-500/40",
+            pause:
+              "from-indigo-500 to-blue-600 hover:from-indigo-400 hover:to-blue-500 shadow-indigo-500/40",
+            reset:
+              "from-pink-500 to-red-600 hover:from-pink-400 hover:to-red-500 shadow-pink-500/40",
+          },
         };
-      case 'starfield':
+      case "starfield":
         return {
-          container: 'backdrop-blur-2xl bg-slate-950/95 border border-teal-500/50 shadow-2xl shadow-teal-500/40',
-          glow: 'bg-gradient-to-r from-teal-500/40 via-cyan-500/40 to-blue-500/40',
-          title: 'text-teal-400 tracking-[0.4em] text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light',
-          numberContainer: 'relative group',
-          number: time === 0 ? 'text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse' : 'text-transparent bg-clip-text bg-gradient-to-b from-teal-400 to-cyan-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          numberGlow: time === 0 ? 'text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl' : 'text-teal-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          animation: isRunning ? 'animate-pulse' : '',
-          specialEffect: 'star-field',
+          container:
+            "backdrop-blur-2xl bg-slate-950/95 border border-teal-500/50 shadow-2xl shadow-teal-500/40",
+          glow: "bg-gradient-to-r from-teal-500/40 via-cyan-500/40 to-blue-500/40",
+          title:
+            "text-teal-400 font-light text-xl sm:text-2xl md:text-3xl lg:text-4xl",
+          numberContainer: "relative group",
+          number:
+            time === 0
+              ? "text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse"
+              : "text-transparent bg-clip-text bg-gradient-to-b from-teal-400 to-cyan-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          numberGlow:
+            time === 0
+              ? "text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl"
+              : "text-teal-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          animation: isRunning ? "animate-pulse" : "",
+          specialEffect: "star-field",
           buttons: {
-            start: 'from-teal-500 to-cyan-600 hover:from-teal-400 hover:to-cyan-500 shadow-teal-500/40',
-            pause: 'from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 shadow-blue-500/40',
-            reset: 'from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40'
-          }
+            start:
+              "from-teal-500 to-cyan-600 hover:from-teal-400 hover:to-cyan-500 shadow-teal-500/40",
+            pause:
+              "from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 shadow-blue-500/40",
+            reset:
+              "from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40",
+          },
         };
-      case 'quantum':
+      case "quantum":
         return {
-          container: 'backdrop-blur-2xl bg-emerald-950/90 border border-emerald-500/50 shadow-2xl shadow-emerald-500/40',
-          glow: 'bg-gradient-to-r from-emerald-500/40 via-green-500/40 to-teal-500/40',
-          title: 'text-emerald-400 tracking-[0.4em] text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium',
-          numberContainer: 'relative group',
-          number: time === 0 ? 'text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse' : 'text-transparent bg-clip-text bg-gradient-to-b from-emerald-400 to-green-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          numberGlow: time === 0 ? 'text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl' : 'text-emerald-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          animation: isRunning ? 'animate-bounce' : '',
-          specialEffect: 'quantum-wave',
+          container:
+            "backdrop-blur-2xl bg-emerald-950/90 border border-emerald-500/50 shadow-2xl shadow-emerald-500/40",
+          glow: "bg-gradient-to-r from-emerald-500/40 via-green-500/40 to-teal-500/40",
+          title:
+            "text-emerald-400 font-medium text-xl sm:text-2xl md:text-3xl lg:text-4xl",
+          numberContainer: "relative group",
+          number:
+            time === 0
+              ? "text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse"
+              : "text-transparent bg-clip-text bg-gradient-to-b from-emerald-400 to-green-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          numberGlow:
+            time === 0
+              ? "text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl"
+              : "text-emerald-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          animation: isRunning ? "animate-bounce" : "",
+          specialEffect: "quantum-wave",
           buttons: {
-            start: 'from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 shadow-emerald-500/40',
-            pause: 'from-teal-500 to-cyan-600 hover:from-teal-400 hover:to-cyan-500 shadow-teal-500/40',
-            reset: 'from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40'
-          }
+            start:
+              "from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 shadow-emerald-500/40",
+            pause:
+              "from-teal-500 to-cyan-600 hover:from-teal-400 hover:to-cyan-500 shadow-teal-500/40",
+            reset:
+              "from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40",
+          },
         };
       default: // pulse
         return {
-          container: 'backdrop-blur-2xl bg-slate-950/95 border border-cyan-500/40 shadow-2xl shadow-cyan-500/30',
-          glow: 'bg-gradient-to-r from-cyan-500/30 via-blue-500/30 to-purple-500/30',
-          title: 'text-cyan-300 tracking-[0.4em] text-xl sm:text-2xl md:text-3xl lg:text-4xl',
-          numberContainer: 'relative group',
-          number: time === 0 ? 'text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse' : 'text-transparent bg-clip-text bg-gradient-to-b from-cyan-400 to-blue-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          numberGlow: time === 0 ? 'text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl' : 'text-cyan-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl',
-          animation: isRunning ? `animate-pulse ${time <= 3 ? 'animate-bounce' : ''}` : '',
-          specialEffect: 'pulse-wave',
+          container:
+            "backdrop-blur-2xl bg-slate-950/95 border border-cyan-500/40 shadow-2xl shadow-cyan-500/30",
+          glow: "bg-gradient-to-r from-cyan-500/40 via-blue-500/40 to-purple-500/40",
+          title:
+            "text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl drop-shadow-[0_0_12px_rgba(6,182,212,0.8)]",
+          numberContainer: "relative group",
+          number:
+            time === 0
+              ? "text-red-400 text-4xl sm:text-6xl md:text-8xl lg:text-9xl animate-pulse"
+              : "text-transparent bg-clip-text bg-gradient-to-b from-cyan-400 to-blue-600 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          numberGlow:
+            time === 0
+              ? "text-red-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl"
+              : "text-cyan-400/60 text-4xl sm:text-6xl md:text-8xl lg:text-9xl",
+          animation: isRunning
+            ? `animate-pulse ${time <= 3 ? "animate-bounce" : ""}`
+            : "",
+          specialEffect: "pulse-wave",
           buttons: {
-            start: 'from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 shadow-green-500/40',
-            pause: 'from-yellow-500 to-orange-600 hover:from-yellow-400 hover:to-orange-500 shadow-yellow-500/40',
-            reset: 'from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40'
-          }
+            start:
+              "from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 shadow-green-500/40",
+            pause:
+              "from-yellow-500 to-orange-600 hover:from-yellow-400 hover:to-orange-500 shadow-yellow-500/40",
+            reset:
+              "from-red-500 to-pink-600 hover:from-red-400 hover:to-pink-500 shadow-red-500/40",
+          },
         };
     }
   };
 
   const renderSpecialEffects = (effect: string) => {
     switch (effect) {
-      case 'matrix-rain':
+      case "matrix-rain":
         return (
           <>
             {[...Array(8)].map((_, i) => (
-              <div key={i} className={`absolute w-0.5 bg-green-400/30 animate-pulse`} 
-                   style={{
-                     left: `${10 + i * 12}%`,
-                     height: '100%',
-                     animationDelay: `${i * 0.3}s`,
-                     animationDuration: '2s'
-                   }} />
+              <div
+                key={i}
+                className={`absolute w-0.5 bg-green-400/30 animate-pulse`}
+                style={{
+                  left: `${10 + i * 12}%`,
+                  height: "100%",
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: "2s",
+                }}
+              />
             ))}
           </>
         );
-      case 'neon-rings':
+      case "neon-rings":
         return (
           <>
             {[...Array(3)].map((_, i) => (
-              <div key={i} className={`absolute inset-0 border-2 border-pink-400/20 rounded-full animate-ping`} 
-                   style={{
-                     animationDelay: `${i * 0.5}s`,
-                     animationDuration: '3s'
-                   }} />
+              <div
+                key={i}
+                className={`absolute inset-0 border-2 border-pink-400/20 rounded-full animate-ping`}
+                style={{
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: "3s",
+                }}
+              />
             ))}
           </>
         );
-      case 'hologram-scan':
+      case "hologram-scan":
         return (
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-400/10 to-transparent animate-pulse" 
-               style={{ animationDuration: '1.5s' }} />
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-400/10 to-transparent animate-pulse"
+            style={{ animationDuration: "1.5s" }}
+          />
         );
-      case 'plasma-fire':
+      case "plasma-fire":
         return (
           <>
             {[...Array(5)].map((_, i) => (
-              <div key={i} className={`absolute w-4 h-4 bg-orange-500/40 rounded-full blur-sm animate-bounce`} 
-                   style={{
-                     left: `${20 + i * 15}%`,
-                     bottom: '10%',
-                     animationDelay: `${i * 0.2}s`,
-                     animationDuration: '1s'
-                   }} />
+              <div
+                key={i}
+                className={`absolute w-4 h-4 bg-orange-500/40 rounded-full blur-sm animate-bounce`}
+                style={{
+                  left: `${20 + i * 15}%`,
+                  bottom: "10%",
+                  animationDelay: `${i * 0.2}s`,
+                  animationDuration: "1s",
+                }}
+              />
             ))}
           </>
         );
-      case 'cosmic-rings':
+      case "cosmic-rings":
         return (
           <>
             {[...Array(4)].map((_, i) => (
-              <div key={i} className={`absolute border border-violet-400/20 rounded-full animate-spin`} 
-                   style={{
-                     width: `${60 + i * 20}%`,
-                     height: `${60 + i * 20}%`,
-                     top: '50%',
-                     left: '50%',
-                     transform: 'translate(-50%, -50%)',
-                     animationDuration: `${3 + i}s`
-                   }} />
+              <div
+                key={i}
+                className={`absolute border border-violet-400/20 rounded-full animate-spin`}
+                style={{
+                  width: `${60 + i * 20}%`,
+                  height: `${60 + i * 20}%`,
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  animationDuration: `${3 + i}s`,
+                }}
+              />
             ))}
           </>
         );
-      case 'star-field':
+      case "star-field":
         return (
           <>
             {[...Array(20)].map((_, i) => (
-              <div key={i} className={`absolute w-1 h-1 bg-teal-400/60 rounded-full animate-pulse`} 
-                   style={{
-                     left: `${Math.random() * 100}%`,
-                     top: `${Math.random() * 100}%`,
-                     animationDelay: `${Math.random() * 2}s`,
-                     animationDuration: `${1 + Math.random()}s`
-                   }} />
+              <div
+                key={i}
+                className={`absolute w-1 h-1 bg-teal-400/60 rounded-full animate-pulse`}
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 2}s`,
+                  animationDuration: `${1 + Math.random()}s`,
+                }}
+              />
             ))}
           </>
         );
-      case 'quantum-wave':
+      case "quantum-wave":
         return (
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-400/5 to-transparent animate-pulse" 
-               style={{ animationDuration: '2s' }} />
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-400/5 to-transparent animate-pulse"
+            style={{ animationDuration: "2s" }}
+          />
+        );
+      case "pulse-wave":
+        return (
+          <>
+            {/* Enhanced background glow */}
+            <div
+              className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/30 to-cyan-500/20 animate-pulse-slow"
+              style={{ animationDuration: "3s" }}
+            />
+
+            {/* Enhanced circular rings */}
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute border-2 border-cyan-400/40 rounded-full animate-pulse-slow"
+                style={{
+                  width: `${40 + i * 15}%`,
+                  height: `${15 + i * 15}%`,
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  animationDelay: `${i * 0.7}s`,
+                  boxShadow: "0 0 15px rgba(34, 211, 238, 0.4)",
+                }}
+              />
+            ))}
+
+            {/* Horizontal light beams */}
+            <div className="absolute left-0 right-0 h-[1px] top-1/2 bg-cyan-400/30 shadow-lg shadow-cyan-400/40 animate-pulse" />
+            <div
+              className="absolute left-0 right-0 h-[1px] top-[40%] bg-blue-400/30 shadow-lg shadow-blue-400/40 animate-pulse-slow"
+              style={{ animationDelay: "0.5s" }}
+            />
+            <div
+              className="absolute left-0 right-0 h-[1px] top-[60%] bg-cyan-400/30 shadow-lg shadow-cyan-400/40 animate-pulse-slow"
+              style={{ animationDelay: "1s" }}
+            />
+
+            {/* Vertical light beams */}
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i + 10}
+                className="absolute w-[2px] h-32 bg-cyan-400/25 animate-pulse-slow"
+                style={{
+                  left: `${15 + i * 10}%`,
+                  top: `${Math.random() * 70}%`,
+                  animationDelay: `${i * 0.4}s`,
+                  transform: `rotate(${i * 45}deg)`,
+                  boxShadow: "0 0 10px rgba(34, 211, 238, 0.4)",
+                }}
+              />
+            ))}
+
+            {/* Pulsing dots */}
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i + 20}
+                className="absolute w-2 h-2 rounded-full bg-cyan-400/70 animate-ping"
+                style={{
+                  left: `${20 + i * 15}%`,
+                  top: `${30 + (i % 3) * 20}%`,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: "1.5s",
+                  boxShadow: "0 0 8px rgba(34, 211, 238, 0.6)",
+                }}
+              />
+            ))}
+          </>
         );
       default:
         return null;
@@ -264,64 +440,211 @@ const CountdownTimer = () => {
 
   return (
     <div className="relative w-full">
-      <div className={`relative rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl transform transition-all duration-700 hover:scale-[1.02] ${styles.container}`}>
+      <div
+        className={`relative rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl transform transition-all duration-700 hover:scale-[1.02] ${styles.container}`}
+      >
         {/* Enhanced Glow Effect */}
-        <div className={`absolute inset-0 rounded-2xl sm:rounded-3xl blur-2xl sm:blur-3xl opacity-60 animate-pulse ${styles.glow}`}></div>
-        <div className={`absolute inset-0 rounded-2xl sm:rounded-3xl blur-3xl opacity-30 ${styles.glow}`}></div>
-        
+        <div
+          className={`absolute inset-0 rounded-2xl sm:rounded-3xl blur-2xl sm:blur-3xl opacity-60 animate-pulse ${
+            styles.glow
+          } ${
+            countdownStyle === "neon"
+              ? "opacity-80"
+              : countdownStyle === "pulse"
+              ? "opacity-75"
+              : ""
+          }`}
+        ></div>
+        <div
+          className={`absolute inset-0 rounded-2xl sm:rounded-3xl blur-3xl opacity-30 ${
+            styles.glow
+          } ${
+            countdownStyle === "neon"
+              ? "opacity-50"
+              : countdownStyle === "pulse"
+              ? "opacity-40"
+              : ""
+          }`}
+        ></div>
+
         {/* Special Effects Background */}
         <div className="absolute inset-0 overflow-hidden rounded-2xl sm:rounded-3xl">
           {renderSpecialEffects(styles.specialEffect)}
+          {countdownStyle === "neon" && (
+            <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-transparent to-cyan-500/5"></div>
+          )}
+          {countdownStyle === "pulse" && (
+            <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 via-transparent to-blue-500/10"></div>
+          )}
         </div>
-        
+
         <div className="relative z-10 text-center">
           {/* Title */}
-          <h1 className={`font-bold mb-4 sm:mb-6 md:mb-8 animate-fade-in ${styles.title}`}>
-            10 SECOND COUNTDOWN
+          <h1
+            className={`font-bold mb-4 sm:mb-6 md:mb-8 uppercase relative z-10 
+            ${styles.title} transition-all duration-300 hover:scale-105
+            drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] tracking-wider
+            ${countdownStyle === "neon" ? "animate-pulse-slow" : ""}`}
+            aria-label="10 Second Countdown"
+          >
+            <div className="absolute -inset-1 sm:-inset-2 border-t border-b border-white/10 opacity-70 rounded-lg"></div>
+            <span className="relative inline-block">
+              <span
+                className={`absolute -inset-1 blur-sm opacity-50 bg-gradient-to-r from-transparent via-white/10 to-transparent rounded-lg ${
+                  countdownStyle === "neon"
+                    ? "via-cyan-500/20"
+                    : countdownStyle === "pulse"
+                    ? "via-cyan-500/30"
+                    : ""
+                }`}
+              ></span>
+              {countdownStyle === "neon" ? (
+                <>
+                  <span className="absolute inset-0 text-cyan-400 blur-[2px] z-0">
+                    10 SECOND COUNTDOWN
+                  </span>
+                  <span className="absolute inset-0 text-cyan-300 blur-[1px] z-10">
+                    10 SECOND COUNTDOWN
+                  </span>
+                  <span className="relative z-20 text-white">
+                    10 SECOND COUNTDOWN
+                  </span>
+                </>
+              ) : countdownStyle === "pulse" ? (
+                <>
+                  {/* Enhanced layers for pulse theme */}
+                  <span className="absolute inset-0 text-cyan-300 blur-[3px] z-0 animate-pulse-slow">
+                    10 SECOND COUNTDOWN
+                  </span>
+                  <span
+                    className="absolute inset-0 text-blue-300 blur-[2px] z-10 animate-pulse"
+                    style={{ animationDuration: "2s" }}
+                  >
+                    10 SECOND COUNTDOWN
+                  </span>
+                  <span className="relative z-20 text-white font-bold">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-cyan-200 to-cyan-400">
+                      10 SECOND COUNTDOWN
+                    </span>
+                  </span>
+
+                  {/* Decorative elements for pulse theme */}
+                  <div className="absolute -inset-x-4 top-1/2 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent"></div>
+                  <div className="absolute -inset-y-1 left-0 w-[1px] bg-gradient-to-b from-transparent via-cyan-400/60 to-transparent"></div>
+                  <div className="absolute -inset-y-1 right-0 w-[1px] bg-gradient-to-b from-transparent via-cyan-400/60 to-transparent"></div>
+                </>
+              ) : (
+                "10 SECOND COUNTDOWN"
+              )}
+            </span>
+            <div
+              className={`absolute -left-4 -right-4 h-px bg-gradient-to-r from-transparent to-transparent -bottom-2 ${
+                countdownStyle === "neon"
+                  ? "via-cyan-400/50"
+                  : countdownStyle === "pulse"
+                  ? "via-cyan-400/60"
+                  : "via-white/20"
+              }`}
+            ></div>
+
+            {/* Extra glowing effect for pulse theme */}
+            {countdownStyle === "pulse" && (
+              <div className="absolute -inset-x-6 -inset-y-2 border border-cyan-500/20 rounded-lg blur-sm"></div>
+            )}
           </h1>
 
           {/* Countdown Style Selector */}
-          <CountdownStyleSelector 
-            currentStyle={countdownStyle} 
-            onStyleChange={setCountdownStyle} 
+          <CountdownStyleSelector
+            currentStyle={countdownStyle}
+            onStyleChange={setCountdownStyle}
           />
 
           {/* Countdown Display */}
           <div className="mb-8 sm:mb-10 md:mb-12">
-            <div className={`flex items-center justify-center ${styles.numberContainer}`}>
+            <div
+              className={`flex items-center justify-center ${styles.numberContainer}`}
+            >
               {/* Main Number */}
               <div className={`relative ${styles.animation}`}>
-                <div className={`drop-shadow-2xl transform transition-all duration-500 font-bold ${styles.number} ${time <= 3 && time > 0 ? 'animate-bounce scale-110' : ''}`}>
+                <div
+                  className={`drop-shadow-2xl transform transition-all duration-500 font-bold ${
+                    styles.number
+                  } ${time <= 3 && time > 0 ? "animate-bounce scale-110" : ""}`}
+                >
                   {time}
                 </div>
-                <div className={`absolute inset-0 blur-lg sm:blur-2xl animate-pulse ${styles.numberGlow}`}>
+                <div
+                  className={`absolute inset-0 blur-lg sm:blur-2xl animate-pulse ${styles.numberGlow}`}
+                >
                   {time}
                 </div>
-                <div className={`absolute inset-0 blur-2xl sm:blur-3xl opacity-50 ${styles.numberGlow}`}>
+                <div
+                  className={`absolute inset-0 blur-2xl sm:blur-3xl opacity-50 ${styles.numberGlow}`}
+                >
                   {time}
                 </div>
-                
+
                 {/* Enhanced Special Effects for Different Styles */}
-                {countdownStyle === 'hologram' && isRunning && (
+                {countdownStyle === "hologram" && isRunning && (
                   <div className="absolute inset-0 border-2 border-blue-400/30 rounded-full animate-ping"></div>
                 )}
-                {countdownStyle === 'matrix' && time <= 5 && time > 0 && (
+                {countdownStyle === "matrix" && time <= 5 && time > 0 && (
                   <div className="absolute -inset-2 sm:-inset-4 border border-green-400/40 rounded-lg animate-pulse"></div>
                 )}
-                {countdownStyle === 'neon' && time <= 3 && time > 0 && (
+                {countdownStyle === "neon" && time <= 3 && time > 0 && (
                   <>
                     <div className="absolute -inset-4 sm:-inset-8 bg-pink-500/20 rounded-full blur-xl animate-ping"></div>
                     <div className="absolute -inset-6 sm:-inset-12 bg-purple-500/10 rounded-full blur-2xl animate-pulse"></div>
                   </>
                 )}
-                {countdownStyle === 'plasma' && time <= 5 && time > 0 && (
+                {countdownStyle === "plasma" && time <= 5 && time > 0 && (
                   <div className="absolute -inset-4 sm:-inset-8 bg-orange-500/30 rounded-full blur-2xl animate-pulse"></div>
                 )}
-                {countdownStyle === 'cosmic' && isRunning && (
-                  <div className="absolute -inset-6 sm:-inset-12 border border-violet-400/20 rounded-full animate-spin" style={{ animationDuration: '4s' }}></div>
+                {countdownStyle === "cosmic" && isRunning && (
+                  <div
+                    className="absolute -inset-6 sm:-inset-12 border border-violet-400/20 rounded-full animate-spin"
+                    style={{ animationDuration: "4s" }}
+                  ></div>
                 )}
-                {countdownStyle === 'quantum' && time <= 3 && time > 0 && (
+                {countdownStyle === "quantum" && time <= 3 && time > 0 && (
                   <div className="absolute inset-0 bg-emerald-400/10 rounded-lg animate-pulse blur-sm"></div>
+                )}
+                {countdownStyle === "pulse" && (
+                  <>
+                    <div className="absolute -inset-4 sm:-inset-8 bg-cyan-500/10 rounded-full blur-xl animate-pulse-slow"></div>
+                    {time <= 5 && time > 0 && (
+                      <>
+                        <div
+                          className="absolute -inset-8 sm:-inset-16 border border-cyan-400/30 rounded-full animate-pulse-slow"
+                          style={{ animationDuration: "3s" }}
+                        ></div>
+                        <div
+                          className="absolute -inset-12 sm:-inset-24 border border-blue-400/20 rounded-full animate-pulse-slow"
+                          style={{
+                            animationDuration: "4s",
+                            animationDelay: "0.5s",
+                          }}
+                        ></div>
+                      </>
+                    )}
+                    {/* Add radial light beams when time is low */}
+                    {time <= 3 && time > 0 && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        {[...Array(8)].map((_, i) => (
+                          <div
+                            key={`beam-${i}`}
+                            className="absolute h-[150px] sm:h-[200px] w-[2px] bg-gradient-to-b from-cyan-400/60 to-transparent animate-pulse"
+                            style={{
+                              transformOrigin: "center bottom",
+                              transform: `rotate(${i * 45}deg)`,
+                              animationDelay: `${i * 0.1}s`,
+                              bottom: "50%",
+                            }}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -342,7 +665,10 @@ const CountdownTimer = () => {
                 disabled={time === 0}
                 className={`group relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-r transition-all duration-500 transform hover:scale-125 hover:rotate-12 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed ${styles.buttons.start}`}
               >
-                <Play className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white ml-0.5" fill="currentColor" />
+                <Play
+                  className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white ml-0.5"
+                  fill="currentColor"
+                />
                 <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-green-400/20 blur-xl group-hover:blur-2xl transition-all duration-500 animate-pulse"></div>
               </button>
             ) : (
@@ -350,7 +676,10 @@ const CountdownTimer = () => {
                 onClick={handlePause}
                 className={`group relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-r transition-all duration-500 transform hover:scale-125 hover:rotate-12 hover:shadow-2xl ${styles.buttons.pause}`}
               >
-                <Pause className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" fill="currentColor" />
+                <Pause
+                  className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white"
+                  fill="currentColor"
+                />
                 <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-yellow-400/20 blur-xl group-hover:blur-2xl transition-all duration-500 animate-pulse"></div>
               </button>
             )}
@@ -366,15 +695,23 @@ const CountdownTimer = () => {
 
           {/* Status Indicator */}
           <div className="flex items-center justify-center space-x-2 sm:space-x-3">
-            <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-500 ${
-              isRunning 
-                ? `${styles.buttons.start.includes('green') ? 'bg-green-400' : styles.buttons.start.includes('blue') ? 'bg-blue-400' : 'bg-pink-400'} shadow-2xl animate-ping` 
-                : time === 0 
-                ? 'bg-red-400 animate-pulse'
-                : 'bg-gray-600'
-            }`}></div>
+            <div
+              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-500 ${
+                isRunning
+                  ? `${
+                      styles.buttons.start.includes("green")
+                        ? "bg-green-400"
+                        : styles.buttons.start.includes("blue")
+                        ? "bg-blue-400"
+                        : "bg-pink-400"
+                    } shadow-2xl animate-ping`
+                  : time === 0
+                  ? "bg-red-400 animate-pulse"
+                  : "bg-gray-600"
+              }`}
+            ></div>
             <span className="text-white/80 text-xs sm:text-sm tracking-[0.2em] font-light">
-              {isRunning ? 'COUNTING DOWN' : time === 0 ? 'FINISHED' : 'READY'}
+              {isRunning ? "COUNTING DOWN" : time === 0 ? "FINISHED" : "READY"}
             </span>
           </div>
         </div>

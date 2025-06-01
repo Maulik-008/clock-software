@@ -1,3 +1,6 @@
+# Study Timer - Clock Software
+# https://studytimer.lovable.dev/
+
 User-agent: Googlebot
 Allow: /
 
@@ -12,3 +15,10 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Block specific directories or files if needed
+# Disallow: /private/
+# Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://studytimer.lovable.dev/sitemap.xml

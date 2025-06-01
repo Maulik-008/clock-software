@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" fill="none">
+  <rect width="1200" height="630" fill="#121212" rx="3"/>
+  <rect x="50" y="50" width="1100" height="530" rx="10" fill="#1e1e2e" stroke="#3b82f6" stroke-width="2"/>
+  
+  <!-- Clock Circle -->
+  <circle cx="600" cy="315" r="200" fill="#0f172a" stroke="#3b82f6" stroke-width="3"/>
+  <circle cx="600" cy="315" r="190" fill="none" stroke="#6366f1" stroke-width="1" stroke-opacity="0.5"/>
+  
+  <!-- Clock Hands -->
+  <line x1="600" y1="315" x2="600" y2="165" stroke="#ec4899" stroke-width="4" stroke-linecap="round"/>
+  <line x1="600" y1="315" x2="730" y2="315" stroke="#3b82f6" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="600" cy="315" r="10" fill="#ec4899"/>
+  
+  <!-- Clock Ticks -->
+  <line x1="600" y1="135" x2="600" y2="145" stroke="#6366f1" stroke-width="3"/>
+  <line x1="600" y1="485" x2="600" y2="495" stroke="#6366f1" stroke-width="3"/>
+  <line x1="780" y1="315" x2="770" y2="315" stroke="#6366f1" stroke-width="3"/>
+  <line x1="420" y1="315" x2="430" y2="315" stroke="#6366f1" stroke-width="3"/>
+  
+  <!-- Title -->
+  <text x="600" y="560" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#ffffff" text-anchor="middle">Study Timer - Dark Mode Clock</text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="600" font-family="Arial, sans-serif" font-size="24" fill="#a1a1aa" text-anchor="middle">Focus better with our beautiful timer app</text>
+</svg> 
