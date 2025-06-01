@@ -608,8 +608,8 @@ const ClockTimer = () => {
             </span>
           </div>
 
-          {/* Moved Clock Style Selector to bottom - make more visible */}
-          <div className="mt-2 bg-black/20 backdrop-blur-sm py-1.5 px-1 rounded-xl border border-white/10">
+          {/* Theme Selector */}
+          <div className="mt-2">
             <ClockStyleSelector
               currentStyle={clockStyle}
               onStyleChange={setClockStyle}

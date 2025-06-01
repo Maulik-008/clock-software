@@ -5,7 +5,7 @@ import CountdownStyleSelector from "./CountdownStyleSelector";
 const CountdownTimer = () => {
   const [time, setTime] = useState(10);
   const [isRunning, setIsRunning] = useState(false);
-  const [countdownStyle, setCountdownStyle] = useState("hologram");
+  const [countdownStyle, setCountdownStyle] = useState("neon");
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -721,7 +721,7 @@ const CountdownTimer = () => {
           </div>
 
           {/* Style Selector with better visibility */}
-          <div className="mt-2 bg-black/20 backdrop-blur-sm py-1.5 px-1 rounded-xl border border-white/10">
+          <div className="mt-2">
             <CountdownStyleSelector
               currentStyle={countdownStyle}
               onStyleChange={setCountdownStyle}
