@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 
 const NotFound = () => {
   const location = useLocation();
@@ -14,14 +14,13 @@ const NotFound = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Page Not Found | Study Timer App</title>
-        <meta
-          name="description"
-          content="The page you're looking for could not be found. Return to our Study Timer app to boost your productivity with beautiful dark mode timers."
-        />
-        <meta name="robots" content="noindex, follow" />
-      </Helmet>
+      <SEO
+        title="Page Not Found | Study Timer App"
+        description="The page you're looking for could not be found. Return to our Study Timer app to boost your productivity with beautiful dark mode timers."
+        keywords="404, page not found, error page, study timer, pomodoro"
+        canonicalUrl="https://studyclock.com/404"
+        noIndex={true}
+      />
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black text-white">
         <div className="text-center max-w-md px-4">
           <h1 className="text-6xl font-bold mb-6 text-cyan-400">404</h1>

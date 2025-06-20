@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import { Link } from "react-router-dom";
 import ParticleBackground from "../components/ParticleBackground";
 import Footer from "../components/Footer";
@@ -7,24 +7,12 @@ import Footer from "../components/Footer";
 const AboutUs = () => {
   return (
     <>
-      <Helmet>
-        <title>
-          About StudyClock.com - Created by Maulik Joshi | Productivity Timer
-        </title>
-        <meta
-          name="description"
-          content="Learn about StudyClock.com, a productivity timer created by software engineer Maulik Joshi to help students and professionals maximize focus and efficiency using research-backed time management techniques."
-        />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
-        <link rel="canonical" href="https://studyclock.com/about-us" />
-        <meta
-          name="keywords"
-          content="studyclock, productivity timer, time management app, pomodoro technique, Maulik Joshi, software engineer, focus timer, study timer, student productivity tool"
-        />
-      </Helmet>
+      <SEO
+        title="About StudyClock | Our Story and Mission"
+        description="Learn about the team behind StudyClock.com and our mission to help students and professionals boost productivity through better time management."
+        keywords="about us, studyclock, productivity tools, time management, study tools, team"
+        canonicalUrl="https://studyclock.com/about-us"
+      />
       <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
         <ParticleBackground />
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import ParticleBackground from "../components/ParticleBackground";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
@@ -7,25 +7,12 @@ import Footer from "../components/Footer";
 const StudyClockGuide = () => {
   return (
     <>
-      <Helmet>
-        <title>
-          How to Use StudyClock Timer - Maximize Your Study Sessions |
-          StudyClock.com
-        </title>
-        <meta
-          name="description"
-          content="Learn how to use StudyClock Timer effectively to boost productivity, improve focus, and manage study time. Perfect for students, professionals, and anyone looking to enhance time management."
-        />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
-        <link rel="canonical" href="https://studyclock.com/study-clock-guide" />
-        <meta
-          name="keywords"
-          content="study timer, focus timer, productivity timer, pomodoro timer, study clock, time management, online timer, student productivity"
-        />
-      </Helmet>
+      <SEO
+        title="Study Clock Guide | Productivity Timer Best Practices"
+        description="Get the most out of your study sessions with our comprehensive guide to time management and productivity techniques."
+        keywords="study clock guide, productivity tips, time management, study techniques, focus methods"
+        canonicalUrl="https://studyclock.com/study-clock-guide"
+      />
       <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
         <ParticleBackground />
 

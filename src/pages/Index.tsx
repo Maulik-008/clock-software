@@ -4,16 +4,18 @@ import CountdownTimer from "../components/CountdownTimer";
 import PomodoroTimer from "../components/PomodoroTimer";
 import ParticleBackground from "../components/ParticleBackground";
 import Navigation from "../components/Navigation";
-import { Helmet } from "react-helmet";
 import Footer from "../components/Footer";
+import SEO from "../components/SEO";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-type AppMode = "timer" | "countdown" | "pomodoro";
+type AppMode = "timer" | "countdown" | "pomodoro" | "clock";
 type PomodoroMode = "pomodoro" | "shortBreak" | "longBreak";
 
 const Index = () => {
   const [mode, setMode] = useState<AppMode>("pomodoro");
   const [pomodoroMode, setPomodoroMode] = useState<PomodoroMode>("pomodoro");
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.documentElement.classList.add("text-base", "md:text-lg");
@@ -27,12 +29,20 @@ const Index = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (mode === "clock") {
+      navigate("/study-clock-timer");
+    }
+  }, [mode, navigate]);
+
   const getTitle = () => {
     switch (mode) {
       case "timer":
         return "Focus Timer & Time Tracker";
       case "countdown":
         return "Countdown Timer";
+      case "clock":
+        return "Study Clock Timer";
       case "pomodoro":
         return pomodoroMode === "pomodoro"
           ? "Study With Me Pomodoro Timer"
@@ -48,6 +58,8 @@ const Index = () => {
         return "Track your study time with StudyClock.com's sleek focus timer. Ideal for deep work, time blocking, and maximizing productivity with the Pomodoro method.";
       case "countdown":
         return "Boost concentration with StudyClock.com's countdown timer. Great for students, professionals, and anyone managing focus-driven sessions.";
+      case "clock":
+        return "Beautiful clock timer with elegant design to track your study sessions. Perfect for visualizing your focus time with an engaging interface.";
       case "pomodoro":
         return pomodoroMode === "pomodoro"
           ? "Start your Pomodoro session with StudyClock.com – 25 minutes of focused work followed by strategic breaks. Perfect for students and remote workers."
@@ -56,20 +68,31 @@ const Index = () => {
           : "Take a longer 15-minute break after multiple Pomodoro cycles to refresh your mind and maintain peak productivity on StudyClock.com.";
     }
   };
+
+  // Function to determine the correct path for canonical URL based on mode
+  const getCanonicalPath = () => {
+    switch (mode) {
+      case "timer":
+        return "/study-timer";
+      case "countdown":
+        return "/counter";
+      case "pomodoro":
+        return "/pomodoro-timer";
+      case "clock":
+        return "/study-clock-timer";
+      default:
+        return "/";
+    }
+  };
+
   return (
     <>
-      <Helmet>
-        <title>{getTitle()} - StudyClock.com</title>
-        <meta name="description" content={getDescription()} />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
-        <link
-          rel="canonical"
-          href={`https://studyclock.com/${mode === "timer" ? "clock" : mode}`}
-        />
-      </Helmet>
+      <SEO
+        title={`${getTitle()} - StudyClock.com`}
+        description={getDescription()}
+        keywords="study timer, pomodoro, clock timer, countdown timer, productivity, focus timer, time management"
+        canonicalUrl="https://studyclock.com/"
+      />
       <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
         <ParticleBackground />
         <Navigation
@@ -130,7 +153,7 @@ const Index = () => {
           <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-6 text-center">
             Choose Your Productivity Tool
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-black/50 backdrop-blur-lg rounded-xl border border-cyan-900/50 p-5 flex flex-col items-center">
               <h3 className="text-xl font-semibold text-cyan-400 mb-3">
                 Study Timer
@@ -144,6 +167,22 @@ const Index = () => {
                 className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 text-center"
               >
                 Open Study Timer
+              </Link>
+            </div>
+
+            <div className="bg-black/50 backdrop-blur-lg rounded-xl border border-blue-900/50 p-5 flex flex-col items-center">
+              <h3 className="text-xl font-semibold text-blue-400 mb-3">
+                Study Clock Timer
+              </h3>
+              <p className="text-gray-300 text-center mb-4">
+                Beautiful analog-style clock timer with modern design. Track
+                your focus time with an elegant and engaging visual interface.
+              </p>
+              <Link
+                to="/study-clock-timer"
+                className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium hover:from-blue-400 hover:to-indigo-500 transition-all duration-300 text-center"
+              >
+                Open Clock Timer
               </Link>
             </div>
 

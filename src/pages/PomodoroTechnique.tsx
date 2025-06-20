@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import ParticleBackground from "../components/ParticleBackground";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
@@ -7,23 +7,12 @@ import Footer from "../components/Footer";
 const PomodoroTechnique = () => {
   return (
     <>
-      <Helmet>
-        <title>
-          What is Pomodoro Technique? - StudyClock.com | Boost Your Productivity
-        </title>
-        <meta
-          name="description"
-          content="Learn about the Pomodoro Technique - a time management method that helps students and professionals improve focus and productivity through structured work intervals. Try it with StudyClock.com's free timer."
-        />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
-        <link
-          rel="canonical"
-          href="https://studyclock.com/pomodoro-technique"
-        />
-      </Helmet>
+      <SEO
+        title="The Pomodoro Technique | Ultimate Productivity Method"
+        description="Master the Pomodoro Technique to boost productivity and focus. Learn how the 25/5 method can transform your study and work sessions."
+        keywords="pomodoro technique, pomodoro method, productivity method, time management, focus technique, 25 5 method, work break cycle"
+        canonicalUrl="https://studyclock.com/pomodoro-technique"
+      />
       <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
         <ParticleBackground />
 

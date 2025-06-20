@@ -1,60 +1,26 @@
 import React from "react";
 import CountdownTimer from "../components/CountdownTimer";
 import ParticleBackground from "../components/ParticleBackground";
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import Footer from "../components/Footer";
+import Navigation from "../components/Navigation";
 import { Link } from "react-router-dom";
 
 const Counter = () => {
   return (
     <>
-      <Helmet>
-        <title>Countdown Timer | Focus Timer for Study & Work</title>
-        <meta
-          name="description"
-          content="Free countdown timer app for focused study sessions. Our aesthetic break timer helps you manage time effectively with customizable intervals. Perfect for exam preparation, task management, and productivity enhancement."
-        />
-        <meta
-          name="keywords"
-          content="countdown timer, focus timer, break timer, timer app, timing application, aesthetic timer, productivity app, task management, time tracking, student tools, exam timer, timed study sessions"
-        />
-        <link rel="canonical" href="https://studyclock.com/counter" />
-      </Helmet>
+      <SEO
+        title="Countdown Timer | Focus & Study Session Timer"
+        description="Enhance your focus with our countdown timer. Perfect for timed study sessions, exams, and productivity tracking."
+        keywords="countdown timer, study timer, focus timer, exam timer, productivity app, timer app, clock app, time management"
+        canonicalUrl="https://studyclock.com/counter"
+      />
       <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
         <ParticleBackground />
-        <header className="fixed top-2 sm:top-3 md:top-4 left-1/2 transform -translate-x-1/2 z-20 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg px-3 sm:px-4">
-          <div className="flex flex-col items-center mb-1">
-            <h1 className="text-base sm:text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-1">
-              <Link to="/">StudyClock.com</Link>
-            </h1>
-          </div>
-          <nav className="flex flex-wrap sm:flex-nowrap justify-center gap-1 p-1 bg-black/70 backdrop-blur-xl rounded-lg md:rounded-xl border border-white/20 shadow-xl">
-            <Link
-              to="/study-timer"
-              className="group relative flex items-center justify-center space-x-1 sm:space-x-1 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md md:rounded-lg transition-all duration-300 transform hover:scale-105 flex-1 bg-white/5 hover:bg-white/10"
-            >
-              <span className="text-white/90 font-medium tracking-wide text-xs sm:text-sm">
-                STUDY TIMER
-              </span>
-            </Link>
-            <Link
-              to="/counter"
-              className="group relative flex items-center justify-center space-x-1 sm:space-x-1 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md md:rounded-lg transition-all duration-300 transform hover:scale-105 flex-1 bg-gradient-to-r from-purple-500 to-pink-600 shadow-lg shadow-purple-500/30"
-            >
-              <span className="text-white/90 font-medium tracking-wide text-xs sm:text-sm">
-                COUNTDOWN
-              </span>
-            </Link>
-            <Link
-              to="/pomodoro-timer"
-              className="group relative flex items-center justify-center space-x-1 sm:space-x-1 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md md:rounded-lg transition-all duration-300 transform hover:scale-105 flex-1 bg-white/5 hover:bg-white/10"
-            >
-              <span className="text-white/90 font-medium tracking-wide text-xs sm:text-sm">
-                POMODORO
-              </span>
-            </Link>
-          </nav>
-        </header>
+
+        {/* Global Navigation */}
+        <Navigation />
+
         <main className="relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-16 sm:pt-18 md:pt-20">
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
             <section aria-label="Countdown Timer" className="fade-in">
