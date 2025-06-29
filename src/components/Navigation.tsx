@@ -9,6 +9,8 @@ import {
   Home,
   Info,
   BookOpen,
+  ChevronDown,
+  ShoppingCart,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -17,6 +19,12 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 interface NavigationProps {
@@ -42,8 +50,8 @@ const Navigation: React.FC<NavigationProps> = ({
     return location.pathname === path;
   };
 
-  // Main navigation items
-  const navItems = [
+  // Main timer navigation items
+  const timerItems = [
     {
       name: "Study Timer",
       path: "/study-timer",
@@ -74,21 +82,36 @@ const Navigation: React.FC<NavigationProps> = ({
     },
   ];
 
-  // Secondary navigation items
-  const secondaryNavItems = [
-    { name: "Home", path: "/", icon: <Home className="w-4 h-4" /> },
-    { name: "About Us", path: "/about-us", icon: <Info className="w-4 h-4" /> },
+  // Resources submenu items
+  const resourcesItems = [
     {
       name: "Study Guide",
       path: "/study-clock-guide",
       icon: <BookOpen className="w-4 h-4" />,
+      description: "Learn study techniques",
+    },
+    {
+      name: "Timer Reviews",
+      path: "/study-clock-recommendations",
+      icon: <ShoppingCart className="w-4 h-4" />,
+      description: "Best physical timers",
     },
     {
       name: "Pomodoro Technique",
       path: "/pomodoro-technique",
       icon: <Target className="w-4 h-4" />,
+      description: "Master the technique",
+    },
+    {
+      name: "About Us",
+      path: "/about-us",
+      icon: <Info className="w-4 h-4" />,
+      description: "Learn about StudyClock",
     },
   ];
+
+  // Check if any resources item is active
+  const isResourcesActive = resourcesItems.some((item) => isActive(item.path));
 
   // Handle click on timer mode button
   const handleModeClick = (
@@ -115,7 +138,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1 bg-black/70 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl p-1">
-            {navItems.map((item) => {
+            {timerItems.map((item) => {
               const active = isActive(item.path);
               return (
                 <Link
@@ -150,21 +173,77 @@ const Navigation: React.FC<NavigationProps> = ({
             })}
           </div>
 
-          {/* Secondary Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
-            {secondaryNavItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={cn(
-                  "flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors",
-                  isActive(item.path) ? "text-white/90 bg-white/10" : ""
-                )}
+          {/* Desktop Resources Dropdown & Home */}
+          <div className="hidden lg:flex items-center space-x-2">
+            {/* Home Link */}
+            <Link
+              to="/"
+              className={cn(
+                "flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors",
+                isActive("/") ? "text-white/90 bg-white/10" : ""
+              )}
+            >
+              <Home className="w-4 h-4" />
+              <span className="text-sm">Home</span>
+            </Link>
+
+            {/* Resources Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className={cn(
+                    "flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors",
+                    isResourcesActive ? "text-white/90 bg-white/10" : ""
+                  )}
+                >
+                  <BookOpen className="w-4 h-4" />
+                  <span className="text-sm">Resources</span>
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="w-64 bg-gray-900/98 backdrop-blur-xl border border-white/20 shadow-2xl"
               >
-                {item.icon}
-                <span className="text-sm">{item.name}</span>
-              </Link>
-            ))}
+                {resourcesItems.map((item) => (
+                  <DropdownMenuItem key={item.path} asChild className="p-0">
+                    <Link
+                      to={item.path}
+                      className={cn(
+                        "flex items-start gap-3 p-3 cursor-pointer transition-all duration-200 rounded-md mx-1 my-1",
+                        isActive(item.path)
+                          ? "bg-cyan-500/20 text-cyan-100 border border-cyan-500/30"
+                          : "text-gray-200 hover:text-white hover:bg-white/10"
+                      )}
+                    >
+                      <div
+                        className={cn(
+                          "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
+                          isActive(item.path)
+                            ? "bg-cyan-500/30 text-cyan-200"
+                            : "bg-white/10 text-gray-300"
+                        )}
+                      >
+                        {item.icon}
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-medium text-sm">{item.name}</div>
+                        <div
+                          className={cn(
+                            "text-xs mt-0.5",
+                            isActive(item.path)
+                              ? "text-cyan-200/80"
+                              : "text-gray-400"
+                          )}
+                        >
+                          {item.description}
+                        </div>
+                      </div>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Mobile Menu Trigger */}
@@ -199,7 +278,7 @@ const Navigation: React.FC<NavigationProps> = ({
                       Timers
                     </h3>
                     <div className="grid grid-cols-2 gap-2">
-                      {navItems.map((item) => (
+                      {timerItems.map((item) => (
                         <SheetClose asChild key={item.path}>
                           <Link
                             to={item.path}
@@ -219,9 +298,7 @@ const Navigation: React.FC<NavigationProps> = ({
                             className={cn(
                               "flex flex-col items-center p-4 rounded-xl bg-black/50 border border-white/10 transition-all",
                               isActive(item.path)
-                                ? `ring-2 ring-offset-2 ring-offset-gray-950 ring-${
-                                    item.color.split(" ")[0]
-                                  }`
+                                ? "ring-2 ring-cyan-500/50"
                                 : ""
                             )}
                           >
@@ -242,13 +319,36 @@ const Navigation: React.FC<NavigationProps> = ({
                     </div>
                   </div>
 
-                  {/* Mobile Secondary Navigation */}
+                  {/* Mobile Home Link */}
                   <div className="mt-8">
+                    <h3 className="text-sm uppercase text-white/50 mb-2 px-1">
+                      Navigation
+                    </h3>
+                    <SheetClose asChild>
+                      <Link
+                        to="/"
+                        className={cn(
+                          "flex items-center gap-3 px-3 py-3 rounded-lg w-full",
+                          isActive("/")
+                            ? "bg-white/10 text-white"
+                            : "text-white/70 hover:text-white hover:bg-white/5"
+                        )}
+                      >
+                        <div className="w-8 h-8 rounded-full bg-black/50 flex items-center justify-center">
+                          <Home className="w-4 h-4" />
+                        </div>
+                        <span>Home</span>
+                      </Link>
+                    </SheetClose>
+                  </div>
+
+                  {/* Mobile Resources Navigation */}
+                  <div className="mt-6">
                     <h3 className="text-sm uppercase text-white/50 mb-2 px-1">
                       Resources
                     </h3>
                     <div className="space-y-1">
-                      {secondaryNavItems.map((item) => (
+                      {resourcesItems.map((item) => (
                         <SheetClose asChild key={item.path}>
                           <Link
                             to={item.path}
@@ -262,7 +362,12 @@ const Navigation: React.FC<NavigationProps> = ({
                             <div className="w-8 h-8 rounded-full bg-black/50 flex items-center justify-center">
                               {item.icon}
                             </div>
-                            <span>{item.name}</span>
+                            <div className="flex-1">
+                              <div className="font-medium">{item.name}</div>
+                              <div className="text-xs text-white/50">
+                                {item.description}
+                              </div>
+                            </div>
                           </Link>
                         </SheetClose>
                       ))}

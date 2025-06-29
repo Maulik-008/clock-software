@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PomodoroTechnique from "./pages/PomodoroTechnique";
 import StudyClockGuide from "./pages/StudyClockGuide";
+import StudyClockRecommendations from "./pages/StudyClockRecommendations";
 import AboutUs from "./pages/AboutUs";
 import StudyTimer from "./pages/StudyTimer";
 import Counter from "./pages/Counter";
@@ -33,6 +34,10 @@ const App = () => (
             <Route path="/pomodoro-timer" element={<PomodoroTimerPage />} />
             <Route path="/pomodoro-technique" element={<PomodoroTechnique />} />
             <Route path="/study-clock-guide" element={<StudyClockGuide />} />
+            <Route
+              path="/study-clock-recommendations"
+              element={<StudyClockRecommendations />}
+            />
             <Route path="/about-us" element={<AboutUs />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
