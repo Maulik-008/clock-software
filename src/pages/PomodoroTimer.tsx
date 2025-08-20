@@ -21,7 +21,7 @@ const PomodoroTimerPage = () => {
         {/* Global Navigation */}
         <Navigation />
 
-        <main className="relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-16 sm:pt-18 md:pt-20">
+        <main className="mt-3 relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-16 sm:pt-18 md:pt-20">
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
             <section aria-label="Pomodoro Timer" className="fade-in">
               <h1 className="sr-only">

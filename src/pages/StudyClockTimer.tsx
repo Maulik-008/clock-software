@@ -170,7 +170,7 @@ const StudyClockTimer = () => {
 
         {/* Main Content */}
         <main className="relative z-10 min-h-screen flex flex-col items-center justify-center p-3 sm:p-4 pt-20 sm:pt-24 md:pt-28">
-          <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto">
+          <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto mt-3">
             {/* Clock Section */}
             <section aria-label="Study Clock Timer" className="fade-in">
               <h1 className="sr-only">
@@ -178,24 +178,33 @@ const StudyClockTimer = () => {
               </h1>
 
               {/* Style Selector */}
-              <div className="mb-6 flex justify-center">
+              <div className="mb-8 flex justify-center">
                 <Tabs
                   defaultValue="modern"
-                  className="w-full max-w-xs"
+                  className="w-full max-w-sm flex justify-center"
                   onValueChange={(value) => {
                     setClockStyle(value);
                     // Track style change event
                     analytics.trackStyleChange("study_clock_timer", value);
                   }}
                 >
-                  <TabsList className="grid w-full grid-cols-3 bg-black/50 border border-white/10">
-                    <TabsTrigger value="modern" className="text-sm">
+                  <TabsList className="grid w-full grid-cols-3 bg-black/70 backdrop-blur-md border border-white/15 p-1 rounded-xl shadow-lg h-12">
+                    <TabsTrigger
+                      value="modern"
+                      className="text-sm font-medium rounded-lg h-full py-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-600 data-[state=active]:shadow-md data-[state=active]:text-white transition-all data-[state=inactive]:text-white/70 data-[state=active]:scale-100"
+                    >
                       Modern
                     </TabsTrigger>
-                    <TabsTrigger value="minimal" className="text-sm">
+                    <TabsTrigger
+                      value="minimal"
+                      className="text-sm font-medium rounded-lg h-full py-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-purple-600 data-[state=active]:shadow-md data-[state=active]:text-white transition-all data-[state=inactive]:text-white/70 data-[state=active]:scale-100"
+                    >
                       Minimal
                     </TabsTrigger>
-                    <TabsTrigger value="neon" className="text-sm">
+                    <TabsTrigger
+                      value="neon"
+                      className="text-sm font-medium rounded-lg h-full py-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:shadow-md data-[state=active]:text-white transition-all data-[state=inactive]:text-white/70 data-[state=active]:scale-100"
+                    >
                       Neon
                     </TabsTrigger>
                   </TabsList>
@@ -208,8 +217,12 @@ const StudyClockTimer = () => {
                 className={`${styles.container} rounded-2xl p-6 sm:p-8 md:p-10 relative overflow-hidden transition-all duration-500 ease-out transform hover:scale-[1.01]`}
               >
                 {/* Decorative Elements */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r opacity-80 ${styles.primaryColor}"></div>
-                <div className="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-l opacity-80 ${styles.secondaryColor}"></div>
+                <div
+                  className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r opacity-80 ${styles.primaryColor}`}
+                ></div>
+                <div
+                  className={`absolute bottom-0 right-0 w-full h-1 bg-gradient-to-l opacity-80 ${styles.secondaryColor}`}
+                ></div>
                 <div className="absolute -top-40 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
                 <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
 

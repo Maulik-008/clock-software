@@ -153,7 +153,7 @@ const Index = () => {
           <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-6 text-center">
             Choose Your Productivity Tool
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
             <div className="bg-black/50 backdrop-blur-lg rounded-xl border border-cyan-900/50 p-5 flex flex-col items-center">
               <h3 className="text-xl font-semibold text-cyan-400 mb-3">
                 Study Timer

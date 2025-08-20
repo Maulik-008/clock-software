@@ -123,321 +123,341 @@ const Navigation: React.FC<NavigationProps> = ({
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 py-4">
-      <div className="max-w-7xl mx-auto">
-        <nav className="relative flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link
-              to="/"
-              className="text-base sm:text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 hover:opacity-90 transition-opacity"
-            >
-              StudyClock.com
-            </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1 bg-black/70 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl p-1">
-            {timerItems.map((item) => {
-              const active = isActive(item.path);
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => {
-                    if (onModeChange) {
-                      // Map path to mode
-                      if (item.path === "/study-timer")
-                        handleModeClick("timer");
-                      else if (item.path === "/counter")
-                        handleModeClick("countdown");
-                      else if (item.path === "/pomodoro-timer")
-                        handleModeClick("pomodoro");
-                      else if (item.path === "/study-clock-timer")
-                        handleModeClick("clock");
-                    }
-                  }}
-                  className={cn(
-                    "flex items-center gap-1 px-3 py-2 rounded-lg whitespace-nowrap transition-all duration-300 hover:bg-white/10",
-                    active
-                      ? `bg-gradient-to-r ${item.color} shadow-lg ${item.shadowColor}`
-                      : "bg-transparent"
-                  )}
-                >
-                  {item.icon}
-                  <span className="text-white/90 text-sm font-medium">
-                    {item.name}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Desktop Resources Dropdown & Home */}
-          <div className="hidden lg:flex items-center space-x-2">
-            {/* Home Link */}
-            <Link
-              to="/"
-              className={cn(
-                "flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors",
-                isActive("/") ? "text-white/90 bg-white/10" : ""
-              )}
-            >
-              <Home className="w-4 h-4" />
-              <span className="text-sm">Home</span>
-            </Link>
-
-            {/* Resources Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className={cn(
-                    "flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors",
-                    isResourcesActive ? "text-white/90 bg-white/10" : ""
-                  )}
-                >
-                  <BookOpen className="w-4 h-4" />
-                  <span className="text-sm">Resources</span>
-                  <ChevronDown className="w-3 h-3" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="w-64 bg-gray-900/98 backdrop-blur-xl border border-white/20 shadow-2xl"
+    <>
+      {/* Custom scrollbar styles */}
+      <style>{`
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 5px;
+      }
+      
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+      }
+      
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(99, 102, 241, 0.5);
+        border-radius: 10px;
+      }
+      
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(99, 102, 241, 0.7);
+      }
+    `}</style>
+      <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 py-3">
+        <div className="max-w-7xl mx-auto">
+          <nav className="relative flex items-center justify-between bg-black/85 backdrop-blur-xl rounded-xl border border-white/25 shadow-xl p-3 sm:p-3.5">
+            {/* Logo */}
+            <div className="flex-shrink-0 px-1">
+              <Link
+                to="/"
+                className="text-lg sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 hover:opacity-90 transition-opacity"
               >
-                {resourcesItems.map((item) => (
-                  <DropdownMenuItem key={item.path} asChild className="p-0">
-                    <Link
-                      to={item.path}
-                      className={cn(
-                        "flex items-start gap-3 p-3 cursor-pointer transition-all duration-200 rounded-md mx-1 my-1",
-                        isActive(item.path)
-                          ? "bg-cyan-500/20 text-cyan-100 border border-cyan-500/30"
-                          : "text-gray-200 hover:text-white hover:bg-white/10"
-                      )}
-                    >
-                      <div
+                StudyClock.com
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-1 bg-black/70 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl p-1">
+              {timerItems.map((item) => {
+                const active = isActive(item.path);
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => {
+                      if (onModeChange) {
+                        // Map path to mode
+                        if (item.path === "/study-timer")
+                          handleModeClick("timer");
+                        else if (item.path === "/counter")
+                          handleModeClick("countdown");
+                        else if (item.path === "/pomodoro-timer")
+                          handleModeClick("pomodoro");
+                        else if (item.path === "/study-clock-timer")
+                          handleModeClick("clock");
+                      }
+                    }}
+                    className={cn(
+                      "flex items-center gap-1 px-3 py-2 rounded-lg whitespace-nowrap transition-all duration-300 hover:bg-white/10",
+                      active
+                        ? `bg-gradient-to-r ${item.color} shadow-lg ${item.shadowColor}`
+                        : "bg-transparent"
+                    )}
+                  >
+                    {item.icon}
+                    <span className="text-white/90 text-sm font-medium">
+                      {item.name}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Desktop Resources Dropdown & Home */}
+            <div className="hidden lg:flex items-center space-x-2">
+              {/* Home Link */}
+              <Link
+                to="/"
+                className={cn(
+                  "flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors",
+                  isActive("/") ? "text-white/90 bg-white/10" : ""
+                )}
+              >
+                <Home className="w-4 h-4" />
+                <span className="text-sm">Home</span>
+              </Link>
+
+              {/* Resources Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className={cn(
+                      "flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors",
+                      isResourcesActive ? "text-white/90 bg-white/10" : ""
+                    )}
+                  >
+                    <BookOpen className="w-4 h-4" />
+                    <span className="text-sm">Resources</span>
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-64 bg-gray-900/98 backdrop-blur-xl border border-white/20 shadow-2xl"
+                >
+                  {resourcesItems.map((item) => (
+                    <DropdownMenuItem key={item.path} asChild className="p-0">
+                      <Link
+                        to={item.path}
                         className={cn(
-                          "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
+                          "flex items-start gap-3 p-3 cursor-pointer transition-all duration-200 rounded-md mx-1 my-1",
                           isActive(item.path)
-                            ? "bg-cyan-500/30 text-cyan-200"
-                            : "bg-white/10 text-gray-300"
+                            ? "bg-cyan-500/20 text-cyan-100 border border-cyan-500/30"
+                            : "text-gray-200 hover:text-white hover:bg-white/10"
                         )}
                       >
-                        {item.icon}
-                      </div>
-                      <div className="flex-1">
-                        <div className="font-medium text-sm">{item.name}</div>
                         <div
                           className={cn(
-                            "text-xs mt-0.5",
+                            "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
                             isActive(item.path)
-                              ? "text-cyan-200/80"
-                              : "text-gray-400"
+                              ? "bg-cyan-500/30 text-cyan-200"
+                              : "bg-white/10 text-gray-300"
                           )}
                         >
-                          {item.description}
+                          {item.icon}
                         </div>
-                      </div>
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          {/* Mobile Menu Trigger */}
-          <div className="md:hidden">
-            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-              <SheetTrigger asChild>
-                <button
-                  className="p-2 bg-black/70 backdrop-blur-xl rounded-lg border border-white/20 shadow-xl"
-                  aria-label="Menu"
-                >
-                  <Menu className="h-5 w-5 text-white" />
-                </button>
-              </SheetTrigger>
-              <SheetContent
-                side="right"
-                className="w-[80%] sm:w-[350px] bg-gray-950/95 backdrop-blur-xl border-white/10"
-              >
-                <div className="flex flex-col h-full">
-                  {/* Mobile Logo */}
-                  <div className="flex items-center justify-between py-4">
-                    <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-                      StudyClock.com
-                    </span>
-                    <SheetClose className="rounded-full p-2 hover:bg-white/10">
-                      <X className="h-5 w-5 text-white" />
-                    </SheetClose>
-                  </div>
-
-                  {/* Mobile Timer Navigation */}
-                  <div className="mt-6">
-                    <h3 className="text-sm uppercase text-white/50 mb-2 px-1">
-                      Timers
-                    </h3>
-                    <div className="grid grid-cols-2 gap-2">
-                      {timerItems.map((item) => (
-                        <SheetClose asChild key={item.path}>
-                          <Link
-                            to={item.path}
-                            onClick={() => {
-                              if (onModeChange) {
-                                // Map path to mode
-                                if (item.path === "/study-timer")
-                                  handleModeClick("timer");
-                                else if (item.path === "/counter")
-                                  handleModeClick("countdown");
-                                else if (item.path === "/pomodoro-timer")
-                                  handleModeClick("pomodoro");
-                                else if (item.path === "/study-clock-timer")
-                                  handleModeClick("clock");
-                              }
-                            }}
+                        <div className="flex-1">
+                          <div className="font-medium text-sm">{item.name}</div>
+                          <div
                             className={cn(
-                              "flex flex-col items-center p-4 rounded-xl bg-black/50 border border-white/10 transition-all",
+                              "text-xs mt-0.5",
                               isActive(item.path)
-                                ? "ring-2 ring-cyan-500/50"
-                                : ""
+                                ? "text-cyan-200/80"
+                                : "text-gray-400"
                             )}
                           >
-                            <div
+                            {item.description}
+                          </div>
+                        </div>
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
+            {/* Mobile Menu Trigger */}
+            <div className="md:hidden">
+              <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+                <SheetTrigger asChild>
+                  <button
+                    className="p-3 bg-red-500 hover:bg-red-600 transition-all rounded-xl shadow-lg shadow-red-500/30"
+                    aria-label="Menu"
+                  >
+                    <Menu className="h-6 w-6 text-white" strokeWidth={2.5} />
+                  </button>
+                </SheetTrigger>
+                <SheetContent
+                  side="right"
+                  className="w-[80%] sm:w-[350px] bg-black/95 backdrop-blur-xl border-white/10 p-0 overflow-hidden"
+                >
+                  <div className="flex flex-col h-full overflow-y-auto custom-scrollbar px-5 pt-2 pb-6">
+                    {/* Mobile Logo */}
+                    <div className="flex items-center justify-between sticky top-0 py-4 bg-black/80 backdrop-blur-md z-10 mb-2">
+                      <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                        StudyClock.com
+                      </span>
+                      <SheetClose className="rounded-full p-2 hover:bg-white/10">
+                        <X className="h-6 w-6 text-white" />
+                      </SheetClose>
+                    </div>
+
+                    {/* Mobile Timer Navigation */}
+                    <div className="mt-6">
+                      <h3 className="text-sm uppercase text-white/70 font-bold mb-3 px-1">
+                        Timers
+                      </h3>
+                      {onModeChange && location.pathname === "/" && (
+                        <div className="mb-4 flex justify-center items-center gap-4 bg-black/70 p-3 rounded-xl border border-white/10">
+                          <h4 className="text-sm text-white/90 font-medium">
+                            Current Mode:
+                          </h4>
+                          <div className="flex gap-3">
+                            <button
+                              onClick={() => {
+                                onModeChange("pomodoro");
+                                setIsMenuOpen(false);
+                              }}
                               className={cn(
-                                "w-10 h-10 rounded-full flex items-center justify-center mb-2",
-                                `bg-gradient-to-r ${item.color}`
+                                "flex items-center justify-center p-2 rounded-lg transition-all",
+                                currentMode === "pomodoro"
+                                  ? "bg-gradient-to-r from-red-500 to-rose-600 shadow-md"
+                                  : "bg-white/10"
                               )}
                             >
-                              {item.icon}
-                            </div>
-                            <span className="text-white text-sm">
-                              {item.name}
-                            </span>
-                          </Link>
-                        </SheetClose>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Mobile Home Link */}
-                  <div className="mt-8">
-                    <h3 className="text-sm uppercase text-white/50 mb-2 px-1">
-                      Navigation
-                    </h3>
-                    <SheetClose asChild>
-                      <Link
-                        to="/"
-                        className={cn(
-                          "flex items-center gap-3 px-3 py-3 rounded-lg w-full",
-                          isActive("/")
-                            ? "bg-white/10 text-white"
-                            : "text-white/70 hover:text-white hover:bg-white/5"
-                        )}
-                      >
-                        <div className="w-8 h-8 rounded-full bg-black/50 flex items-center justify-center">
-                          <Home className="w-4 h-4" />
+                              <Target className="w-5 h-5 text-white" />
+                            </button>
+                            <button
+                              onClick={() => {
+                                onModeChange("timer");
+                                setIsMenuOpen(false);
+                              }}
+                              className={cn(
+                                "flex items-center justify-center p-2 rounded-lg transition-all",
+                                currentMode === "timer"
+                                  ? "bg-gradient-to-r from-cyan-500 to-blue-600 shadow-md"
+                                  : "bg-white/10"
+                              )}
+                            >
+                              <Clock className="w-5 h-5 text-white" />
+                            </button>
+                          </div>
                         </div>
-                        <span>Home</span>
-                      </Link>
-                    </SheetClose>
-                  </div>
-
-                  {/* Mobile Resources Navigation */}
-                  <div className="mt-6">
-                    <h3 className="text-sm uppercase text-white/50 mb-2 px-1">
-                      Resources
-                    </h3>
-                    <div className="space-y-1">
-                      {resourcesItems.map((item) => (
-                        <SheetClose asChild key={item.path}>
-                          <Link
-                            to={item.path}
-                            className={cn(
-                              "flex items-center gap-3 px-3 py-3 rounded-lg w-full",
-                              isActive(item.path)
-                                ? "bg-white/10 text-white"
-                                : "text-white/70 hover:text-white hover:bg-white/5"
-                            )}
-                          >
-                            <div className="w-8 h-8 rounded-full bg-black/50 flex items-center justify-center">
-                              {item.icon}
-                            </div>
-                            <div className="flex-1">
-                              <div className="font-medium">{item.name}</div>
-                              <div className="text-xs text-white/50">
-                                {item.description}
+                      )}
+                      <div className="grid grid-cols-2 gap-3">
+                        {timerItems.map((item) => (
+                          <SheetClose asChild key={item.path}>
+                            <Link
+                              to={item.path}
+                              onClick={() => {
+                                if (onModeChange) {
+                                  // Map path to mode
+                                  if (item.path === "/study-timer")
+                                    handleModeClick("timer");
+                                  else if (item.path === "/counter")
+                                    handleModeClick("countdown");
+                                  else if (item.path === "/pomodoro-timer")
+                                    handleModeClick("pomodoro");
+                                  else if (item.path === "/study-clock-timer")
+                                    handleModeClick("clock");
+                                }
+                              }}
+                              className={cn(
+                                "flex flex-col items-center p-4 rounded-xl bg-black/80 border border-white/20 shadow-md transition-all hover:shadow-lg",
+                                isActive(item.path)
+                                  ? `ring-2 ring-${item.color
+                                      .split(" ")[1]
+                                      .replace(
+                                        "to-",
+                                        ""
+                                      )}/70 shadow-lg shadow-${item.color
+                                      .split(" ")[1]
+                                      .replace("to-", "")}/30`
+                                  : ""
+                              )}
+                            >
+                              <div
+                                className={cn(
+                                  "w-12 h-12 rounded-full flex items-center justify-center mb-2 shadow-md",
+                                  `bg-gradient-to-r ${item.color}`
+                                )}
+                              >
+                                {item.icon}
                               </div>
-                            </div>
-                          </Link>
-                        </SheetClose>
-                      ))}
+                              <span className="text-white text-sm font-medium">
+                                {item.name}
+                              </span>
+                            </Link>
+                          </SheetClose>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Mobile Home Link */}
+                    <div className="mt-8">
+                      <h3 className="text-sm uppercase text-white/70 font-bold mb-3 px-1">
+                        Navigation
+                      </h3>
+                      <SheetClose asChild>
+                        <Link
+                          to="/"
+                          className={cn(
+                            "flex items-center gap-3 px-4 py-3 rounded-xl w-full border transition-all",
+                            isActive("/")
+                              ? "bg-blue-900/30 text-white border-blue-500/30 shadow-md"
+                              : "text-white/80 hover:text-white hover:bg-white/10 border-transparent"
+                          )}
+                        >
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center shadow-md">
+                            <Home className="w-5 h-5 text-white" />
+                          </div>
+                          <span className="font-medium">Home</span>
+                        </Link>
+                      </SheetClose>
+                    </div>
+
+                    {/* Mobile Resources Navigation */}
+                    <div className="mt-8">
+                      <h3 className="text-sm uppercase text-white/70 font-bold mb-3 px-1">
+                        Resources
+                      </h3>
+                      <div className="space-y-2">
+                        {resourcesItems.map((item) => (
+                          <SheetClose asChild key={item.path}>
+                            <Link
+                              to={item.path}
+                              className={cn(
+                                "flex items-center gap-3 px-4 py-4 rounded-xl w-full border transition-all",
+                                isActive(item.path)
+                                  ? "bg-blue-900/30 text-white border-blue-500/30 shadow-md"
+                                  : "text-white/80 hover:text-white hover:bg-white/10 border-transparent"
+                              )}
+                            >
+                              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center shadow-md">
+                                {item.icon}
+                              </div>
+                              <div className="flex-1">
+                                <div className="font-medium">{item.name}</div>
+                                <div className="text-xs text-white/70 mt-1">
+                                  {item.description}
+                                </div>
+                              </div>
+                            </Link>
+                          </SheetClose>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Bottom Info */}
+                    <div className="mt-auto pt-8 pb-4 text-center">
+                      <p className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 font-bold">
+                        StudyClock.com
+                      </p>
+                      <p className="text-white/60 text-xs mt-1">
+                        Focus Better, Study Smarter
+                      </p>
                     </div>
                   </div>
-
-                  {/* Bottom Info */}
-                  <div className="mt-auto pt-8 pb-4 text-center text-white/50 text-sm">
-                    <p>StudyClock.com - Focus Better</p>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
-
-          {/* Mobile Timer Selection for Home Page */}
-          {onModeChange && location.pathname === "/" && (
-            <div className="md:hidden flex items-center space-x-1 bg-black/70 backdrop-blur-xl rounded-lg border border-white/10 shadow-lg p-1">
-              <button
-                onClick={() => onModeChange("pomodoro")}
-                className={cn(
-                  "flex items-center p-1.5 rounded-md transition-all",
-                  currentMode === "pomodoro"
-                    ? "bg-gradient-to-r from-red-500 to-rose-600"
-                    : "bg-white/5"
-                )}
-              >
-                <Target className="w-4 h-4 text-white" />
-              </button>
-
-              <button
-                onClick={() => onModeChange("timer")}
-                className={cn(
-                  "flex items-center p-1.5 rounded-md transition-all",
-                  currentMode === "timer"
-                    ? "bg-gradient-to-r from-cyan-500 to-blue-600"
-                    : "bg-white/5"
-                )}
-              >
-                <Clock className="w-4 h-4 text-white" />
-              </button>
-
-              <button
-                onClick={() => onModeChange("clock")}
-                className={cn(
-                  "flex items-center p-1.5 rounded-md transition-all",
-                  currentMode === "clock"
-                    ? "bg-gradient-to-r from-blue-500 to-indigo-600"
-                    : "bg-white/5"
-                )}
-              >
-                <Watch className="w-4 h-4 text-white" />
-              </button>
-
-              <button
-                onClick={() => onModeChange("countdown")}
-                className={cn(
-                  "flex items-center p-1.5 rounded-md transition-all",
-                  currentMode === "countdown"
-                    ? "bg-gradient-to-r from-purple-500 to-pink-600"
-                    : "bg-white/5"
-                )}
-              >
-                <Timer className="w-4 h-4 text-white" />
-              </button>
+                </SheetContent>
+              </Sheet>
             </div>
-          )}
-        </nav>
-      </div>
-    </header>
+
+            {/* Removed mobile timer selection buttons as requested */}
+          </nav>
+        </div>
+      </header>
+    </>
   );
 };
 
