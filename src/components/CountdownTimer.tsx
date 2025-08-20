@@ -1,19 +1,63 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Play, Pause, RotateCcw } from "lucide-react";
+import {
+  Play,
+  Pause,
+  RotateCcw,
+  Bell,
+  BellOff,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import CountdownStyleSelector from "./CountdownStyleSelector";
 
 const CountdownTimer = () => {
   const [time, setTime] = useState(10);
   const [isRunning, setIsRunning] = useState(false);
   const [countdownStyle, setCountdownStyle] = useState("neon");
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Request notification permissions when component mounts
+  useEffect(() => {
+    if ("Notification" in window) {
+      Notification.requestPermission();
+    }
+
+    // Initialize audio element
+    audioRef.current = new Audio("/audio/alarm.mp3");
+    audioRef.current.loop = false;
+
+    return () => {
+      // Clean up audio when component unmounts
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      }
+    };
+  }, []);
+
+  // Handle timer countdown and notifications
   useEffect(() => {
     if (isRunning && time > 0) {
       intervalRef.current = setInterval(() => {
         setTime((prevTime) => {
           if (prevTime <= 1) {
             setIsRunning(false);
+
+            // Show notification when timer ends
+            if (notificationsEnabled) {
+              showNotification();
+            }
+
+            // Play sound when timer ends
+            if (soundEnabled && audioRef.current) {
+              audioRef.current.play().catch((err) => {
+                console.error("Error playing audio:", err);
+              });
+            }
+
             return 0;
           }
           return prevTime - 1;
@@ -30,13 +74,36 @@ const CountdownTimer = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isRunning, time]);
+  }, [isRunning, time, notificationsEnabled, soundEnabled]);
 
   const handleStart = () => setIsRunning(true);
   const handlePause = () => setIsRunning(false);
   const handleReset = () => {
     setIsRunning(false);
     setTime(10);
+
+    // Stop audio if it's playing
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  };
+
+  // Toggle notification settings
+  const toggleNotifications = () => setNotificationsEnabled((prev) => !prev);
+  const toggleSound = () => setSoundEnabled((prev) => !prev);
+
+  // Show browser notification
+  const showNotification = () => {
+    if (!notificationsEnabled) return;
+
+    if ("Notification" in window && Notification.permission === "granted") {
+      new Notification("Time's up!", {
+        body: "Your countdown timer has finished.",
+        icon: "/favicon.ico",
+        silent: true, // We'll play our own sound
+      });
+    }
   };
 
   const getCountdownStyles = () => {
@@ -649,6 +716,12 @@ const CountdownTimer = () => {
             {time === 0 && (
               <div className="mt-2 sm:mt-3 text-red-400 text-sm sm:text-base font-bold animate-bounce">
                 TIME'S UP!
+                {soundEnabled && (
+                  <div className="text-xs text-gray-400 mt-1 flex items-center justify-center gap-1">
+                    <Volume2 className="w-3 h-3" />
+                    <span>Sound Playing</span>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -721,6 +794,47 @@ const CountdownTimer = () => {
             <span className="text-white/80 text-xs tracking-[0.2em] font-light">
               {isRunning ? "COUNTING DOWN" : time === 0 ? "FINISHED" : "READY"}
             </span>
+          </div>
+
+          {/* Notification Settings */}
+          <div className="flex justify-center items-center gap-4 mt-4 mb-2">
+            <button
+              onClick={toggleNotifications}
+              className={`group relative flex items-center justify-center p-2 rounded-full transition-all duration-300 transform hover:scale-105 ${
+                notificationsEnabled ? "bg-blue-500/30" : "bg-gray-700/30"
+              }`}
+              aria-label={
+                notificationsEnabled
+                  ? "Disable Notifications"
+                  : "Enable Notifications"
+              }
+              title={
+                notificationsEnabled
+                  ? "Disable Notifications"
+                  : "Enable Notifications"
+              }
+            >
+              {notificationsEnabled ? (
+                <Bell className="w-5 h-5 text-blue-300" />
+              ) : (
+                <BellOff className="w-5 h-5 text-gray-400" />
+              )}
+            </button>
+
+            <button
+              onClick={toggleSound}
+              className={`group relative flex items-center justify-center p-2 rounded-full transition-all duration-300 transform hover:scale-105 ${
+                soundEnabled ? "bg-blue-500/30" : "bg-gray-700/30"
+              }`}
+              aria-label={soundEnabled ? "Disable Sound" : "Enable Sound"}
+              title={soundEnabled ? "Disable Sound" : "Enable Sound"}
+            >
+              {soundEnabled ? (
+                <Volume2 className="w-5 h-5 text-blue-300" />
+              ) : (
+                <VolumeX className="w-5 h-5 text-gray-400" />
+              )}
+            </button>
           </div>
 
           {/* Style Selector with better visibility */}

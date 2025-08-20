@@ -15,6 +15,7 @@ import StudyTimer from "./pages/StudyTimer";
 import Counter from "./pages/Counter";
 import PomodoroTimerPage from "./pages/PomodoroTimer";
 import StudyClockTimer from "./pages/StudyClockTimer";
+import Stopwatch from "./pages/Stopwatch";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/study-timer" element={<StudyTimer />} />
+            <Route path="/online-stopwatch" element={<Stopwatch />} />
             <Route path="/study-clock-timer" element={<StudyClockTimer />} />
             <Route path="/counter" element={<Counter />} />
             <Route path="/pomodoro-timer" element={<PomodoroTimerPage />} />

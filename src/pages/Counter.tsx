@@ -76,6 +76,13 @@ const Counter = () => {
                   </li>
                   <li>
                     <span className="text-white font-medium">
+                      Audio & Visual Notifications:
+                    </span>{" "}
+                    Get alerted when your timer completes with customizable
+                    sound and browser notifications.
+                  </li>
+                  <li>
+                    <span className="text-white font-medium">
                       Visual Alert System:
                     </span>{" "}
                     Color changes and animations that subtly indicate when time
@@ -220,6 +227,22 @@ const Counter = () => {
                       The aesthetic design also makes it more enjoyable to use,
                       increasing the likelihood you'll stick with your time
                       management system.
+                    </p>
+                  </div>
+
+                  <div className="bg-black/40 rounded-lg p-4 border border-gray-800">
+                    <h4 className="font-medium text-white text-lg">
+                      How do the timer notifications work?
+                    </h4>
+                    <p className="text-gray-300 mt-2">
+                      When your countdown completes, our timer alerts you with
+                      both audio and visual notifications. The audio alarm
+                      ensures you're notified even if you're not looking at the
+                      screen, while browser notifications appear on your device
+                      even if you're in another tab or application. You can
+                      easily customize your notification preferences by toggling
+                      sound and notifications on or off using the control
+                      buttons on the timer interface.
                     </p>
                   </div>
                 </div>

@@ -156,9 +156,10 @@ const PomodoroTimerPage = () => {
                     <span className="text-white font-medium">
                       Visual and Audio Notifications:
                     </span>{" "}
-                    Gentle alerts when it's time to switch between work and
-                    break periods - not those jarring alarms that make your
-                    heart jump out of your chest!
+                    Customizable alerts when it's time to switch between work
+                    and break periods - get both sound alerts and browser
+                    notifications to never miss the end of a session, even when
+                    you're in another tab!
                   </li>
                   <li>
                     <span className="text-white font-medium">
@@ -449,6 +450,23 @@ const PomodoroTimerPage = () => {
                       alternation between intensive focus and complete breaks
                       creates a rhythm that trains your brain for deep work,
                       making it more effective than less structured approaches.
+                    </p>
+                  </div>
+
+                  <div className="bg-black/40 rounded-lg p-4 border border-gray-800">
+                    <h4 className="font-medium text-white text-lg">
+                      How do the notification features work?
+                    </h4>
+                    <p className="text-gray-300 mt-2">
+                      Our Pomodoro timer comes with two types of notifications
+                      to help you stay on track. First, audio notifications play
+                      a pleasant alarm sound when your timer completes. Second,
+                      browser notifications appear on your screen even if you're
+                      working in another tab or application. Both features can
+                      be easily toggled on or off using the bell and sound icons
+                      in the timer controls, allowing you to customize your
+                      experience based on your environment - perfect whether
+                      you're studying in a library or at home!
                     </p>
                   </div>
                 </div>
