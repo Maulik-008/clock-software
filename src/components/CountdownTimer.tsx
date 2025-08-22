@@ -9,6 +9,7 @@ import {
   VolumeX,
 } from "lucide-react";
 import CountdownStyleSelector from "./CountdownStyleSelector";
+import useAnalytics from "@/hooks/use-analytics";
 
 const CountdownTimer = () => {
   const [time, setTime] = useState(10);
@@ -18,6 +19,7 @@ const CountdownTimer = () => {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const analytics = useAnalytics();
 
   // Request notification permissions when component mounts
   useEffect(() => {
@@ -53,6 +55,7 @@ const CountdownTimer = () => {
 
             // Play sound when timer ends
             if (soundEnabled && audioRef.current) {
+              analytics.trackSound("countdown");
               audioRef.current.play().catch((err) => {
                 console.error("Error playing audio:", err);
               });
@@ -76,8 +79,14 @@ const CountdownTimer = () => {
     };
   }, [isRunning, time, notificationsEnabled, soundEnabled]);
 
-  const handleStart = () => setIsRunning(true);
-  const handlePause = () => setIsRunning(false);
+  const handleStart = () => {
+    setIsRunning(true);
+    analytics.trackTimerStart("countdown");
+  };
+  const handlePause = () => {
+    setIsRunning(false);
+    analytics.trackTimerPause("countdown", time);
+  };
   const handleReset = () => {
     setIsRunning(false);
     setTime(10);
@@ -87,6 +96,7 @@ const CountdownTimer = () => {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
+    analytics.trackTimerComplete("countdown", time);
   };
 
   // Toggle notification settings

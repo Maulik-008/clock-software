@@ -14,6 +14,7 @@ import {
   EMAIL_TEMPLATE_ID,
   EMAIL_PUBLIC_KEY,
 } from "@/lib/emailjs";
+import useAnalytics from "@/hooks/use-analytics";
 
 // Define form schema with Zod
 const formSchema = z.object({
@@ -28,6 +29,7 @@ type FormData = z.infer<typeof formSchema>;
 const FeedbackForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const analytics = useAnalytics();
   const closeDialogRef = useRef<HTMLButtonElement>(null);
   const {
     register,
@@ -67,6 +69,7 @@ const FeedbackForm: React.FC = () => {
         if (closeDialogRef.current) {
           closeDialogRef.current.click();
         }
+        analytics.trackFeedback("feedback_sent");
       }
     } catch (error) {
       console.error("Error sending feedback:", error);

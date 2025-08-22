@@ -53,12 +53,31 @@ const useAnalytics = () => {
     });
   };
 
+  /**
+   * Track a feedback event
+   */
+  const trackFeedback = (feedbackType: string) => {
+    event("feedback", {
+      feedback_type: feedbackType,
+    });
+  };
+
+  /**
+   * Track a sound event
+   */
+  const trackSound = (soundType: string) => {
+    event("sound", {
+      sound_type: soundType,
+    });
+  };
   return {
     trackTimerStart,
     trackTimerPause,
     trackTimerComplete,
     trackButtonClick,
     trackStyleChange,
+    trackFeedback,
+    trackSound,
   };
 };
 

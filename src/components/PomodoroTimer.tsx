@@ -19,6 +19,7 @@ import {
   VolumeX,
 } from "lucide-react";
 import { Button } from "./ui/button";
+import useAnalytics from "@/hooks/use-analytics";
 
 type PomodoroMode = "pomodoro" | "shortBreak" | "longBreak";
 
@@ -38,6 +39,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
   const [soundEnabled, setSoundEnabled] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const analytics = useAnalytics();
 
   // Timer durations in seconds
   const durations = useMemo(
@@ -139,6 +141,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
 
             // Play sound when timer ends
             if (soundEnabled && audioRef.current) {
+              analytics.trackSound("pomodoro");
               audioRef.current.play().catch((err) => {
                 console.error("Error playing audio:", err);
               });
@@ -169,10 +172,14 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
     showNotification,
   ]);
 
-  const handleStart = () => setIsRunning(true);
+  const handleStart = () => {
+    setIsRunning(true);
+    analytics.trackTimerStart("pomodoro");
+  };
 
   const handlePause = () => {
     setIsRunning(false);
+    analytics.trackTimerPause("pomodoro", time);
     // Recalculate end time when paused
     if (startTime && time > 0) {
       const now = new Date();
@@ -186,7 +193,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
     setTime(durations[mode]);
     setStartTime(null);
     setEndTime(null);
-
+    analytics.trackTimerComplete("pomodoro", time);
     // Stop audio if it's playing
     if (audioRef.current) {
       audioRef.current.pause();
