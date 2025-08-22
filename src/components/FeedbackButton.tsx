@@ -14,7 +14,7 @@ const FeedbackButton: React.FC = () => {
     <Dialog>
       <DialogTrigger asChild>
         <button
-          className="fixed bottom-20 right-6 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105"
+          className="fixed bottom-10 right-6 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105"
           aria-label="Send Feedback"
         >
           <MessageSquare className="h-5 w-5" />
