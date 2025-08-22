@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import FeedbackButton from "./FeedbackButton";
 
 const Footer: React.FC = () => {
   return (
@@ -31,6 +32,7 @@ const Footer: React.FC = () => {
         </Link>
       </div>
       <p>StudyClock.com - Focus Better, Achieve More</p>
+      <FeedbackButton />
     </footer>
   );
 };
