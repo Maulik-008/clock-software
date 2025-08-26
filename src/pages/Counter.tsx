@@ -21,7 +21,7 @@ const Counter = () => {
         {/* Global Navigation */}
         <Navigation />
 
-        <main className="mt-4 relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-16 sm:pt-18 md:pt-20">
+        <main className="mt-4 relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-28 sm:pt-28 md:pt-28">
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
             <section aria-label="Countdown Timer" className="fade-in">
               <h1 className="sr-only">

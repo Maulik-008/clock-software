@@ -16,6 +16,9 @@ import Counter from "./pages/Counter";
 import PomodoroTimerPage from "./pages/PomodoroTimer";
 import StudyClockTimer from "./pages/StudyClockTimer";
 import Stopwatch from "./pages/Stopwatch";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfUse from "./pages/TermsOfUse";
+import StudyTodoList from "./pages/StudyTodoList";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +44,9 @@ const App = () => (
               element={<StudyClockRecommendations />}
             />
             <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-use" element={<TermsOfUse />} />
+            <Route path="/study-todo-list" element={<StudyTodoList />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

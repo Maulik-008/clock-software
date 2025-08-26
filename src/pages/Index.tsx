@@ -6,6 +6,7 @@ import ParticleBackground from "../components/ParticleBackground";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import SEO from "../components/SEO";
+import TodoList from "../components/TodoList";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -145,6 +146,11 @@ const Index = () => {
                 </div>
               </section>
             )}
+
+            {/* Todo List Component */}
+            <div className="mt-8">
+              <TodoList variant="full" maxHeight="350px" />
+            </div>
           </div>
         </main>
 

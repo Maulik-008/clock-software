@@ -219,7 +219,7 @@ const FuturisticStopwatch = () => {
         <ParticleBackground />
         <Navigation />
 
-        <main className="relative z-10 pt-16 pb-20 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+        <main className="relative z-10 pt-28 pb-20 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
           <div className="w-full max-w-6xl mx-auto">
             {/* Hero section */}
             <div className="text-center mb-10 md:mb-12 animate-fade-in">

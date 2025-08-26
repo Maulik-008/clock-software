@@ -5,6 +5,7 @@ import SEO from "../components/SEO";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
+import TodoList from "@/components/TodoList";
 
 const PomodoroTimerPage = () => {
   return (
@@ -21,13 +22,16 @@ const PomodoroTimerPage = () => {
         {/* Global Navigation */}
         <Navigation />
 
-        <main className="mt-3 relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-16 sm:pt-18 md:pt-20">
+        <main className="mt-3 relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-28 sm:pt-28 md:pt-28">
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
             <section aria-label="Pomodoro Timer" className="fade-in">
               <h1 className="sr-only">
                 Pomodoro Timer - The 25/5 Tomato Technique Timer
               </h1>
               <PomodoroTimer initialMode="pomodoro" />
+              <div className="mt-8">
+                <TodoList variant="full" maxHeight="350px" />
+              </div>
               <div className="mt-4 text-center text-gray-400 text-base">
                 <p>
                   Use the Pomodoro (Tomato) technique to boost your

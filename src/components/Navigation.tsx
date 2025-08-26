@@ -11,6 +11,7 @@ import {
   BookOpen,
   ChevronDown,
   ShoppingCart,
+  ListTodo,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -74,6 +75,13 @@ const Navigation: React.FC<NavigationProps> = ({
       shadowColor: "shadow-purple-500/30",
     },
     {
+      name: "Stopwatch",
+      path: "/online-stopwatch",
+      icon: <Watch className="w-4 h-4" />,
+      color: "from-emerald-500 to-teal-600",
+      shadowColor: "shadow-emerald-500/30",
+    },
+    {
       name: "Pomodoro",
       path: "/pomodoro-timer",
       icon: <Target className="w-4 h-4" />,
@@ -84,6 +92,12 @@ const Navigation: React.FC<NavigationProps> = ({
 
   // Resources submenu items
   const resourcesItems = [
+    {
+      name: "Study Todo List",
+      path: "/study-todo-list",
+      icon: <ListTodo className="w-4 h-4" />,
+      description: "Manage study tasks",
+    },
     {
       name: "Study Guide",
       path: "/study-clock-guide",
@@ -115,10 +129,16 @@ const Navigation: React.FC<NavigationProps> = ({
 
   // Handle click on timer mode button
   const handleModeClick = (
-    mode: "timer" | "countdown" | "pomodoro" | "clock"
+    mode: "timer" | "countdown" | "pomodoro" | "clock" | "stopwatch"
   ) => {
     if (onModeChange) {
-      onModeChange(mode);
+      // Only pass modes that the parent component can handle
+      const validMode = ["timer", "countdown", "pomodoro", "clock"].includes(
+        mode
+      )
+        ? (mode as "timer" | "countdown" | "pomodoro" | "clock")
+        : "timer";
+      onModeChange(validMode);
     }
   };
 
@@ -146,19 +166,19 @@ const Navigation: React.FC<NavigationProps> = ({
     `}</style>
       <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 py-3">
         <div className="max-w-7xl mx-auto">
-          <nav className="relative flex items-center justify-between bg-black/85 backdrop-blur-xl rounded-xl border border-white/25 shadow-xl p-3 sm:p-3.5">
+          <nav className="relative flex items-center justify-between bg-black/85 backdrop-blur-xl rounded-xl border border-white/25 shadow-xl p-3 sm:p-3.5 md:p-4">
             {/* Logo */}
             <div className="flex-shrink-0 px-1">
               <Link
                 to="/"
-                className="text-lg sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 hover:opacity-90 transition-opacity"
+                className="text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 hover:opacity-90 transition-opacity"
               >
                 StudyClock.com
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-1 bg-black/70 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl p-1">
+            {/* Desktop Navigation - Only show on large screens, not tablets */}
+            <div className="hidden lg:flex items-center space-x-1 bg-black/70 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl p-1">
               {timerItems.map((item) => {
                 const active = isActive(item.path);
                 return (
@@ -176,6 +196,8 @@ const Navigation: React.FC<NavigationProps> = ({
                           handleModeClick("pomodoro");
                         else if (item.path === "/study-clock-timer")
                           handleModeClick("clock");
+                        else if (item.path === "/online-stopwatch")
+                          handleModeClick("stopwatch");
                       }
                     }}
                     className={cn(
@@ -267,35 +289,38 @@ const Navigation: React.FC<NavigationProps> = ({
               </DropdownMenu>
             </div>
 
-            {/* Mobile Menu Trigger */}
-            <div className="md:hidden">
+            {/* Mobile Menu Trigger - Show on tablets too */}
+            <div className="lg:hidden">
               <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                 <SheetTrigger asChild>
                   <button
-                    className="p-3 bg-red-500 hover:bg-red-600 transition-all rounded-xl shadow-lg shadow-red-500/30"
+                    className="p-3 md:p-4 bg-red-500 hover:bg-red-600 transition-all rounded-xl shadow-lg shadow-red-500/30"
                     aria-label="Menu"
                   >
-                    <Menu className="h-6 w-6 text-white" strokeWidth={2.5} />
+                    <Menu
+                      className="h-6 w-6 md:h-7 md:w-7 text-white"
+                      strokeWidth={2.5}
+                    />
                   </button>
                 </SheetTrigger>
                 <SheetContent
                   side="right"
-                  className="w-[80%] sm:w-[350px] bg-black/95 backdrop-blur-xl border-white/10 p-0 overflow-hidden"
+                  className="w-[80%] sm:w-[400px] md:w-[450px] bg-black/95 backdrop-blur-xl border-white/10 p-0 overflow-hidden"
                 >
                   <div className="flex flex-col h-full overflow-y-auto custom-scrollbar px-5 pt-2 pb-6">
                     {/* Mobile Logo */}
-                    <div className="flex items-center justify-between sticky top-0 py-4 bg-black/80 backdrop-blur-md z-10 mb-2">
-                      <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                    <div className="flex items-center justify-between sticky top-0 py-4 md:py-5 bg-black/80 backdrop-blur-md z-10 mb-2">
+                      <span className="text-lg md:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
                         StudyClock.com
                       </span>
-                      <SheetClose className="rounded-full p-2 hover:bg-white/10">
-                        <X className="h-6 w-6 text-white" />
+                      <SheetClose className="rounded-full p-2 md:p-3 hover:bg-white/10">
+                        <X className="h-6 w-6 md:h-7 md:w-7 text-white" />
                       </SheetClose>
                     </div>
 
                     {/* Mobile Timer Navigation */}
                     <div className="mt-6">
-                      <h3 className="text-sm uppercase text-white/70 font-bold mb-3 px-1">
+                      <h3 className="text-sm md:text-base uppercase text-white/70 font-bold mb-3 px-1">
                         Timers
                       </h3>
                       {onModeChange && location.pathname === "/" && (
@@ -335,7 +360,7 @@ const Navigation: React.FC<NavigationProps> = ({
                           </div>
                         </div>
                       )}
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                         {timerItems.map((item) => (
                           <SheetClose asChild key={item.path}>
                             <Link
@@ -386,30 +411,49 @@ const Navigation: React.FC<NavigationProps> = ({
 
                     {/* Mobile Home Link */}
                     <div className="mt-8">
-                      <h3 className="text-sm uppercase text-white/70 font-bold mb-3 px-1">
+                      <h3 className="text-sm md:text-base uppercase text-white/70 font-bold mb-3 px-1">
                         Navigation
                       </h3>
-                      <SheetClose asChild>
-                        <Link
-                          to="/"
-                          className={cn(
-                            "flex items-center gap-3 px-4 py-3 rounded-xl w-full border transition-all",
-                            isActive("/")
-                              ? "bg-blue-900/30 text-white border-blue-500/30 shadow-md"
-                              : "text-white/80 hover:text-white hover:bg-white/10 border-transparent"
-                          )}
-                        >
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center shadow-md">
-                            <Home className="w-5 h-5 text-white" />
-                          </div>
-                          <span className="font-medium">Home</span>
-                        </Link>
-                      </SheetClose>
+                      <div className="space-y-2">
+                        <SheetClose asChild>
+                          <Link
+                            to="/"
+                            className={cn(
+                              "flex items-center gap-3 px-4 py-3 rounded-xl w-full border transition-all",
+                              isActive("/")
+                                ? "bg-blue-900/30 text-white border-blue-500/30 shadow-md"
+                                : "text-white/80 hover:text-white hover:bg-white/10 border-transparent"
+                            )}
+                          >
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center shadow-md">
+                              <Home className="w-5 h-5 text-white" />
+                            </div>
+                            <span className="font-medium">Home</span>
+                          </Link>
+                        </SheetClose>
+
+                        <SheetClose asChild>
+                          <Link
+                            to="/online-stopwatch"
+                            className={cn(
+                              "flex items-center gap-3 px-4 py-3 rounded-xl w-full border transition-all",
+                              isActive("/online-stopwatch")
+                                ? "bg-emerald-900/30 text-white border-emerald-500/30 shadow-md"
+                                : "text-white/80 hover:text-white hover:bg-white/10 border-transparent"
+                            )}
+                          >
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 flex items-center justify-center shadow-md">
+                              <Watch className="w-5 h-5 text-white" />
+                            </div>
+                            <span className="font-medium">Stopwatch</span>
+                          </Link>
+                        </SheetClose>
+                      </div>
                     </div>
 
                     {/* Mobile Resources Navigation */}
                     <div className="mt-8">
-                      <h3 className="text-sm uppercase text-white/70 font-bold mb-3 px-1">
+                      <h3 className="text-sm md:text-base uppercase text-white/70 font-bold mb-3 px-1">
                         Resources
                       </h3>
                       <div className="space-y-2">

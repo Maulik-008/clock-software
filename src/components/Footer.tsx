@@ -30,8 +30,23 @@ const Footer: React.FC = () => {
         >
           About Us
         </Link>
+        <Link
+          to="/privacy-policy"
+          className="text-gray-400 hover:text-gray-300 transition-colors"
+        >
+          Privacy Policy
+        </Link>
+        <Link
+          to="/terms-of-use"
+          className="text-gray-400 hover:text-gray-300 transition-colors"
+        >
+          Terms of Use
+        </Link>
       </div>
       <p>StudyClock.com - Focus Better, Achieve More</p>
+      <div className="mt-2 text-xs">
+        <p>© {new Date().getFullYear()} StudyClock. All Rights Reserved.</p>
+      </div>
       <FeedbackButton />
     </footer>
   );

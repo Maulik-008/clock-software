@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Footer from "../components/Footer";
 import Navigation from "../components/Navigation";
 import SEO from "../components/SEO";
+import TodoList from "../components/TodoList";
 import { Clock, Play, Pause, RotateCcw, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -169,7 +170,7 @@ const StudyClockTimer = () => {
         <Navigation />
 
         {/* Main Content */}
-        <main className="relative z-10 min-h-screen flex flex-col items-center justify-center p-3 sm:p-4 pt-20 sm:pt-24 md:pt-28">
+        <main className="relative z-10 min-h-screen flex flex-col items-center justify-center p-3 sm:p-4 pt-28 sm:pt-28 md:pt-28">
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto mt-3">
             {/* Clock Section */}
             <section aria-label="Study Clock Timer" className="fade-in">
@@ -339,6 +340,11 @@ const StudyClockTimer = () => {
                   preferred style and start tracking your productivity.
                 </p>
               </div>
+            </section>
+
+            {/* Todo List Section */}
+            <section className="mt-8">
+              <TodoList variant="compact" maxHeight="300px" />
             </section>
 
             {/* Feature Highlights */}
