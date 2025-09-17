@@ -1,3 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "https://www.studyclock.com/:path*",
+      "destination": "https://studyclock.com/:path*",
+      "permanent": true
+    },
+    { "source": "/:path*/", "destination": "/:path*", "permanent": true }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
