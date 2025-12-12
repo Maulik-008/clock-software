@@ -19,6 +19,8 @@ import Stopwatch from "./pages/Stopwatch";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import StudyTodoList from "./pages/StudyTodoList";
+import EndTimeTimer from "./pages/EndTimeTimer";
+import FocusTest from "./pages/FocusTest";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +49,8 @@ const App = () => (
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-use" element={<TermsOfUse />} />
             <Route path="/study-todo-list" element={<StudyTodoList />} />
+            <Route path="/end-time-timer" element={<EndTimeTimer />} />
+            <Route path="/focus-test" element={<FocusTest />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Timer,
   Clock,
@@ -12,35 +12,36 @@ import {
   ChevronDown,
   ShoppingCart,
   ListTodo,
-} from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+  Brain,
+} from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetClose,
-} from "@/components/ui/sheet";
+} from '@/components/ui/sheet';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 
 interface NavigationProps {
-  currentMode?: "timer" | "countdown" | "pomodoro" | "clock";
-  onModeChange?: (mode: "timer" | "countdown" | "pomodoro" | "clock") => void;
-  pomodoroSubMode?: "pomodoro" | "shortBreak" | "longBreak";
+  currentMode?: 'timer' | 'countdown' | 'pomodoro' | 'clock';
+  onModeChange?: (mode: 'timer' | 'countdown' | 'pomodoro' | 'clock') => void;
+  pomodoroSubMode?: 'pomodoro' | 'shortBreak' | 'longBreak';
   onPomodoroSubModeChange?: (
-    subMode: "pomodoro" | "shortBreak" | "longBreak"
+    subMode: 'pomodoro' | 'shortBreak' | 'longBreak'
   ) => void;
 }
 
 const Navigation: React.FC<NavigationProps> = ({
   currentMode,
   onModeChange,
-  pomodoroSubMode = "pomodoro",
+  pomodoroSubMode = 'pomodoro',
   onPomodoroSubModeChange,
 }) => {
   const location = useLocation();
@@ -54,73 +55,86 @@ const Navigation: React.FC<NavigationProps> = ({
   // Main timer navigation items
   const timerItems = [
     {
-      name: "Study Timer",
-      path: "/study-timer",
-      icon: <Clock className="w-4 h-4" />,
-      color: "from-cyan-500 to-blue-600",
-      shadowColor: "shadow-cyan-500/30",
+      name: 'Study Timer',
+      path: '/study-timer',
+      icon: <Clock className='w-4 h-4' />,
+      color: 'from-cyan-500 to-blue-600',
+      shadowColor: 'shadow-cyan-500/30',
     },
     {
-      name: "Clock Timer",
-      path: "/study-clock-timer",
-      icon: <Watch className="w-4 h-4" />,
-      color: "from-blue-500 to-indigo-600",
-      shadowColor: "shadow-blue-500/30",
+      name: 'Clock Timer',
+      path: '/study-clock-timer',
+      icon: <Watch className='w-4 h-4' />,
+      color: 'from-blue-500 to-indigo-600',
+      shadowColor: 'shadow-blue-500/30',
     },
     {
-      name: "Countdown",
-      path: "/counter",
-      icon: <Timer className="w-4 h-4" />,
-      color: "from-purple-500 to-pink-600",
-      shadowColor: "shadow-purple-500/30",
+      name: 'Countdown',
+      path: '/counter',
+      icon: <Timer className='w-4 h-4' />,
+      color: 'from-purple-500 to-pink-600',
+      shadowColor: 'shadow-purple-500/30',
     },
     {
-      name: "Stopwatch",
-      path: "/online-stopwatch",
-      icon: <Watch className="w-4 h-4" />,
-      color: "from-emerald-500 to-teal-600",
-      shadowColor: "shadow-emerald-500/30",
+      name: 'Stopwatch',
+      path: '/online-stopwatch',
+      icon: <Watch className='w-4 h-4' />,
+      color: 'from-emerald-500 to-teal-600',
+      shadowColor: 'shadow-emerald-500/30',
     },
     {
-      name: "Pomodoro",
-      path: "/pomodoro-timer",
-      icon: <Target className="w-4 h-4" />,
-      color: "from-red-500 to-rose-600",
-      shadowColor: "shadow-red-500/30",
+      name: 'Pomodoro',
+      path: '/pomodoro-timer',
+      icon: <Target className='w-4 h-4' />,
+      color: 'from-red-500 to-rose-600',
+      shadowColor: 'shadow-red-500/30',
     },
   ];
 
   // Resources submenu items
   const resourcesItems = [
     {
-      name: "Study Todo List",
-      path: "/study-todo-list",
-      icon: <ListTodo className="w-4 h-4" />,
-      description: "Manage study tasks",
+      name: 'Study Todo List',
+      path: '/study-todo-list',
+      icon: <ListTodo className='w-4 h-4' />,
+      description: 'Manage study tasks',
     },
     {
-      name: "Study Guide",
-      path: "/study-clock-guide",
-      icon: <BookOpen className="w-4 h-4" />,
-      description: "Learn study techniques",
+      name: 'Study Guide',
+      path: '/study-clock-guide',
+      icon: <BookOpen className='w-4 h-4' />,
+      description: 'Learn study techniques',
     },
     {
-      name: "Timer Reviews",
-      path: "/study-clock-recommendations",
-      icon: <ShoppingCart className="w-4 h-4" />,
-      description: "Best physical timers",
+      name: 'Timer Reviews',
+      path: '/study-clock-recommendations',
+      icon: <ShoppingCart className='w-4 h-4' />,
+      description: 'Best physical timers',
     },
     {
-      name: "Pomodoro Technique",
-      path: "/pomodoro-technique",
-      icon: <Target className="w-4 h-4" />,
-      description: "Master the technique",
+      name: 'Pomodoro Technique',
+      path: '/pomodoro-technique',
+      icon: <Target className='w-4 h-4' />,
+      description: 'Master the technique',
     },
     {
-      name: "About Us",
-      path: "/about-us",
-      icon: <Info className="w-4 h-4" />,
-      description: "Learn about StudyClock",
+      name: 'End Time Timer',
+      path: '/end-time-timer',
+      icon: <Timer className='w-4 h-4' />,
+      color: 'from-orange-500 to-amber-600',
+      shadowColor: 'shadow-orange-500/30',
+    },
+    {
+      name: 'Focus Test',
+      path: '/focus-test',
+      icon: <Brain className='w-4 h-4' />,
+      description: 'Discover your focus type',
+    },
+    {
+      name: 'About Us',
+      path: '/about-us',
+      icon: <Info className='w-4 h-4' />,
+      description: 'Learn about StudyClock',
     },
   ];
 
@@ -129,15 +143,15 @@ const Navigation: React.FC<NavigationProps> = ({
 
   // Handle click on timer mode button
   const handleModeClick = (
-    mode: "timer" | "countdown" | "pomodoro" | "clock" | "stopwatch"
+    mode: 'timer' | 'countdown' | 'pomodoro' | 'clock' | 'stopwatch'
   ) => {
     if (onModeChange) {
       // Only pass modes that the parent component can handle
-      const validMode = ["timer", "countdown", "pomodoro", "clock"].includes(
+      const validMode = ['timer', 'countdown', 'pomodoro', 'clock'].includes(
         mode
       )
-        ? (mode as "timer" | "countdown" | "pomodoro" | "clock")
-        : "timer";
+        ? (mode as 'timer' | 'countdown' | 'pomodoro' | 'clock')
+        : 'timer';
       onModeChange(validMode);
     }
   };
@@ -164,21 +178,21 @@ const Navigation: React.FC<NavigationProps> = ({
         background: rgba(99, 102, 241, 0.7);
       }
     `}</style>
-      <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 py-3">
-        <div className="max-w-7xl mx-auto">
-          <nav className="relative flex items-center justify-between bg-black/85 backdrop-blur-xl rounded-xl border border-white/25 shadow-xl p-3 sm:p-3.5 md:p-4">
+      <header className='fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 py-3'>
+        <div className='max-w-7xl mx-auto'>
+          <nav className='relative flex items-center justify-between bg-black/85 backdrop-blur-xl rounded-xl border border-white/25 shadow-xl p-3 sm:p-3.5 md:p-4'>
             {/* Logo */}
-            <div className="flex-shrink-0 px-1">
+            <div className='flex-shrink-0 px-1'>
               <Link
-                to="/"
-                className="text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 hover:opacity-90 transition-opacity"
+                to='/'
+                className='text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 hover:opacity-90 transition-opacity'
               >
                 StudyClock.com
               </Link>
             </div>
 
             {/* Desktop Navigation - Only show on large screens, not tablets */}
-            <div className="hidden lg:flex items-center space-x-1 bg-black/70 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl p-1">
+            <div className='hidden lg:flex items-center space-x-1 bg-black/70 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl p-1'>
               {timerItems.map((item) => {
                 const active = isActive(item.path);
                 return (
@@ -188,27 +202,27 @@ const Navigation: React.FC<NavigationProps> = ({
                     onClick={() => {
                       if (onModeChange) {
                         // Map path to mode
-                        if (item.path === "/study-timer")
-                          handleModeClick("timer");
-                        else if (item.path === "/counter")
-                          handleModeClick("countdown");
-                        else if (item.path === "/pomodoro-timer")
-                          handleModeClick("pomodoro");
-                        else if (item.path === "/study-clock-timer")
-                          handleModeClick("clock");
-                        else if (item.path === "/online-stopwatch")
-                          handleModeClick("stopwatch");
+                        if (item.path === '/study-timer')
+                          handleModeClick('timer');
+                        else if (item.path === '/counter')
+                          handleModeClick('countdown');
+                        else if (item.path === '/pomodoro-timer')
+                          handleModeClick('pomodoro');
+                        else if (item.path === '/study-clock-timer')
+                          handleModeClick('clock');
+                        else if (item.path === '/online-stopwatch')
+                          handleModeClick('stopwatch');
                       }
                     }}
                     className={cn(
-                      "flex items-center gap-1 px-3 py-2 rounded-lg whitespace-nowrap transition-all duration-300 hover:bg-white/10",
+                      'flex items-center gap-1 px-3 py-2 rounded-lg whitespace-nowrap transition-all duration-300 hover:bg-white/10',
                       active
                         ? `bg-gradient-to-r ${item.color} shadow-lg ${item.shadowColor}`
-                        : "bg-transparent"
+                        : 'bg-transparent'
                     )}
                   >
                     {item.icon}
-                    <span className="text-white/90 text-sm font-medium">
+                    <span className='text-white/90 text-sm font-medium'>
                       {item.name}
                     </span>
                   </Link>
@@ -217,17 +231,17 @@ const Navigation: React.FC<NavigationProps> = ({
             </div>
 
             {/* Desktop Resources Dropdown & Home */}
-            <div className="hidden lg:flex items-center space-x-2">
+            <div className='hidden lg:flex items-center space-x-2'>
               {/* Home Link */}
               <Link
-                to="/"
+                to='/'
                 className={cn(
-                  "flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors",
-                  isActive("/") ? "text-white/90 bg-white/10" : ""
+                  'flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors',
+                  isActive('/') ? 'text-white/90 bg-white/10' : ''
                 )}
               >
-                <Home className="w-4 h-4" />
-                <span className="text-sm">Home</span>
+                <Home className='w-4 h-4' />
+                <span className='text-sm'>Home</span>
               </Link>
 
               {/* Resources Dropdown */}
@@ -235,48 +249,48 @@ const Navigation: React.FC<NavigationProps> = ({
                 <DropdownMenuTrigger asChild>
                   <button
                     className={cn(
-                      "flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors",
-                      isResourcesActive ? "text-white/90 bg-white/10" : ""
+                      'flex items-center gap-1 px-3 py-2 rounded-lg text-white/70 hover:text-white/90 transition-colors',
+                      isResourcesActive ? 'text-white/90 bg-white/10' : ''
                     )}
                   >
-                    <BookOpen className="w-4 h-4" />
-                    <span className="text-sm">Resources</span>
-                    <ChevronDown className="w-3 h-3" />
+                    <BookOpen className='w-4 h-4' />
+                    <span className='text-sm'>Resources</span>
+                    <ChevronDown className='w-3 h-3' />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                  align="end"
-                  className="w-64 bg-gray-900/98 backdrop-blur-xl border border-white/20 shadow-2xl"
+                  align='end'
+                  className='w-64 bg-gray-900/98 backdrop-blur-xl border border-white/20 shadow-2xl'
                 >
                   {resourcesItems.map((item) => (
-                    <DropdownMenuItem key={item.path} asChild className="p-0">
+                    <DropdownMenuItem key={item.path} asChild className='p-0'>
                       <Link
                         to={item.path}
                         className={cn(
-                          "flex items-start gap-3 p-3 cursor-pointer transition-all duration-200 rounded-md mx-1 my-1",
+                          'flex items-start gap-3 p-3 cursor-pointer transition-all duration-200 rounded-md mx-1 my-1',
                           isActive(item.path)
-                            ? "bg-cyan-500/20 text-cyan-100 border border-cyan-500/30"
-                            : "text-gray-200 hover:text-white hover:bg-white/10"
+                            ? 'bg-cyan-500/20 text-cyan-100 border border-cyan-500/30'
+                            : 'text-gray-200 hover:text-white hover:bg-white/10'
                         )}
                       >
                         <div
                           className={cn(
-                            "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
+                            'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
                             isActive(item.path)
-                              ? "bg-cyan-500/30 text-cyan-200"
-                              : "bg-white/10 text-gray-300"
+                              ? 'bg-cyan-500/30 text-cyan-200'
+                              : 'bg-white/10 text-gray-300'
                           )}
                         >
                           {item.icon}
                         </div>
-                        <div className="flex-1">
-                          <div className="font-medium text-sm">{item.name}</div>
+                        <div className='flex-1'>
+                          <div className='font-medium text-sm'>{item.name}</div>
                           <div
                             className={cn(
-                              "text-xs mt-0.5",
+                              'text-xs mt-0.5',
                               isActive(item.path)
-                                ? "text-cyan-200/80"
-                                : "text-gray-400"
+                                ? 'text-cyan-200/80'
+                                : 'text-gray-400'
                             )}
                           >
                             {item.description}
@@ -290,77 +304,77 @@ const Navigation: React.FC<NavigationProps> = ({
             </div>
 
             {/* Mobile Menu Trigger - Show on tablets too */}
-            <div className="lg:hidden">
+            <div className='lg:hidden'>
               <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                 <SheetTrigger asChild>
                   <button
-                    className="p-3 md:p-4 bg-red-500 hover:bg-red-600 transition-all rounded-xl shadow-lg shadow-red-500/30"
-                    aria-label="Menu"
+                    className='p-3 md:p-4 bg-red-500 hover:bg-red-600 transition-all rounded-xl shadow-lg shadow-red-500/30'
+                    aria-label='Menu'
                   >
                     <Menu
-                      className="h-6 w-6 md:h-7 md:w-7 text-white"
+                      className='h-6 w-6 md:h-7 md:w-7 text-white'
                       strokeWidth={2.5}
                     />
                   </button>
                 </SheetTrigger>
                 <SheetContent
-                  side="right"
-                  className="w-[80%] sm:w-[400px] md:w-[450px] bg-black/95 backdrop-blur-xl border-white/10 p-0 overflow-hidden"
+                  side='right'
+                  className='w-[80%] sm:w-[400px] md:w-[450px] bg-black/95 backdrop-blur-xl border-white/10 p-0 overflow-hidden'
                 >
-                  <div className="flex flex-col h-full overflow-y-auto custom-scrollbar px-5 pt-2 pb-6">
+                  <div className='flex flex-col h-full overflow-y-auto custom-scrollbar px-5 pt-2 pb-6'>
                     {/* Mobile Logo */}
-                    <div className="flex items-center justify-between sticky top-0 py-4 md:py-5 bg-black/80 backdrop-blur-md z-10 mb-2">
-                      <span className="text-lg md:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                    <div className='flex items-center justify-between sticky top-0 py-4 md:py-5 bg-black/80 backdrop-blur-md z-10 mb-2'>
+                      <span className='text-lg md:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500'>
                         StudyClock.com
                       </span>
-                      <SheetClose className="rounded-full p-2 md:p-3 hover:bg-white/10">
-                        <X className="h-6 w-6 md:h-7 md:w-7 text-white" />
+                      <SheetClose className='rounded-full p-2 md:p-3 hover:bg-white/10'>
+                        <X className='h-6 w-6 md:h-7 md:w-7 text-white' />
                       </SheetClose>
                     </div>
 
                     {/* Mobile Timer Navigation */}
-                    <div className="mt-6">
-                      <h3 className="text-sm md:text-base uppercase text-white/70 font-bold mb-3 px-1">
+                    <div className='mt-6'>
+                      <h3 className='text-sm md:text-base uppercase text-white/70 font-bold mb-3 px-1'>
                         Timers
                       </h3>
-                      {onModeChange && location.pathname === "/" && (
-                        <div className="mb-4 flex justify-center items-center gap-4 bg-black/70 p-3 rounded-xl border border-white/10">
-                          <h4 className="text-sm text-white/90 font-medium">
+                      {onModeChange && location.pathname === '/' && (
+                        <div className='mb-4 flex justify-center items-center gap-4 bg-black/70 p-3 rounded-xl border border-white/10'>
+                          <h4 className='text-sm text-white/90 font-medium'>
                             Current Mode:
                           </h4>
-                          <div className="flex gap-3">
+                          <div className='flex gap-3'>
                             <button
                               onClick={() => {
-                                onModeChange("pomodoro");
+                                onModeChange('pomodoro');
                                 setIsMenuOpen(false);
                               }}
                               className={cn(
-                                "flex items-center justify-center p-2 rounded-lg transition-all",
-                                currentMode === "pomodoro"
-                                  ? "bg-gradient-to-r from-red-500 to-rose-600 shadow-md"
-                                  : "bg-white/10"
+                                'flex items-center justify-center p-2 rounded-lg transition-all',
+                                currentMode === 'pomodoro'
+                                  ? 'bg-gradient-to-r from-red-500 to-rose-600 shadow-md'
+                                  : 'bg-white/10'
                               )}
                             >
-                              <Target className="w-5 h-5 text-white" />
+                              <Target className='w-5 h-5 text-white' />
                             </button>
                             <button
                               onClick={() => {
-                                onModeChange("timer");
+                                onModeChange('timer');
                                 setIsMenuOpen(false);
                               }}
                               className={cn(
-                                "flex items-center justify-center p-2 rounded-lg transition-all",
-                                currentMode === "timer"
-                                  ? "bg-gradient-to-r from-cyan-500 to-blue-600 shadow-md"
-                                  : "bg-white/10"
+                                'flex items-center justify-center p-2 rounded-lg transition-all',
+                                currentMode === 'timer'
+                                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 shadow-md'
+                                  : 'bg-white/10'
                               )}
                             >
-                              <Clock className="w-5 h-5 text-white" />
+                              <Clock className='w-5 h-5 text-white' />
                             </button>
                           </div>
                         </div>
                       )}
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      <div className='grid grid-cols-2 md:grid-cols-3 gap-3'>
                         {timerItems.map((item) => (
                           <SheetClose asChild key={item.path}>
                             <Link
@@ -368,39 +382,39 @@ const Navigation: React.FC<NavigationProps> = ({
                               onClick={() => {
                                 if (onModeChange) {
                                   // Map path to mode
-                                  if (item.path === "/study-timer")
-                                    handleModeClick("timer");
-                                  else if (item.path === "/counter")
-                                    handleModeClick("countdown");
-                                  else if (item.path === "/pomodoro-timer")
-                                    handleModeClick("pomodoro");
-                                  else if (item.path === "/study-clock-timer")
-                                    handleModeClick("clock");
+                                  if (item.path === '/study-timer')
+                                    handleModeClick('timer');
+                                  else if (item.path === '/counter')
+                                    handleModeClick('countdown');
+                                  else if (item.path === '/pomodoro-timer')
+                                    handleModeClick('pomodoro');
+                                  else if (item.path === '/study-clock-timer')
+                                    handleModeClick('clock');
                                 }
                               }}
                               className={cn(
-                                "flex flex-col items-center p-4 rounded-xl bg-black/80 border border-white/20 shadow-md transition-all hover:shadow-lg",
+                                'flex flex-col items-center p-4 rounded-xl bg-black/80 border border-white/20 shadow-md transition-all hover:shadow-lg',
                                 isActive(item.path)
                                   ? `ring-2 ring-${item.color
-                                      .split(" ")[1]
+                                      .split(' ')[1]
                                       .replace(
-                                        "to-",
-                                        ""
+                                        'to-',
+                                        ''
                                       )}/70 shadow-lg shadow-${item.color
-                                      .split(" ")[1]
-                                      .replace("to-", "")}/30`
-                                  : ""
+                                      .split(' ')[1]
+                                      .replace('to-', '')}/30`
+                                  : ''
                               )}
                             >
                               <div
                                 className={cn(
-                                  "w-12 h-12 rounded-full flex items-center justify-center mb-2 shadow-md",
+                                  'w-12 h-12 rounded-full flex items-center justify-center mb-2 shadow-md',
                                   `bg-gradient-to-r ${item.color}`
                                 )}
                               >
                                 {item.icon}
                               </div>
-                              <span className="text-white text-sm font-medium">
+                              <span className='text-white text-sm font-medium'>
                                 {item.name}
                               </span>
                             </Link>
@@ -410,70 +424,70 @@ const Navigation: React.FC<NavigationProps> = ({
                     </div>
 
                     {/* Mobile Home Link */}
-                    <div className="mt-8">
-                      <h3 className="text-sm md:text-base uppercase text-white/70 font-bold mb-3 px-1">
+                    <div className='mt-8'>
+                      <h3 className='text-sm md:text-base uppercase text-white/70 font-bold mb-3 px-1'>
                         Navigation
                       </h3>
-                      <div className="space-y-2">
+                      <div className='space-y-2'>
                         <SheetClose asChild>
                           <Link
-                            to="/"
+                            to='/'
                             className={cn(
-                              "flex items-center gap-3 px-4 py-3 rounded-xl w-full border transition-all",
-                              isActive("/")
-                                ? "bg-blue-900/30 text-white border-blue-500/30 shadow-md"
-                                : "text-white/80 hover:text-white hover:bg-white/10 border-transparent"
+                              'flex items-center gap-3 px-4 py-3 rounded-xl w-full border transition-all',
+                              isActive('/')
+                                ? 'bg-blue-900/30 text-white border-blue-500/30 shadow-md'
+                                : 'text-white/80 hover:text-white hover:bg-white/10 border-transparent'
                             )}
                           >
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center shadow-md">
-                              <Home className="w-5 h-5 text-white" />
+                            <div className='w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center shadow-md'>
+                              <Home className='w-5 h-5 text-white' />
                             </div>
-                            <span className="font-medium">Home</span>
+                            <span className='font-medium'>Home</span>
                           </Link>
                         </SheetClose>
 
                         <SheetClose asChild>
                           <Link
-                            to="/online-stopwatch"
+                            to='/online-stopwatch'
                             className={cn(
-                              "flex items-center gap-3 px-4 py-3 rounded-xl w-full border transition-all",
-                              isActive("/online-stopwatch")
-                                ? "bg-emerald-900/30 text-white border-emerald-500/30 shadow-md"
-                                : "text-white/80 hover:text-white hover:bg-white/10 border-transparent"
+                              'flex items-center gap-3 px-4 py-3 rounded-xl w-full border transition-all',
+                              isActive('/online-stopwatch')
+                                ? 'bg-emerald-900/30 text-white border-emerald-500/30 shadow-md'
+                                : 'text-white/80 hover:text-white hover:bg-white/10 border-transparent'
                             )}
                           >
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 flex items-center justify-center shadow-md">
-                              <Watch className="w-5 h-5 text-white" />
+                            <div className='w-10 h-10 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 flex items-center justify-center shadow-md'>
+                              <Watch className='w-5 h-5 text-white' />
                             </div>
-                            <span className="font-medium">Stopwatch</span>
+                            <span className='font-medium'>Stopwatch</span>
                           </Link>
                         </SheetClose>
                       </div>
                     </div>
 
                     {/* Mobile Resources Navigation */}
-                    <div className="mt-8">
-                      <h3 className="text-sm md:text-base uppercase text-white/70 font-bold mb-3 px-1">
+                    <div className='mt-8'>
+                      <h3 className='text-sm md:text-base uppercase text-white/70 font-bold mb-3 px-1'>
                         Resources
                       </h3>
-                      <div className="space-y-2">
+                      <div className='space-y-2'>
                         {resourcesItems.map((item) => (
                           <SheetClose asChild key={item.path}>
                             <Link
                               to={item.path}
                               className={cn(
-                                "flex items-center gap-3 px-4 py-4 rounded-xl w-full border transition-all",
+                                'flex items-center gap-3 px-4 py-4 rounded-xl w-full border transition-all',
                                 isActive(item.path)
-                                  ? "bg-blue-900/30 text-white border-blue-500/30 shadow-md"
-                                  : "text-white/80 hover:text-white hover:bg-white/10 border-transparent"
+                                  ? 'bg-blue-900/30 text-white border-blue-500/30 shadow-md'
+                                  : 'text-white/80 hover:text-white hover:bg-white/10 border-transparent'
                               )}
                             >
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center shadow-md">
+                              <div className='w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center shadow-md'>
                                 {item.icon}
                               </div>
-                              <div className="flex-1">
-                                <div className="font-medium">{item.name}</div>
-                                <div className="text-xs text-white/70 mt-1">
+                              <div className='flex-1'>
+                                <div className='font-medium'>{item.name}</div>
+                                <div className='text-xs text-white/70 mt-1'>
                                   {item.description}
                                 </div>
                               </div>
@@ -484,11 +498,11 @@ const Navigation: React.FC<NavigationProps> = ({
                     </div>
 
                     {/* Bottom Info */}
-                    <div className="mt-auto pt-8 pb-4 text-center">
-                      <p className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 font-bold">
+                    <div className='mt-auto pt-8 pb-4 text-center'>
+                      <p className='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 font-bold'>
                         StudyClock.com
                       </p>
-                      <p className="text-white/60 text-xs mt-1">
+                      <p className='text-white/60 text-xs mt-1'>
                         Focus Better, Study Smarter
                       </p>
                     </div>
