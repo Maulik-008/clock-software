@@ -26,6 +26,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import useAnalytics from '../hooks/use-analytics';
 import ParticleBackground from '../components/ParticleBackground';
+import { usePersistedCountdown } from '../hooks/usePersistedCountdown';
 
 const EndTimeTimer = () => {
   const location = useLocation();
@@ -41,13 +42,21 @@ const EndTimeTimer = () => {
     initialState?.minutes?.toString() || '0'
   );
   const [endTime, setEndTime] = useState<Date | null>(null);
-  const [timeRemaining, setTimeRemaining] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
+
+  // Use persisted countdown hook
+  const {
+    time: timeRemaining,
+    isRunning,
+    start,
+    pause,
+    reset: resetTimer,
+    setInitialTime,
+  } = usePersistedCountdown('end-time-timer', 0, handleCountdownComplete);
+
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [studySessionCount, setStudySessionCount] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
   const analytics = useAnalytics();
@@ -69,6 +78,43 @@ const EndTimeTimer = () => {
     };
   }, []);
 
+  // Restore UI state from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedState = localStorage.getItem('end-time-timer-ui-state');
+      if (savedState) {
+        const parsed = JSON.parse(savedState);
+        if (parsed.hasStarted) {
+          setHasStarted(true);
+        }
+        if (parsed.endTime) {
+          setEndTime(new Date(parsed.endTime));
+        }
+        if (parsed.hours !== undefined) {
+          setHours(parsed.hours);
+        }
+        if (parsed.minutes !== undefined) {
+          setMinutes(parsed.minutes);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to restore EndTimeTimer UI state:', error);
+    }
+  }, []);
+
+  // Save UI state to localStorage whenever it changes
+  useEffect(() => {
+    if (hasStarted && endTime) {
+      const state = {
+        hasStarted,
+        endTime: endTime.toISOString(),
+        hours,
+        minutes,
+      };
+      localStorage.setItem('end-time-timer-ui-state', JSON.stringify(state));
+    }
+  }, [hasStarted, endTime, hours, minutes]);
+
   const showNotification = useCallback(
     (title: string, body: string) => {
       if (!notificationsEnabled) return;
@@ -84,65 +130,33 @@ const EndTimeTimer = () => {
     [notificationsEnabled]
   );
 
-  // Calculate time remaining and update countdown
-  useEffect(() => {
-    if (isRunning && hasStarted && endTime) {
-      intervalRef.current = setInterval(() => {
-        const now = new Date();
-        const diff = endTime.getTime() - now.getTime();
+  // Handle countdown completion
+  function handleCountdownComplete() {
+    // Clear UI state when timer completes
+    setHasStarted(false);
+    setEndTime(null);
+    localStorage.removeItem('end-time-timer-ui-state');
 
-        if (diff <= 0) {
-          setTimeRemaining(0);
-          setIsRunning(false);
-
-          if (soundEnabled && audioRef.current) {
-            audioRef.current.play().catch((err) => {
-              console.error('Error playing completion sound:', err);
-            });
-          }
-
-          if (notificationsEnabled) {
-            showNotification(
-              'Timer Complete!',
-              'Your countdown timer has finished.'
-            );
-          }
-
-          analytics.trackTimerComplete('end-time-timer', 0);
-
-          toast({
-            title: 'Timer Complete!',
-            description: 'Your countdown timer has finished.',
-            variant: 'default',
-          });
-        } else {
-          setTimeRemaining(diff);
-        }
-      }, 10);
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+    if (soundEnabled && audioRef.current) {
+      audioRef.current.play().catch((err) => {
+        console.error('Error playing completion sound:', err);
+      });
     }
 
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [
-    isRunning,
-    hasStarted,
-    endTime,
-    soundEnabled,
-    notificationsEnabled,
-    showNotification,
-    analytics,
-    toast,
-  ]);
+    if (notificationsEnabled) {
+      showNotification('Timer Complete!', 'Your countdown timer has finished.');
+    }
 
-  const formatTime = (totalMilliseconds: number) => {
-    const totalSeconds = Math.floor(totalMilliseconds / 1000);
+    analytics.trackTimerComplete('end-time-timer', 0);
+
+    toast({
+      title: 'Timer Complete!',
+      description: 'Your countdown timer has finished.',
+      variant: 'default',
+    });
+  }
+
+  const formatTime = (totalSeconds: number) => {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
@@ -181,13 +195,13 @@ const EndTimeTimer = () => {
     const end = new Date(now);
     end.setHours(end.getHours() + hoursNum);
     end.setMinutes(end.getMinutes() + minutesNum);
-    end.setSeconds(end.getSeconds(), 0); // Reset seconds and milliseconds
+    end.setSeconds(end.getSeconds(), 0);
 
-    const diff = end.getTime() - now.getTime();
+    const totalSeconds = hoursNum * 3600 + minutesNum * 60;
     setEndTime(end);
-    setTimeRemaining(diff);
+    setInitialTime(totalSeconds);
     setHasStarted(true);
-    setIsRunning(true);
+    start();
 
     if (soundEnabled && audioRef.current) {
       audioRef.current.currentTime = 0;
@@ -208,7 +222,7 @@ const EndTimeTimer = () => {
       handleSetEndTime();
       return;
     }
-    setIsRunning(true);
+    start();
     if (soundEnabled && audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch((err) => {
@@ -223,7 +237,7 @@ const EndTimeTimer = () => {
   };
 
   const handlePause = () => {
-    setIsRunning(false);
+    pause();
     analytics.trackTimerPause('end-time-timer', timeRemaining);
     toast({
       title: 'Timer Paused',
@@ -232,12 +246,14 @@ const EndTimeTimer = () => {
   };
 
   const handleReset = () => {
-    setIsRunning(false);
     setHasStarted(false);
-    setTimeRemaining(0);
     setEndTime(null);
     setHours('0');
     setMinutes('0');
+    resetTimer();
+
+    // Clear UI state from localStorage
+    localStorage.removeItem('end-time-timer-ui-state');
 
     if (audioRef.current) {
       audioRef.current.pause();
