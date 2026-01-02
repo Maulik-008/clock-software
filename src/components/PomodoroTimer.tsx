@@ -11,31 +11,57 @@ import {
   BellOff,
   Volume2,
   VolumeX,
+  Settings,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import useAnalytics from '@/hooks/use-analytics';
 import {
   usePersistedPomodoro,
   PomodoroMode,
 } from '../hooks/usePersistedPomodoro';
+import { getActivePackage, PomodoroPackage } from '@/lib/pomodoroSettings';
 
 interface PomodoroTimerProps {
   initialMode?: PomodoroMode;
 }
 
 // Timer durations in seconds
-const DURATIONS: Record<PomodoroMode, number> = {
-  pomodoro: 25 * 60, // 25 minutes
-  shortBreak: 5 * 60, // 5 minutes
-  longBreak: 15 * 60, // 15 minutes
-};
+// Timer durations in seconds
+// DURATIONS removed in favor of dynamic packages
 
 const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
   initialMode = 'pomodoro',
 }) => {
+  // Load active package
+  const [activePackage, setActivePackage] = useState<PomodoroPackage>(
+    getActivePackage()
+  );
+
+  useEffect(() => {
+    const updatePackage = () => {
+      setActivePackage(getActivePackage());
+    };
+    window.addEventListener('pomodoro-package-changed', updatePackage);
+    window.addEventListener('pomodoro-packages-updated', updatePackage);
+    return () => {
+      window.removeEventListener('pomodoro-package-changed', updatePackage);
+      window.removeEventListener('pomodoro-packages-updated', updatePackage);
+    };
+  }, []);
+
+  const durations = React.useMemo(
+    () => ({
+      pomodoro: activePackage.pomodoro * 60,
+      shortBreak: activePackage.shortBreak * 60,
+      longBreak: activePackage.longBreak * 60,
+    }),
+    [activePackage]
+  );
+
   // Use persisted Pomodoro hook
   const { time, isRunning, mode, pomodoroCount, start, pause, reset, setMode } =
-    usePersistedPomodoro('pomodoro-timer', handleModeComplete);
+    usePersistedPomodoro('pomodoro-timer', handleModeComplete, durations);
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [endTime, setEndTime] = useState<Date | null>(null);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -114,7 +140,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
   useEffect(() => {
     if (isRunning && time > 0) {
       const now = new Date();
-      const modeDuration = DURATIONS[mode];
+      const modeDuration = durations[mode];
 
       // Calculate end time from current time + remaining time
       const calculatedEndTime = new Date(now.getTime() + time * 1000);
@@ -378,6 +404,17 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
             <VolumeX className='w-5 h-5 text-gray-400' />
           )}
         </button>
+      </div>
+
+      {/* Package Settings Link */}
+      <div className='flex justify-center mb-6'>
+        <Link
+          to='/pomodoro-packages'
+          className='flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors'
+        >
+          <Settings className='w-4 h-4' />
+          <span>Customize Timer ({activePackage.name})</span>
+        </Link>
       </div>
 
       {/* Controls */}

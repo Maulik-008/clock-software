@@ -23,7 +23,7 @@ interface UsePersistedPomodoroReturn {
   clear: () => void;
 }
 
-const DURATIONS: Record<PomodoroMode, number> = {
+const DEFAULT_DURATIONS: Record<PomodoroMode, number> = {
   pomodoro: 25 * 60, // 25 minutes
   shortBreak: 5 * 60, // 5 minutes
   longBreak: 15 * 60, // 15 minutes
@@ -39,9 +39,11 @@ const DURATIONS: Record<PomodoroMode, number> = {
  */
 export const usePersistedPomodoro = (
   storageKey: string,
-  onModeComplete?: (mode: PomodoroMode) => void
+  onModeComplete?: (mode: PomodoroMode) => void,
+  customDurations?: Record<PomodoroMode, number>
 ): UsePersistedPomodoroReturn => {
-  const [time, setTime] = useState(DURATIONS.pomodoro);
+  const durations = customDurations || DEFAULT_DURATIONS;
+  const [time, setTime] = useState(durations.pomodoro);
   const [isRunning, setIsRunning] = useState(false);
   const [mode, setModeState] = useState<PomodoroMode>('pomodoro');
   const [pomodoroCount, setPomodoroCount] = useState(0);
@@ -50,7 +52,7 @@ export const usePersistedPomodoro = (
     mode: 'pomodoro',
     endTimestamp: null,
     pausedAt: null,
-    remainingWhenPaused: DURATIONS.pomodoro,
+    remainingWhenPaused: durations.pomodoro,
     isRunning: false,
     pomodoroCount: 0,
   });
@@ -98,7 +100,7 @@ export const usePersistedPomodoro = (
           setIsRunning(false);
         } else {
           // Fresh state for this mode
-          setTime(DURATIONS[parsed.mode]);
+          setTime(durations[parsed.mode]);
         }
       }
     } catch (error) {
@@ -182,7 +184,7 @@ export const usePersistedPomodoro = (
 
   const start = useCallback(() => {
     const remaining =
-      stateRef.current.remainingWhenPaused || DURATIONS[stateRef.current.mode];
+      stateRef.current.remainingWhenPaused || durations[stateRef.current.mode];
     const now = Date.now();
     const endTimestamp = now + remaining * 1000;
 
@@ -195,7 +197,7 @@ export const usePersistedPomodoro = (
     };
     saveState(newState);
     setIsRunning(true);
-  }, [saveState]);
+  }, [saveState, durations]);
 
   const pause = useCallback(() => {
     const state = stateRef.current;
@@ -218,7 +220,7 @@ export const usePersistedPomodoro = (
   }, [saveState]);
 
   const reset = useCallback(() => {
-    const duration = DURATIONS[stateRef.current.mode];
+    const duration = durations[stateRef.current.mode];
     const newState: PomodoroState = {
       ...stateRef.current,
       endTimestamp: null,
@@ -229,11 +231,11 @@ export const usePersistedPomodoro = (
     saveState(newState);
     setTime(duration);
     setIsRunning(false);
-  }, [saveState]);
+  }, [saveState, durations]);
 
   const setMode = useCallback(
     (newMode: PomodoroMode) => {
-      const duration = DURATIONS[newMode];
+      const duration = durations[newMode];
       const newState: PomodoroState = {
         ...stateRef.current,
         mode: newMode,
@@ -247,7 +249,7 @@ export const usePersistedPomodoro = (
       setTime(duration);
       setIsRunning(false);
     },
-    [saveState]
+    [saveState, durations]
   );
 
   const clear = useCallback(() => {
@@ -256,11 +258,11 @@ export const usePersistedPomodoro = (
       mode: 'pomodoro',
       endTimestamp: null,
       pausedAt: null,
-      remainingWhenPaused: DURATIONS.pomodoro,
+      remainingWhenPaused: durations.pomodoro,
       isRunning: false,
       pomodoroCount: 0,
     };
-  }, [storageKey]);
+  }, [storageKey, durations.pomodoro]);
 
   return {
     time,
