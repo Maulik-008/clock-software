@@ -13,6 +13,7 @@ import {
   ShoppingCart,
   ListTodo,
   Brain,
+  Download,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -26,8 +27,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { showPWAPopup } from '@/utils/pwaPopup';
 
 interface NavigationProps {
   currentMode?: 'timer' | 'countdown' | 'pomodoro' | 'clock';
@@ -299,6 +302,23 @@ const Navigation: React.FC<NavigationProps> = ({
                       </Link>
                     </DropdownMenuItem>
                   ))}
+                  <DropdownMenuSeparator className='bg-white/10' />
+                  <DropdownMenuItem
+                    className='p-0 cursor-pointer'
+                    onClick={() => showPWAPopup()}
+                  >
+                    <div className='flex items-start gap-3 p-3 transition-all duration-200 rounded-md mx-1 my-1 text-gray-200 hover:text-white hover:bg-white/10 w-full'>
+                      <div className='w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-gradient-to-r from-purple-500 to-pink-600 text-white'>
+                        <Download className='w-4 h-4' />
+                      </div>
+                      <div className='flex-1'>
+                        <div className='font-medium text-sm'>Install App (Offline Mode)</div>
+                        <div className='text-xs mt-0.5 text-gray-400'>
+                          Install PWA to use offline
+                        </div>
+                      </div>
+                    </div>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -494,6 +514,25 @@ const Navigation: React.FC<NavigationProps> = ({
                             </Link>
                           </SheetClose>
                         ))}
+                        <SheetClose asChild>
+                          <button
+                            onClick={() => {
+                              showPWAPopup();
+                              setIsMenuOpen(false);
+                            }}
+                            className='flex items-center gap-3 px-4 py-4 rounded-xl w-full border transition-all text-white/80 hover:text-white hover:bg-white/10 border-transparent'
+                          >
+                            <div className='w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center shadow-md'>
+                              <Download className='w-5 h-5 text-white' />
+                            </div>
+                            <div className='flex-1 text-left'>
+                              <div className='font-medium'>Install App (Offline Mode)</div>
+                              <div className='text-xs text-white/70 mt-1'>
+                                Install PWA to use offline
+                              </div>
+                            </div>
+                          </button>
+                        </SheetClose>
                       </div>
                     </div>
 

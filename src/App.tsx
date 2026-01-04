@@ -8,6 +8,7 @@ import Analytics from "./components/Analytics";
 import { FullViewModeProvider } from "./hooks/use-full-view-mode";
 import FloatingButtons from "./components/FloatingButtons";
 import PWAInstallPrompt from "./components/PWAInstallPrompt";
+import PWAInfoPopup from "./components/PWAInfoPopup";
 import OfflineIndicator from "./components/OfflineIndicator";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -40,6 +41,8 @@ const App = () => (
             <Analytics />
             <FloatingButtons />
             <PWAInstallPrompt />
+            <PWAInfoPopup />
+            <OfflineIndicator />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/study-timer" element={<StudyTimer />} />
