@@ -9,6 +9,7 @@ import SEO from "../components/SEO";
 import TodoList from "../components/TodoList";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useFullViewMode } from "@/hooks/use-full-view-mode";
 
 type AppMode = "timer" | "countdown" | "pomodoro" | "clock";
 type PomodoroMode = "pomodoro" | "shortBreak" | "longBreak";
@@ -17,6 +18,7 @@ const Index = () => {
   const [mode, setMode] = useState<AppMode>("pomodoro");
   const [pomodoroMode, setPomodoroMode] = useState<PomodoroMode>("pomodoro");
   const navigate = useNavigate();
+  const { isFullView } = useFullViewMode();
 
   useEffect(() => {
     document.documentElement.classList.add("text-base", "md:text-lg");
@@ -96,15 +98,17 @@ const Index = () => {
       />
       <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
         <ParticleBackground />
-        <Navigation
-          currentMode={mode}
-          onModeChange={setMode}
-          pomodoroSubMode={pomodoroMode}
-          onPomodoroSubModeChange={
-            mode === "pomodoro" ? setPomodoroMode : undefined
-          }
-        />
-        <main className="relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-16 sm:pt-18 md:pt-20">
+        {!isFullView && (
+          <Navigation
+            currentMode={mode}
+            onModeChange={setMode}
+            pomodoroSubMode={pomodoroMode}
+            onPomodoroSubModeChange={
+              mode === "pomodoro" ? setPomodoroMode : undefined
+            }
+          />
+        )}
+        <main className={`relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 ${isFullView ? 'pt-4' : 'pt-16 sm:pt-18 md:pt-20'}`}>
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
             {mode === "timer" ? (
               <section aria-label="Clock Timer" className="fade-in">
@@ -148,13 +152,16 @@ const Index = () => {
             )}
 
             {/* Todo List Component */}
-            <div className="mt-8">
-              <TodoList variant="full" maxHeight="350px" />
-            </div>
+            {!isFullView && (
+              <div className="mt-8">
+                <TodoList variant="full" maxHeight="350px" />
+              </div>
+            )}
           </div>
         </main>
 
         {/* Internal Navigation Links */}
+        {!isFullView && (
         <section className="relative z-10 pt-4 pb-8 px-4 max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-6 text-center">
             Choose Your Productivity Tool
@@ -225,8 +232,10 @@ const Index = () => {
             </div>
           </div>
         </section>
+        )}
 
         {/* StudyClock Information Section */}
+        {!isFullView && (
         <section className="relative z-10 py-8 px-4 max-w-4xl mx-auto text-gray-200">
           <div className="bg-black/60 backdrop-blur-xl p-5 sm:p-8 rounded-xl border border-gray-800 shadow-xl">
             <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-4">
@@ -544,8 +553,9 @@ const Index = () => {
             </div>
           </div>
         </section>
+        )}
 
-        <Footer />
+        {!isFullView && <Footer />}
       </div>
     </>
   );

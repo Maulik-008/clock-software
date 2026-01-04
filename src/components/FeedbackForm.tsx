@@ -19,6 +19,12 @@ import useAnalytics from "@/hooks/use-analytics";
 // Define form schema with Zod
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name is required" }),
+  form_email: z
+    .union([
+      z.string().email({ message: "Please provide a valid email address" }),
+      z.literal(""),
+    ])
+    .optional(),
   message: z
     .string()
     .min(5, { message: "Message is required (min 5 characters)" }),
@@ -40,6 +46,7 @@ const FeedbackForm: React.FC = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      form_email: "",
       message: "",
     },
   });
@@ -53,6 +60,7 @@ const FeedbackForm: React.FC = () => {
         EMAIL_TEMPLATE_ID,
         {
           from_name: data.name,
+          form_email: data.form_email,
           message: data.message,
         },
         EMAIL_PUBLIC_KEY
@@ -73,11 +81,42 @@ const FeedbackForm: React.FC = () => {
       }
     } catch (error) {
       console.error("Error sending feedback:", error);
-      toast({
-        title: "Error sending feedback",
-        description: "Please try again later.",
-        variant: "destructive",
-      });
+
+      // Check if offline
+      if (!navigator.onLine) {
+        // Store feedback for later submission
+        const pendingFeedback = {
+          name: data.name,
+          form_email: data.form_email,
+          message: data.message,
+          timestamp: new Date().toISOString(),
+        };
+
+        const existingPending = JSON.parse(
+          localStorage.getItem("pending-feedback") || "[]"
+        );
+        existingPending.push(pendingFeedback);
+        localStorage.setItem(
+          "pending-feedback",
+          JSON.stringify(existingPending)
+        );
+
+        toast({
+          title: "Feedback saved offline",
+          description: "Your feedback will be sent when you're back online.",
+          variant: "default",
+        });
+        reset();
+        if (closeDialogRef.current) {
+          closeDialogRef.current.click();
+        }
+      } else {
+        toast({
+          title: "Error sending feedback",
+          description: "Please try again later.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -94,6 +133,19 @@ const FeedbackForm: React.FC = () => {
         />
         {errors.name && (
           <p className="text-red-400 text-xs">{errors.name.message}</p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Input
+          id="form_email"
+          type="email"
+          placeholder="Your Email (optional - so we can revert back with updates)"
+          className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
+          {...register("form_email")}
+        />
+        {errors.form_email && (
+          <p className="text-red-400 text-xs">{errors.form_email.message}</p>
         )}
       </div>
 

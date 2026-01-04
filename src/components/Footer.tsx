@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FeedbackButton from "./FeedbackButton";
 
 const Footer: React.FC = () => {
   return (
@@ -47,7 +46,6 @@ const Footer: React.FC = () => {
       <div className="mt-2 text-xs">
         <p>© {new Date().getFullYear()} StudyClock. All Rights Reserved.</p>
       </div>
-      <FeedbackButton />
     </footer>
   );
 };

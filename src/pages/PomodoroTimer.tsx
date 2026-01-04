@@ -6,8 +6,11 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import TodoList from "@/components/TodoList";
+import { useFullViewMode } from "@/hooks/use-full-view-mode";
 
 const PomodoroTimerPage = () => {
+  const { isFullView } = useFullViewMode();
+
   return (
     <>
       <SEO
@@ -20,30 +23,35 @@ const PomodoroTimerPage = () => {
         <ParticleBackground />
 
         {/* Global Navigation */}
-        <Navigation />
+        {!isFullView && <Navigation />}
 
-        <main className="mt-3 relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 pt-28 sm:pt-28 md:pt-28">
+        <main className={`mt-3 relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 ${isFullView ? 'pt-4' : 'pt-28 sm:pt-28 md:pt-28'}`}>
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
             <section aria-label="Pomodoro Timer" className="fade-in">
               <h1 className="sr-only">
                 Pomodoro Timer - The 25/5 Tomato Technique Timer
               </h1>
               <PomodoroTimer initialMode="pomodoro" />
-              <div className="mt-8">
-                <TodoList variant="full" maxHeight="350px" />
-              </div>
-              <div className="mt-4 text-center text-gray-400 text-base">
-                <p>
-                  Use the Pomodoro (Tomato) technique to boost your
-                  productivity. 25-minute focus sessions with short and long
-                  breaks.
-                </p>
-              </div>
+              {!isFullView && (
+                <>
+                  <div className="mt-8">
+                    <TodoList variant="full" maxHeight="350px" />
+                  </div>
+                  <div className="mt-4 text-center text-gray-400 text-base">
+                    <p>
+                      Use the Pomodoro (Tomato) technique to boost your
+                      productivity. 25-minute focus sessions with short and long
+                      breaks.
+                    </p>
+                  </div>
+                </>
+              )}
             </section>
           </div>
         </main>
 
         {/* SEO Content Section */}
+        {!isFullView && (
         <section className="relative z-10 py-8 px-4 max-w-4xl mx-auto text-gray-200">
           <div className="bg-black/60 backdrop-blur-xl p-5 sm:p-8 rounded-xl border border-gray-800 shadow-xl">
             <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-rose-500 mb-4">
@@ -551,8 +559,9 @@ const PomodoroTimerPage = () => {
             </div>
           </div>
         </section>
+        )}
 
-        <Footer />
+        {!isFullView && <Footer />}
       </div>
     </>
   );

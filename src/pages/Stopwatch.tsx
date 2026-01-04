@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Footer from "../components/Footer";
 import Navigation from "../components/Navigation";
 import SEO from "../components/SEO";
+import { useFullViewMode } from "@/hooks/use-full-view-mode";
 import {
   Play,
   Pause,
@@ -36,6 +37,7 @@ const FuturisticStopwatch = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
   const analytics = useAnalytics();
+  const { isFullView } = useFullViewMode();
 
   // Initialize audio
   useEffect(() => {
@@ -217,9 +219,9 @@ const FuturisticStopwatch = () => {
       />
       <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden text-white font-sans">
         <ParticleBackground />
-        <Navigation />
+        {!isFullView && <Navigation />}
 
-        <main className="relative z-10 pt-28 pb-20 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+        <main className={`relative z-10 ${isFullView ? 'pt-4' : 'pt-28'} pb-20 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl`}>
           <div className="w-full max-w-6xl mx-auto">
             {/* Hero section */}
             <div className="text-center mb-10 md:mb-12 animate-fade-in">
@@ -466,6 +468,7 @@ const FuturisticStopwatch = () => {
             </div>
 
             {/* SEO Content Section */}
+            {!isFullView && (
             <section className="mt-12 sm:mt-16 md:mt-20 bg-black/60 backdrop-blur-xl rounded-xl p-6 sm:p-8 border border-gray-800 shadow-xl text-gray-200">
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-400 mb-6">
@@ -634,10 +637,11 @@ const FuturisticStopwatch = () => {
                 </div>
               </div>
             </section>
+            )}
           </div>
         </main>
 
-        <Footer />
+        {!isFullView && <Footer />}
       </div>
 
       <style>{`
