@@ -21,6 +21,7 @@ import {
   PomodoroMode,
 } from '../hooks/usePersistedPomodoro';
 import { getActivePackage, PomodoroPackage } from '@/lib/pomodoroSettings';
+import { useAlarmAudio } from '@/hooks/use-alarm-audio';
 
 interface PomodoroTimerProps {
   initialMode?: PomodoroMode;
@@ -66,7 +67,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
   const [endTime, setEndTime] = useState<Date | null>(null);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { playAlarm, stopAlarm } = useAlarmAudio();
   const analytics = useAnalytics();
 
   // Show browser notification
@@ -106,18 +107,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
     if ('Notification' in window) {
       Notification.requestPermission();
     }
-
-    // Initialize audio element
-    audioRef.current = new Audio('/audio/alarm.mp3');
-    audioRef.current.loop = false;
-
-    return () => {
-      // Clean up audio when component unmounts
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = '';
-      }
-    };
   }, []);
 
   // Handle mode completion
@@ -128,11 +117,9 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
     }
 
     // Play sound
-    if (soundEnabled && audioRef.current) {
+    if (soundEnabled) {
       analytics.trackSound('pomodoro');
-      audioRef.current.play().catch((err) => {
-        console.error('Error playing audio:', err);
-      });
+      playAlarm();
     }
   }
 
@@ -157,7 +144,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
       setStartTime(null);
       setEndTime(null);
     }
-  }, [isRunning, time, mode]);
+  }, [isRunning, time, mode, durations]);
 
   const handleStart = () => {
     start();
@@ -175,10 +162,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
     setStartTime(null);
     setEndTime(null);
     // Stop audio if it's playing
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
+    stopAlarm();
   };
 
   // Toggle notification settings
@@ -404,6 +388,17 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
             <VolumeX className='w-5 h-5 text-gray-400' />
           )}
         </button>
+      </div>
+
+      {/* Alarm Settings Link */}
+      <div className='flex justify-center mb-2'>
+        <Link
+          to='/alarm-settings'
+          className='flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors'
+        >
+          <Volume2 className='w-4 h-4' />
+          <span>Customize Alarm Sound</span>
+        </Link>
       </div>
 
       {/* Package Settings Link */}

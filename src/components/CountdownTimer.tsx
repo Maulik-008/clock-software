@@ -11,6 +11,7 @@ import {
 import CountdownStyleSelector from './CountdownStyleSelector';
 import useAnalytics from '@/hooks/use-analytics';
 import { usePersistedCountdown } from '../hooks/usePersistedCountdown';
+import { useAlarmAudio } from '@/hooks/use-alarm-audio';
 
 const CountdownTimer = () => {
   // Use persisted countdown hook
@@ -22,7 +23,7 @@ const CountdownTimer = () => {
   const [countdownStyle, setCountdownStyle] = useState('neon');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { playAlarm, stopAlarm } = useAlarmAudio();
   const analytics = useAnalytics();
 
   // Request notification permissions when component mounts
@@ -30,18 +31,6 @@ const CountdownTimer = () => {
     if ('Notification' in window) {
       Notification.requestPermission();
     }
-
-    // Initialize audio element
-    audioRef.current = new Audio('/audio/alarm.mp3');
-    audioRef.current.loop = false;
-
-    return () => {
-      // Clean up audio when component unmounts
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = '';
-      }
-    };
   }, []);
 
   // Handle countdown completion
@@ -52,11 +41,9 @@ const CountdownTimer = () => {
     }
 
     // Play sound
-    if (soundEnabled && audioRef.current) {
+    if (soundEnabled) {
       analytics.trackSound('countdown');
-      audioRef.current.play().catch((err) => {
-        console.error('Error playing audio:', err);
-      });
+      playAlarm();
     }
   }
 
@@ -73,10 +60,7 @@ const CountdownTimer = () => {
     reset();
 
     // Stop audio if it's playing
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
+    stopAlarm();
   };
 
   // Toggle notification settings

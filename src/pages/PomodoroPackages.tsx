@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import ParticleBackground from '../components/ParticleBackground';
@@ -22,8 +23,10 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { toast } from 'sonner';
+import useAnalytics from '@/hooks/use-analytics';
 
 const PomodoroPackages = () => {
+  const analytics = useAnalytics();
   const [packages, setPackages] = useState<PomodoroPackage[]>([]);
   const [activeId, setActiveId] = useState<string>('default');
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -32,11 +35,25 @@ const PomodoroPackages = () => {
   useEffect(() => {
     setPackages(getPackages());
     setActiveId(getActivePackageId());
-  }, []);
+
+    // Track page view
+    analytics.trackPageView(
+      '/pomodoro-packages',
+      'Pomodoro Packages',
+      window.matchMedia('(display-mode: standalone)').matches
+    );
+  }, [analytics]);
 
   const handleSetActive = (id: string) => {
+    const pkg = packages.find((p) => p.id === id);
     setActivePackageId(id);
     setActiveId(id);
+
+    // Track package activation
+    if (pkg) {
+      analytics.trackPackageActivate(id, pkg.name);
+    }
+
     toast.success('Timer package activated!');
   };
 
@@ -45,6 +62,14 @@ const PomodoroPackages = () => {
     setPackages(newPackages);
     savePackages(newPackages);
     setEditingId(null);
+
+    // Track package edit
+    analytics.trackPackageEdit(pkg.id, pkg.name, {
+      pomodoro: pkg.pomodoro,
+      shortBreak: pkg.shortBreak,
+      longBreak: pkg.longBreak,
+    });
+
     toast.success('Package saved successfully.');
   };
 
@@ -53,6 +78,8 @@ const PomodoroPackages = () => {
       toast.error('You must have at least one package.');
       return;
     }
+
+    const pkgToDelete = packages.find((p) => p.id === id);
     const newPackages = packages.filter((p) => p.id !== id);
     setPackages(newPackages);
     savePackages(newPackages);
@@ -62,12 +89,27 @@ const PomodoroPackages = () => {
       setActiveId(newActive);
       setActivePackageId(newActive);
     }
+
+    // Track package deletion
+    if (pkgToDelete) {
+      analytics.trackPackageDelete(id, pkgToDelete.name);
+    }
+
     toast.success('Package deleted.');
   };
 
   const handleCreate = () => {
+    // Generate unique ID with fallback for older browsers
+    const generateId = () => {
+      if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        return crypto.randomUUID();
+      }
+      // Fallback for older browsers
+      return `pkg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    };
+
     const newPkg: PomodoroPackage = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       name: 'New Package',
       pomodoro: 25,
       shortBreak: 5,
@@ -77,52 +119,68 @@ const PomodoroPackages = () => {
     setPackages(newPackages);
     savePackages(newPackages);
     setEditingId(newPkg.id);
+
+    // Track package creation
+    analytics.trackPackageCreate(newPkg.name);
+
+    toast.success('New package created!');
   };
 
   return (
-    <div className='relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden text-gray-100'>
-      <ParticleBackground />
-      <Navigation />
+    <>
+      <Helmet>
+        <title>Pomodoro Timer Packages - Study Clock</title>
+        <meta
+          name='description'
+          content='Create and manage custom Pomodoro timer configurations. Customize your focus time, short breaks, and long breaks to match your productivity style.'
+        />
+      </Helmet>
 
-      <main className='relative z-10 min-h-screen container mx-auto px-4 py-28'>
-        <div className='max-w-4xl mx-auto'>
-          <header className='mb-8 text-center'>
-            <h1 className='text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-500 mb-4'>
-              Timer Packages
-            </h1>
-            <p className='text-gray-400 text-lg'>
-              Create and manage your custom Pomodoro timer configurations.
-            </p>
-          </header>
+      <div className='relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden text-gray-100'>
+        <ParticleBackground />
+        <Navigation />
 
-          <div className='grid gap-6'>
-            {packages.map((pkg) => (
-              <PackageCard
-                key={pkg.id}
-                pkg={pkg}
-                isActive={activeId === pkg.id}
-                isEditing={editingId === pkg.id}
-                onEdit={() => setEditingId(pkg.id)}
-                onCancelEdit={() => setEditingId(null)}
-                onSave={handleSave}
-                onDelete={() => handleDelete(pkg.id)}
-                onActivate={() => handleSetActive(pkg.id)}
-              />
-            ))}
+        <main className='relative z-10 min-h-screen container mx-auto px-4 py-28 pb-16'>
+          <div className='max-w-4xl mx-auto'>
+            <header className='mb-8 text-center'>
+              <h1 className='text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-500 mb-4'>
+                Pomodoro Timer Packages
+              </h1>
+              <p className='text-gray-400 text-base md:text-lg max-w-2xl mx-auto'>
+                Create and manage your custom Pomodoro timer configurations. Set
+                your ideal focus time, short breaks, and long breaks.
+              </p>
+            </header>
 
-            <Button
-              onClick={handleCreate}
-              className='w-full py-8 border-2 border-dashed border-gray-700 bg-transparent hover:bg-gray-800 text-gray-400 hover:text-white transition-all rounded-xl'
-            >
-              <Plus className='mr-2 h-6 w-6' />
-              Create New Package
-            </Button>
+            <div className='grid gap-4 md:gap-6'>
+              {packages.map((pkg) => (
+                <PackageCard
+                  key={pkg.id}
+                  pkg={pkg}
+                  isActive={activeId === pkg.id}
+                  isEditing={editingId === pkg.id}
+                  onEdit={() => setEditingId(pkg.id)}
+                  onCancelEdit={() => setEditingId(null)}
+                  onSave={handleSave}
+                  onDelete={() => handleDelete(pkg.id)}
+                  onActivate={() => handleSetActive(pkg.id)}
+                />
+              ))}
+
+              <Button
+                onClick={handleCreate}
+                className='w-full py-6 md:py-8 border-2 border-dashed border-gray-700 bg-transparent hover:bg-gray-800 text-gray-400 hover:text-white transition-all rounded-xl text-sm md:text-base'
+              >
+                <Plus className='mr-2 h-5 w-5 md:h-6 md:w-6' />
+                Create New Package
+              </Button>
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 };
 
