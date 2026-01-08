@@ -30,13 +30,16 @@ const PomodoroPackages = () => {
   const [packages, setPackages] = useState<PomodoroPackage[]>([]);
   const [activeId, setActiveId] = useState<string>('default');
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [creatingId, setCreatingId] = useState<string | null>(null);
 
   // Load initial data
   useEffect(() => {
     setPackages(getPackages());
     setActiveId(getActivePackageId());
+  }, []);
 
-    // Track page view
+  // Track page view
+  useEffect(() => {
     analytics.trackPageView(
       '/pomodoro-packages',
       'Pomodoro Packages',
@@ -58,36 +61,72 @@ const PomodoroPackages = () => {
   };
 
   const handleSave = (pkg: PomodoroPackage) => {
+    if (!pkg.name.trim()) {
+      toast.error('Package name cannot be empty');
+      return;
+    }
+    if (pkg.pomodoro <= 0 || pkg.shortBreak <= 0 || pkg.longBreak <= 0) {
+      toast.error('Durations must be positive numbers');
+      return;
+    }
+
     const newPackages = packages.map((p) => (p.id === pkg.id ? pkg : p));
     setPackages(newPackages);
     savePackages(newPackages);
     setEditingId(null);
 
-    // Track package edit
-    analytics.trackPackageEdit(pkg.id, pkg.name, {
-      pomodoro: pkg.pomodoro,
-      shortBreak: pkg.shortBreak,
-      longBreak: pkg.longBreak,
-    });
-
-    toast.success('Package saved successfully.');
+    if (creatingId === pkg.id) {
+      analytics.trackPackageCreate(pkg.name);
+      toast.success('New package created!');
+      setCreatingId(null);
+    } else {
+      analytics.trackPackageEdit(pkg.id, pkg.name, {
+        pomodoro: pkg.pomodoro,
+        shortBreak: pkg.shortBreak,
+        longBreak: pkg.longBreak,
+      });
+      toast.success('Package saved successfully.');
+    }
   };
 
   const handleDelete = (id: string) => {
-    if (packages.length <= 1) {
+    // If we are creating a package, treat the list size carefuly
+    const isCreating = !!creatingId;
+    const isDeletingCreated = id === creatingId;
+
+    if (!isDeletingCreated && packages.length <= 1) {
       toast.error('You must have at least one package.');
       return;
     }
 
     const pkgToDelete = packages.find((p) => p.id === id);
     const newPackages = packages.filter((p) => p.id !== id);
+
+    // If we are deleting a saved package while creating another,
+    // we must ensure we don't end up with 0 saved packages.
+    // And we must NOT save the creating package to storage.
+    const packagesToSave = newPackages.filter((p) => p.id !== creatingId);
+
+    if (packagesToSave.length === 0 && !isDeletingCreated) {
+      toast.error('You must have at least one saved package.');
+      return;
+    }
+
     setPackages(newPackages);
-    savePackages(newPackages);
+    savePackages(packagesToSave);
+
+    if (id === creatingId) {
+      setCreatingId(null);
+      setEditingId(null);
+    }
 
     if (activeId === id) {
-      const newActive = newPackages[0].id;
-      setActiveId(newActive);
-      setActivePackageId(newActive);
+      // If we deleted the active package, switch to the first available one (preferably saved)
+      const newActive = packagesToSave[0]?.id || newPackages[0]?.id;
+      if (newActive) {
+        setActiveId(newActive);
+        setActivePackageId(newActive); // This saves the active ID reference
+      }
     }
 
     // Track package deletion
@@ -96,6 +135,14 @@ const PomodoroPackages = () => {
     }
 
     toast.success('Package deleted.');
+  };
+
+  const handleCancelEdit = (id: string) => {
+    if (creatingId === id) {
+      setPackages(packages.filter((p) => p.id !== id));
+      setCreatingId(null);
+    }
+    setEditingId(null);
   };
 
   const handleCreate = () => {
@@ -117,13 +164,9 @@ const PomodoroPackages = () => {
     };
     const newPackages = [...packages, newPkg];
     setPackages(newPackages);
-    savePackages(newPackages);
+    // Don't save yet
+    setCreatingId(newPkg.id);
     setEditingId(newPkg.id);
-
-    // Track package creation
-    analytics.trackPackageCreate(newPkg.name);
-
-    toast.success('New package created!');
   };
 
   return (
@@ -160,7 +203,7 @@ const PomodoroPackages = () => {
                   isActive={activeId === pkg.id}
                   isEditing={editingId === pkg.id}
                   onEdit={() => setEditingId(pkg.id)}
-                  onCancelEdit={() => setEditingId(null)}
+                  onCancelEdit={() => handleCancelEdit(pkg.id)}
                   onSave={handleSave}
                   onDelete={() => handleDelete(pkg.id)}
                   onActivate={() => handleSetActive(pkg.id)}
@@ -208,8 +251,10 @@ const PackageCard: React.FC<PackageCardProps> = ({
   const [data, setData] = useState(pkg);
 
   useEffect(() => {
-    setData(pkg);
-  }, [pkg]);
+    if (isEditing) {
+      setData(pkg);
+    }
+  }, [pkg, isEditing]);
 
   const handleChange = (
     field: keyof PomodoroPackage,

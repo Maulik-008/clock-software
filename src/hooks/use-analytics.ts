@@ -293,6 +293,16 @@ const useAnalytics = () => {
     });
   };
 
+  /**
+   * Track Full View Mode toggle
+   */
+  const trackFullViewMode = (entered: boolean) => {
+    event('full_view_mode', {
+      action: entered ? 'enter' : 'exit',
+      timestamp: new Date().toISOString(),
+    });
+  };
+
   return {
     trackTimerStart,
     trackTimerPause,
@@ -324,6 +334,7 @@ const useAnalytics = () => {
     // General tracking
     trackPageView,
     trackStorageUsage,
+    trackFullViewMode,
   };
 };
 

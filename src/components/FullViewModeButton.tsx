@@ -1,25 +1,27 @@
-import React, { useEffect } from "react";
-import { Maximize2, Minimize2, X } from "lucide-react";
-import { useFullViewMode } from "@/hooks/use-full-view-mode";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { Maximize2, Minimize2, X } from 'lucide-react';
+import { useFullViewMode } from '@/hooks/use-full-view-mode';
+import { useLocation } from 'react-router-dom';
+import useAnalytics from '@/hooks/use-analytics';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from '@/components/ui/tooltip';
 
 const FullViewModeButton: React.FC = () => {
   const { isFullView, toggleFullView, setFullView } = useFullViewMode();
   const location = useLocation();
+  const analytics = useAnalytics();
 
   // Only show on clock-related pages
   const clockPages = [
-    "/pomodoro-timer",
-    "/study-timer",
-    "/online-stopwatch",
-    "/counter",
-    "/study-clock-timer",
-    "/",
+    '/pomodoro-timer',
+    '/study-timer',
+    '/online-stopwatch',
+    '/counter',
+    '/study-clock-timer',
+    '/',
   ];
 
   const isClockPage = clockPages.includes(location.pathname);
@@ -27,18 +29,25 @@ const FullViewModeButton: React.FC = () => {
   // Add Escape key support to exit full view mode
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isFullView) {
+      if (e.key === 'Escape' && isFullView) {
         setFullView(false);
+        analytics.trackFullViewMode(false);
       }
     };
 
     if (isFullView) {
-      window.addEventListener("keydown", handleEscape);
+      window.addEventListener('keydown', handleEscape);
       return () => {
-        window.removeEventListener("keydown", handleEscape);
+        window.removeEventListener('keydown', handleEscape);
       };
     }
-  }, [isFullView, setFullView]);
+  }, [isFullView, setFullView, analytics]);
+
+  const handleToggle = () => {
+    const newState = !isFullView;
+    toggleFullView();
+    analytics.trackFullViewMode(newState);
+  };
 
   if (!isClockPage) {
     return null;
@@ -51,14 +60,14 @@ const FullViewModeButton: React.FC = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <button
-              className="fixed bottom-24 right-6 z-[9999] flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-rose-600 text-white shadow-lg shadow-red-500/30 hover:shadow-red-500/50 transition-all duration-300 hover:scale-105"
-              aria-label="Exit Full View Mode"
-              onClick={toggleFullView}
+              className='fixed bottom-24 right-6 z-[9999] flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-rose-600 text-white shadow-lg shadow-red-500/30 hover:shadow-red-500/50 transition-all duration-300 hover:scale-105'
+              aria-label='Exit Full View Mode'
+              onClick={handleToggle}
             >
-              <X className="h-5 w-5" strokeWidth={2.5} />
+              <X className='h-5 w-5' strokeWidth={2.5} />
             </button>
           </TooltipTrigger>
-          <TooltipContent side="left">
+          <TooltipContent side='left'>
             <p>Exit Full View Mode (ESC)</p>
           </TooltipContent>
         </Tooltip>
@@ -69,11 +78,11 @@ const FullViewModeButton: React.FC = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <button
-              className="fixed bottom-24 right-6 sm:bottom-10 sm:right-20 md:right-24 z-[9999] flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105"
-              aria-label="Enter Full View Mode"
-              onClick={toggleFullView}
+              className='fixed bottom-24 right-6 sm:bottom-10 sm:right-20 md:right-24 z-[9999] flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105'
+              aria-label='Enter Full View Mode'
+              onClick={handleToggle}
             >
-              <Maximize2 className="h-5 w-5" />
+              <Maximize2 className='h-5 w-5' />
             </button>
           </TooltipTrigger>
           <TooltipContent>
