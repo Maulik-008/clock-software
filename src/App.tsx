@@ -27,6 +27,7 @@ import StudyTodoList from './pages/StudyTodoList';
 import EndTimeTimer from './pages/EndTimeTimer';
 import FocusTest from './pages/FocusTest';
 import PomodoroPackages from './pages/PomodoroPackages';
+import CounterPackages from './pages/CounterPackages';
 import AlarmSettings from './pages/AlarmSettings';
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ const App = () => (
               <Route path='/online-stopwatch' element={<Stopwatch />} />
               <Route path='/study-clock-timer' element={<StudyClockTimer />} />
               <Route path='/counter' element={<Counter />} />
+              <Route path='/counter-packages' element={<CounterPackages />} />
               <Route path='/pomodoro-timer' element={<PomodoroTimerPage />} />
               <Route path='/pomodoro-packages' element={<PomodoroPackages />} />
               <Route

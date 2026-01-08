@@ -94,14 +94,18 @@ export const usePersistedCountdown = (
   }, [storageKey]); // saveStateSync is intentionally not in deps - it uses stateRef which is stable
 
   // Save state to localStorage - memoized properly with storageKey
+  const saveStateSync = (state: CountdownState) => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+      stateRef.current = state;
+    } catch (error) {
+      console.error('Failed to save countdown state:', error);
+    }
+  };
+
   const saveState = useCallback(
     (state: CountdownState) => {
-      try {
-        localStorage.setItem(storageKey, JSON.stringify(state));
-        stateRef.current = state;
-      } catch (error) {
-        console.error('Failed to save countdown state:', error);
-      }
+      saveStateSync(state);
     },
     [storageKey]
   );

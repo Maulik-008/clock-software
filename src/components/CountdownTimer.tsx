@@ -7,19 +7,48 @@ import {
   BellOff,
   Volume2,
   VolumeX,
+  Settings,
 } from 'lucide-react';
 import CountdownStyleSelector from './CountdownStyleSelector';
 import useAnalytics from '@/hooks/use-analytics';
 import { usePersistedCountdown } from '../hooks/usePersistedCountdown';
 import { useAlarmAudio } from '@/hooks/use-alarm-audio';
+import { getActiveCounterPackage, CounterPackage } from '@/lib/counterSettings';
+import { Link } from 'react-router-dom';
 
 const CountdownTimer = () => {
-  // Use persisted countdown hook
-  const { time, isRunning, start, pause, reset } = usePersistedCountdown(
-    'countdown-timer',
-    10,
-    handleCountdownComplete
+  // Load active package
+  const [activePackage, setActivePackage] = useState<CounterPackage>(
+    getActiveCounterPackage()
   );
+
+  useEffect(() => {
+    const updatePackage = () => {
+      setActivePackage(getActiveCounterPackage());
+    };
+    window.addEventListener('counter-package-changed', updatePackage);
+    window.addEventListener('counter-packages-updated', updatePackage);
+    return () => {
+      window.removeEventListener('counter-package-changed', updatePackage);
+      window.removeEventListener('counter-packages-updated', updatePackage);
+    };
+  }, []);
+
+  // Use persisted countdown hook - duration is in seconds
+  const { time, isRunning, start, pause, reset, setInitialTime } =
+    usePersistedCountdown(
+      'countdown-timer',
+      activePackage.duration,
+      handleCountdownComplete
+    );
+
+  // Update timer when package changes
+  useEffect(() => {
+    // Only reset/update if the timer is not running or if explicitly desired
+    // For now, let's update the initial time which the hook uses for reset
+    setInitialTime(activePackage.duration);
+  }, [activePackage, setInitialTime]);
+
   const [countdownStyle, setCountdownStyle] = useState('neon');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -78,6 +107,14 @@ const CountdownTimer = () => {
         silent: true, // We'll play our own sound
       });
     }
+  };
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const mSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${mSeconds
+      .toString()
+      .padStart(2, '0')}`;
   };
 
   const getCountdownStyles = () => {
@@ -542,30 +579,30 @@ const CountdownTimer = () => {
               {countdownStyle === 'neon' ? (
                 <>
                   <span className='absolute inset-0 text-cyan-400 blur-[2px] z-0'>
-                    10 SECOND COUNTDOWN
+                    {activePackage.name.toUpperCase()}
                   </span>
                   <span className='absolute inset-0 text-cyan-300 blur-[1px] z-10'>
-                    10 SECOND COUNTDOWN
+                    {activePackage.name.toUpperCase()}
                   </span>
                   <span className='relative z-20 text-white'>
-                    10 SECOND COUNTDOWN
+                    {activePackage.name.toUpperCase()}
                   </span>
                 </>
               ) : countdownStyle === 'pulse' ? (
                 <>
                   {/* Enhanced layers for pulse theme */}
                   <span className='absolute inset-0 text-cyan-300 blur-[3px] z-0 animate-pulse-slow'>
-                    10 SECOND COUNTDOWN
+                    {activePackage.name.toUpperCase()}
                   </span>
                   <span
                     className='absolute inset-0 text-blue-300 blur-[2px] z-10 animate-pulse'
                     style={{ animationDuration: '2s' }}
                   >
-                    10 SECOND COUNTDOWN
+                    {activePackage.name.toUpperCase()}
                   </span>
                   <span className='relative z-20 text-white font-bold'>
                     <span className='bg-clip-text text-transparent bg-gradient-to-b from-white via-cyan-200 to-cyan-400'>
-                      10 SECOND COUNTDOWN
+                      {activePackage.name.toUpperCase()}
                     </span>
                   </span>
 
@@ -575,7 +612,7 @@ const CountdownTimer = () => {
                   <div className='absolute -inset-y-1 right-0 w-[1px] bg-gradient-to-b from-transparent via-cyan-400/60 to-transparent'></div>
                 </>
               ) : (
-                '10 SECOND COUNTDOWN'
+                activePackage.name.toUpperCase()
               )}
             </span>
             <div
@@ -608,17 +645,17 @@ const CountdownTimer = () => {
                     time === 0 ? 'text-red-400 animate-pulse' : styles.number
                   }`}
                 >
-                  {time === 0 ? "Time's up!" : time}
+                  {time === 0 ? "Time's up!" : formatTime(time)}
                 </div>
                 <div
                   className={`absolute inset-0 blur-lg sm:blur-2xl animate-pulse text-6xl sm:text-5xl md:text-6xl lg:text-7xl ${styles.numberGlow}`}
                 >
-                  {time === 0 ? "Time's up!" : time}
+                  {time === 0 ? "Time's up!" : formatTime(time)}
                 </div>
                 <div
                   className={`absolute inset-0 blur-2xl sm:blur-3xl opacity-50 text-6xl sm:text-5xl md:text-6xl lg:text-7xl ${styles.numberGlow}`}
                 >
-                  {time === 0 ? "Time's up!" : time}
+                  {time === 0 ? "Time's up!" : formatTime(time)}
                 </div>
 
                 {/* Keep all the special effects for different styles */}
@@ -809,6 +846,28 @@ const CountdownTimer = () => {
                 <VolumeX className='w-5 h-5 text-gray-400' />
               )}
             </button>
+          </div>
+
+          {/* Alarm Settings Link */}
+          <div className='flex justify-center mb-2'>
+            <Link
+              to='/alarm-settings'
+              className='flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors'
+            >
+              <Volume2 className='w-4 h-4' />
+              <span>Customize Alarm Sound</span>
+            </Link>
+          </div>
+
+          {/* Package Settings Link */}
+          <div className='flex justify-center mb-6'>
+            <Link
+              to='/counter-packages'
+              className='flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors'
+            >
+              <Settings className='w-4 h-4' />
+              <span>Customize Timer ({activePackage.name})</span>
+            </Link>
           </div>
 
           {/* Style Selector with better visibility */}
