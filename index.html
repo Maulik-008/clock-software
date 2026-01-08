@@ -16,11 +16,14 @@
       name="keywords"
       content="studyclock.com, study timer, pomodoro timer, focus timer, academic timer, student productivity, countdown clock, productivity app, dark mode timer, concentration tool, work timer, time tracker, clock timer, timer app"
     />
-    
+
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#6366f1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="StudyClock" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/favicon.ico" />
@@ -110,7 +113,20 @@
       crossorigin="anonymous"
     ></script>
   </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-6KLNQSMLNM"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
 
+    gtag("config", "G-6KLNQSMLNM");
+  </script>
   <body>
     <div id="root"></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
