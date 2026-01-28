@@ -43,9 +43,9 @@ const PomodoroPackages = () => {
     analytics.trackPageView(
       '/pomodoro-packages',
       'Pomodoro Packages',
-      window.matchMedia('(display-mode: standalone)').matches
+      window.matchMedia('(display-mode: standalone)').matches,
     );
-  }, [analytics]);
+  }, []);
 
   const handleSetActive = (id: string) => {
     const pkg = packages.find((p) => p.id === id);
@@ -258,7 +258,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
 
   const handleChange = (
     field: keyof PomodoroPackage,
-    value: string | number
+    value: string | number,
   ) => {
     setData({ ...data, [field]: value });
   };

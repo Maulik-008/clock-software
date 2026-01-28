@@ -36,9 +36,9 @@ const CounterPackages = () => {
     analytics.trackPageView(
       '/counter-packages',
       'Counter Packages',
-      window.matchMedia('(display-mode: standalone)').matches
+      window.matchMedia('(display-mode: standalone)').matches,
     );
-  }, [analytics]);
+  }, []);
 
   const handleSetActive = (id: string) => {
     setActiveCounterPackageId(id);

@@ -54,10 +54,10 @@ const PWAInstallPrompt: React.FC = () => {
     return () => {
       window.removeEventListener(
         'beforeinstallprompt',
-        handleBeforeInstallPrompt
+        handleBeforeInstallPrompt,
       );
     };
-  }, [analytics]);
+  }, []);
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
