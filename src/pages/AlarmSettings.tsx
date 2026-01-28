@@ -42,9 +42,8 @@ import {
 const AlarmSettings = () => {
   const { toast } = useToast();
   const analytics = useAnalytics();
-  const [alarmSettings, setAlarmSettings] = useState<AlarmSettings>(
-    getAlarmSettings()
-  );
+  const [alarmSettings, setAlarmSettings] =
+    useState<AlarmSettings>(getAlarmSettings());
   const [customAlarms, setCustomAlarms] = useState<CustomAlarm[]>([]);
   const [storageInfo, setStorageInfo] = useState<{
     totalUsed: number;
@@ -69,9 +68,9 @@ const AlarmSettings = () => {
     analytics.trackPageView(
       '/alarm-settings',
       'Alarm Settings',
-      window.matchMedia('(display-mode: standalone)').matches
+      window.matchMedia('(display-mode: standalone)').matches,
     );
-  }, [analytics]);
+  }, []);
 
   const loadCustomAlarms = async () => {
     try {
@@ -91,7 +90,7 @@ const AlarmSettings = () => {
       analytics.trackStorageUsage(
         info.totalUsed,
         info.maxStorage,
-        info.alarmsCount
+        info.alarmsCount,
       );
     } catch (error) {
       console.error('Error loading storage info:', error);
@@ -120,7 +119,7 @@ const AlarmSettings = () => {
     // Track custom alarm selection
     analytics.trackCustomAlarmSelect(
       customAlarmId,
-      customAlarm?.name || 'Unknown'
+      customAlarm?.name || 'Unknown',
     );
 
     toast({
@@ -130,7 +129,7 @@ const AlarmSettings = () => {
   };
 
   const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -213,7 +212,7 @@ const AlarmSettings = () => {
 
   const handlePlayAlarm = async (
     alarmId: string,
-    type: 'predefined' | 'custom'
+    type: 'predefined' | 'custom',
   ) => {
     // Stop current audio if playing
     if (audioRef.current) {
