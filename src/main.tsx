@@ -4,13 +4,14 @@ import App from './App.tsx';
 import './index.css';
 import { initEmailJS } from './lib/emailjs';
 import './utils/offlineSync';
-import { PostHogProvider } from 'posthog-js/react';
+import posthog from 'posthog-js';
+import { PostHogProvider } from '@posthog/react';
 
 // Initialize EmailJS
 initEmailJS();
-console.log(import.meta.env.DEV);
-// PostHog configuration
-const posthogOptions = {
+
+// Initialize PostHog - Official pattern from docs
+posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_KEY, {
   api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
   defaults: '2025-11-30',
 
@@ -18,12 +19,6 @@ const posthogOptions = {
   session_recording: {
     maskAllInputs: true,
     maskTextSelector: '.sensitive',
-  },
-
-  // Autocapture configuration
-  autocapture: {
-    dom_event_allowlist: ['click', 'submit', 'change'],
-    element_allowlist: ['button', 'a', 'input', 'select', 'textarea'],
   },
 
   // Performance
@@ -36,7 +31,7 @@ const posthogOptions = {
   // Advanced
   persistence: 'localStorage',
   persistence_name: 'study_clock_posthog',
-} satisfies Partial<import('posthog-js').PostHogConfig>;
+});
 
 // Register Service Worker for PWA
 if ('serviceWorker' in navigator) {
@@ -85,10 +80,7 @@ if ('serviceWorker' in navigator) {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <PostHogProvider
-      apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
-      options={posthogOptions}
-    >
+    <PostHogProvider client={posthog}>
       <App />
     </PostHogProvider>
   </StrictMode>,

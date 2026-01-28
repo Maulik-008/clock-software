@@ -1,5 +1,5 @@
 import { trackEvent } from '../lib/analytics';
-import { usePostHog } from 'posthog-js/react';
+import { usePostHog } from '@posthog/react';
 
 /**
  * Custom hook for unified analytics tracking
