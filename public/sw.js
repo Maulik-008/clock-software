@@ -1,7 +1,7 @@
 // Service Worker for StudyClock.com PWA
-const CACHE_NAME = 'studyclock-v3';
-const STATIC_CACHE_NAME = 'studyclock-static-v3';
-const RUNTIME_CACHE_NAME = 'studyclock-runtime-v3';
+const CACHE_NAME = 'studyclock-v4';
+const STATIC_CACHE_NAME = 'studyclock-static-v4';
+const RUNTIME_CACHE_NAME = 'studyclock-runtime-v4';
 
 // Static assets to cache on install
 const STATIC_ASSETS = [
@@ -10,6 +10,8 @@ const STATIC_ASSETS = [
   '/favicon.ico',
   '/manifest.json',
   '/og-image.svg',
+  '/icon-192.png',
+  '/icon-512.png',
   // All alarm audio files for offline support
   '/audio/alarm.mp3',
   '/audio/crystal.mp3',
@@ -33,7 +35,7 @@ self.addEventListener('install', (event) => {
       caches.open(STATIC_CACHE_NAME).then((cache) => {
         console.log('[Service Worker] Caching static assets');
         return cache.addAll(
-          STATIC_ASSETS.map((url) => new Request(url, { cache: 'reload' }))
+          STATIC_ASSETS.map((url) => new Request(url, { cache: 'reload' })),
         );
       }),
       caches.open(RUNTIME_CACHE_NAME).then((cache) => {
@@ -42,7 +44,7 @@ self.addEventListener('install', (event) => {
       }),
     ]).catch((error) => {
       console.error('[Service Worker] Cache installation failed:', error);
-    })
+    }),
   );
   self.skipWaiting();
 });
@@ -62,9 +64,9 @@ self.addEventListener('activate', (event) => {
             console.log('[Service Worker] Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
-        })
+        }),
       );
-    })
+    }),
   );
   return self.clients.claim();
 });
@@ -134,7 +136,7 @@ self.addEventListener('fetch', (event) => {
             }
           } catch (error) {
             console.log(
-              '[Service Worker] Network failed for navigation, using cache'
+              '[Service Worker] Network failed for navigation, using cache',
             );
           }
 
@@ -162,7 +164,7 @@ self.addEventListener('fetch', (event) => {
           } catch (error) {
             console.log(
               '[Service Worker] Failed to fetch static asset:',
-              url.pathname
+              url.pathname,
             );
             // Return a fallback if available
             if (url.pathname.includes('/audio/')) {
@@ -179,7 +181,7 @@ self.addEventListener('fetch', (event) => {
           } catch (error) {
             console.log(
               '[Service Worker] API request failed (offline):',
-              url.pathname
+              url.pathname,
             );
             // Return a graceful error response for API calls
             return new Response(
@@ -189,7 +191,7 @@ self.addEventListener('fetch', (event) => {
               {
                 status: 503,
                 headers: { 'Content-Type': 'application/json' },
-              }
+              },
             );
           }
         }
@@ -221,7 +223,7 @@ self.addEventListener('fetch', (event) => {
         }
         throw error;
       }
-    })()
+    })(),
   );
 });
 
