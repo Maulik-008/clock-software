@@ -1,9 +1,9 @@
 import React from 'react';
 import SEO from '../components/SEO';
-import ParticleBackground from '../components/ParticleBackground';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import useAnalytics from '../hooks/use-analytics';
+import PageLayout from '../components/PageLayout';
 import {
   Clock,
   Target,
@@ -190,8 +190,7 @@ const StudyClockRecommendations = () => {
         keywords='study clocks, physical timers, student timers, pomodoro timer, countdown timer, visual timer, study productivity, time management tools, focus timer, study equipment'
         canonicalUrl='https://studyclock.com/study-clock-recommendations'
       />
-      <div className='relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden'>
-        <ParticleBackground />
+      <PageLayout showParticles>
 
         <main className='relative z-10 min-h-screen flex flex-col items-center justify-start pt-20 pb-16 px-4 sm:px-6 lg:px-8'>
           <div className='w-full max-w-7xl mx-auto'>
@@ -578,7 +577,7 @@ const StudyClockRecommendations = () => {
         </main>
 
         <Footer />
-      </div>
+      </PageLayout>
     </>
   );
 };

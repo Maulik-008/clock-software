@@ -1,8 +1,8 @@
 import React from "react";
 import SEO from "../components/SEO";
-import ParticleBackground from "../components/ParticleBackground";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import PageLayout from "../components/PageLayout";
 
 const StudyClockGuide = () => {
   return (
@@ -13,8 +13,7 @@ const StudyClockGuide = () => {
         keywords="study clock guide, productivity tips, time management, study techniques, focus methods"
         canonicalUrl="https://studyclock.com/study-clock-guide"
       />
-      <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
-        <ParticleBackground />
+      <PageLayout showParticles>
 
         <main className="relative z-10 min-h-screen flex flex-col items-center justify-start pt-12 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="w-full max-w-4xl mx-auto bg-black/60 backdrop-blur-xl p-6 sm:p-8 rounded-xl border border-gray-800 shadow-xl">
@@ -575,7 +574,7 @@ const StudyClockGuide = () => {
         </main>
 
         <Footer />
-      </div>
+      </PageLayout>
     </>
   );
 };

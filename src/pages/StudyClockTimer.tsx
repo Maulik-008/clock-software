@@ -15,6 +15,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import useAnalytics from "../hooks/use-analytics";
 import { usePersistedTimer } from "../hooks/usePersistedTimer";
+import PageLayout from "../components/PageLayout";
 
 const StudyClockTimer = () => {
   // Use persisted timer hook
@@ -143,7 +144,7 @@ const StudyClockTimer = () => {
         keywords="study clock timer, timer for study, timer clock, focus timer, productivity app, time tracking, student tools, study space, deep work"
         canonicalUrl="https://studyclock.com/study-clock-timer"
       />
-      <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
+      <PageLayout>
         {/* Animated Background */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
@@ -701,7 +702,7 @@ const StudyClockTimer = () => {
         )}
 
         {!isFullView && <Footer />}
-      </div>
+      </PageLayout>
     </>
   );
 };

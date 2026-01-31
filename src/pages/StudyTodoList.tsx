@@ -13,10 +13,10 @@ import {
   Brain,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import ParticleBackground from "../components/ParticleBackground";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import SEO from "../components/SEO";
+import PageLayout from "../components/PageLayout";
 
 // Define the Task type
 interface Task {
@@ -163,8 +163,7 @@ const StudyTodoList = () => {
         keywords="study todo list, student task manager, to do list for students, study planner online, study tasks organizer, student homework planner, academic task manager, study goals planner"
         canonicalUrl="https://studyclock.com/study-todo-list"
       />
-      <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
-        <ParticleBackground />
+      <PageLayout showParticles>
         <Navigation />
 
         <main className="relative z-10 pt-28 pb-20 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
@@ -868,7 +867,7 @@ const StudyTodoList = () => {
 
           <Footer />
         </main>
-      </div>
+      </PageLayout>
 
       {/* Custom scrollbar styles */}
       <style>{`

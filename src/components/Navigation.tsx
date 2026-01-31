@@ -183,9 +183,9 @@ const Navigation: React.FC<NavigationProps> = ({
     `}</style>
       <header className='fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 py-3'>
         <div className='max-w-7xl mx-auto'>
-          <nav className='relative flex items-center justify-between bg-black/85 backdrop-blur-xl rounded-xl border border-white/25 shadow-xl p-3 sm:p-3.5 md:p-4'>
+          <nav className='relative grid grid-cols-[1fr_auto_1fr] items-center gap-3 bg-black/80 backdrop-blur-xl rounded-2xl shadow-xl px-4 sm:px-5 md:px-6 py-3'>
             {/* Logo */}
-            <div className='flex-shrink-0 px-1'>
+            <div className='flex-shrink-0 justify-self-start'>
               <Link
                 to='/'
                 className='text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 hover:opacity-90 transition-opacity'
@@ -195,7 +195,7 @@ const Navigation: React.FC<NavigationProps> = ({
             </div>
 
             {/* Desktop Navigation - Only show on large screens, not tablets */}
-            <div className='hidden lg:flex items-center space-x-1 bg-black/70 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl p-1'>
+            <div className='hidden lg:flex items-center space-x-1 justify-self-center bg-black/70 backdrop-blur-xl rounded-xl border border-white/15 shadow-lg p-1'>
               {timerItems.map((item) => {
                 const active = isActive(item.path);
                 return (
@@ -234,7 +234,7 @@ const Navigation: React.FC<NavigationProps> = ({
             </div>
 
             {/* Desktop Resources Dropdown & Home */}
-            <div className='hidden lg:flex items-center space-x-2'>
+            <div className='hidden lg:flex items-center space-x-2 justify-self-end pl-4 border-l border-white/10'>
               {/* Home Link */}
               <Link
                 to='/'
@@ -324,7 +324,7 @@ const Navigation: React.FC<NavigationProps> = ({
             </div>
 
             {/* Mobile Menu Trigger - Show on tablets too */}
-            <div className='lg:hidden'>
+            <div className='lg:hidden justify-self-end col-start-3'>
               <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                 <SheetTrigger asChild>
                   <button

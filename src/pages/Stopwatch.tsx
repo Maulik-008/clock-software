@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useToast } from "@/components/ui/use-toast";
 import useAnalytics from "../hooks/use-analytics";
-import ParticleBackground from "../components/ParticleBackground";
+import PageLayout from "../components/PageLayout";
 
 const FuturisticStopwatch = () => {
   const [time, setTime] = useState(0);
@@ -144,8 +144,8 @@ const FuturisticStopwatch = () => {
         showNotification(
           "Study Session Complete!",
           `Great job! You studied for ${formatTimeWords(
-            time
-          )}. Take a short break before starting again.`
+            time,
+          )}. Take a short break before starting again.`,
         );
       }
     }
@@ -217,11 +217,12 @@ const FuturisticStopwatch = () => {
         keywords="study stopwatch, stopwatch for study, study focus timer, online stopwatch, study meditation stopwatch, focus timer, concentration tool, pomodoro stopwatch"
         canonicalUrl="https://studyclock.com/stopwatch"
       />
-      <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden text-white font-sans">
-        <ParticleBackground />
+      <PageLayout className="text-white font-sans">
         {!isFullView && <Navigation />}
 
-        <main className={`relative z-10 ${isFullView ? 'pt-4' : 'pt-28'} pb-20 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl`}>
+        <main
+          className={`relative z-10 ${isFullView ? "pt-4" : "pt-28"} pb-20 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl`}
+        >
           <div className="w-full max-w-6xl mx-auto">
             {/* Hero section */}
             <div className="text-center mb-10 md:mb-12 animate-fade-in">
@@ -294,8 +295,8 @@ const FuturisticStopwatch = () => {
                         {isRunning
                           ? "FOCUS MODE"
                           : time > 0
-                          ? "PAUSED"
-                          : "READY"}
+                            ? "PAUSED"
+                            : "READY"}
                       </p>
 
                       {/* Study indicator */}
@@ -469,180 +470,184 @@ const FuturisticStopwatch = () => {
 
             {/* SEO Content Section */}
             {!isFullView && (
-            <section className="mt-12 sm:mt-16 md:mt-20 bg-black/60 backdrop-blur-xl rounded-xl p-6 sm:p-8 border border-gray-800 shadow-xl text-gray-200">
-              <div className="max-w-4xl mx-auto">
-                <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-400 mb-6">
-                  Maximize Your Study Effectiveness with Our Online Stopwatch
-                </h2>
+              <section className="mt-12 sm:mt-16 md:mt-20 bg-black/60 backdrop-blur-xl rounded-xl p-6 sm:p-8 border border-gray-800 shadow-xl text-gray-200">
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-400 mb-6">
+                    Maximize Your Study Effectiveness with Our Online Stopwatch
+                  </h2>
 
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      Why Use a Study Stopwatch?
-                    </h3>
-                    <p className="text-gray-300">
-                      Using a dedicated study stopwatch helps you build
-                      awareness of how you spend your study time. Research shows
-                      that time tracking increases productivity by up to 30% by
-                      creating accountability and revealing patterns in your
-                      focus levels. Our online stopwatch for studying provides
-                      precise timing with millisecond accuracy, helping you
-                      track exactly how much time you're dedicating to each
-                      subject or topic.
-                    </p>
-                  </div>
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">
+                        Why Use a Study Stopwatch?
+                      </h3>
+                      <p className="text-gray-300">
+                        Using a dedicated study stopwatch helps you build
+                        awareness of how you spend your study time. Research
+                        shows that time tracking increases productivity by up to
+                        30% by creating accountability and revealing patterns in
+                        your focus levels. Our online stopwatch for studying
+                        provides precise timing with millisecond accuracy,
+                        helping you track exactly how much time you're
+                        dedicating to each subject or topic.
+                      </p>
+                    </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      Study Focus Techniques Using a Stopwatch
-                    </h3>
-                    <p className="text-gray-300 mb-3">
-                      A study focus stopwatch is more than just a timer – it's a
-                      powerful tool for implementing proven study methods that
-                      enhance concentration and retention:
-                    </p>
-                    <ul className="list-disc pl-5 text-gray-300 space-y-2">
-                      <li>
-                        <span className="text-white font-medium">
-                          The Pomodoro Technique:
-                        </span>{" "}
-                        Use our stopwatch to time focused 25-minute study blocks
-                        followed by 5-minute breaks, proven to maintain optimal
-                        concentration levels.
-                      </li>
-                      <li>
-                        <span className="text-white font-medium">
-                          Meditation Intervals:
-                        </span>{" "}
-                        Begin each study session with 5 minutes of mindfulness,
-                        using our stopwatch to time your meditation practice for
-                        improved focus.
-                      </li>
-                      <li>
-                        <span className="text-white font-medium">
-                          52/17 Method:
-                        </span>{" "}
-                        Research shows 52 minutes of focused work followed by 17
-                        minutes of rest optimizes productivity. Our study
-                        stopwatch makes tracking these intervals simple.
-                      </li>
-                      <li>
-                        <span className="text-white font-medium">
-                          Personal Record Tracking:
-                        </span>{" "}
-                        Challenge yourself to extend your uninterrupted study
-                        time, creating a positive competition with yourself.
-                      </li>
-                    </ul>
-                  </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">
+                        Study Focus Techniques Using a Stopwatch
+                      </h3>
+                      <p className="text-gray-300 mb-3">
+                        A study focus stopwatch is more than just a timer – it's
+                        a powerful tool for implementing proven study methods
+                        that enhance concentration and retention:
+                      </p>
+                      <ul className="list-disc pl-5 text-gray-300 space-y-2">
+                        <li>
+                          <span className="text-white font-medium">
+                            The Pomodoro Technique:
+                          </span>{" "}
+                          Use our stopwatch to time focused 25-minute study
+                          blocks followed by 5-minute breaks, proven to maintain
+                          optimal concentration levels.
+                        </li>
+                        <li>
+                          <span className="text-white font-medium">
+                            Meditation Intervals:
+                          </span>{" "}
+                          Begin each study session with 5 minutes of
+                          mindfulness, using our stopwatch to time your
+                          meditation practice for improved focus.
+                        </li>
+                        <li>
+                          <span className="text-white font-medium">
+                            52/17 Method:
+                          </span>{" "}
+                          Research shows 52 minutes of focused work followed by
+                          17 minutes of rest optimizes productivity. Our study
+                          stopwatch makes tracking these intervals simple.
+                        </li>
+                        <li>
+                          <span className="text-white font-medium">
+                            Personal Record Tracking:
+                          </span>{" "}
+                          Challenge yourself to extend your uninterrupted study
+                          time, creating a positive competition with yourself.
+                        </li>
+                      </ul>
+                    </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      Benefits of Our Online Study Stopwatch
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
-                      <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                        <h4 className="font-medium text-white mb-2 flex items-center">
-                          <Clock size={16} className="mr-2 text-cyan-400" />
-                          Precision Timing
-                        </h4>
-                        <p className="text-sm text-gray-300">
-                          Millisecond accuracy helps you track study time
-                          precisely, enabling detailed analysis of your study
-                          patterns.
-                        </p>
-                      </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">
+                        Benefits of Our Online Study Stopwatch
+                      </h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                          <h4 className="font-medium text-white mb-2 flex items-center">
+                            <Clock size={16} className="mr-2 text-cyan-400" />
+                            Precision Timing
+                          </h4>
+                          <p className="text-sm text-gray-300">
+                            Millisecond accuracy helps you track study time
+                            precisely, enabling detailed analysis of your study
+                            patterns.
+                          </p>
+                        </div>
 
-                      <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                        <h4 className="font-medium text-white mb-2 flex items-center">
-                          <Bell size={16} className="mr-2 text-cyan-400" />
-                          Audio & Visual Notifications
-                        </h4>
-                        <p className="text-sm text-gray-300">
-                          Customizable notifications alert you when it's time to
-                          switch subjects or take a break, even if you're
-                          focused elsewhere.
-                        </p>
-                      </div>
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                          <h4 className="font-medium text-white mb-2 flex items-center">
+                            <Bell size={16} className="mr-2 text-cyan-400" />
+                            Audio & Visual Notifications
+                          </h4>
+                          <p className="text-sm text-gray-300">
+                            Customizable notifications alert you when it's time
+                            to switch subjects or take a break, even if you're
+                            focused elsewhere.
+                          </p>
+                        </div>
 
-                      <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                        <h4 className="font-medium text-white mb-2 flex items-center">
-                          <BookOpen size={16} className="mr-2 text-cyan-400" />
-                          Session Tracking
-                        </h4>
-                        <p className="text-sm text-gray-300">
-                          Keep count of completed study sessions to build
-                          momentum and maintain motivation throughout your
-                          learning journey.
-                        </p>
-                      </div>
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                          <h4 className="font-medium text-white mb-2 flex items-center">
+                            <BookOpen
+                              size={16}
+                              className="mr-2 text-cyan-400"
+                            />
+                            Session Tracking
+                          </h4>
+                          <p className="text-sm text-gray-300">
+                            Keep count of completed study sessions to build
+                            momentum and maintain motivation throughout your
+                            learning journey.
+                          </p>
+                        </div>
 
-                      <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                        <h4 className="font-medium text-white mb-2 flex items-center">
-                          <Timer size={16} className="mr-2 text-cyan-400" />
-                          Distraction-Free Interface
-                        </h4>
-                        <p className="text-sm text-gray-300">
-                          Our minimal, eye-friendly design eliminates
-                          distractions while providing all the features needed
-                          for effective study timing.
-                        </p>
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                          <h4 className="font-medium text-white mb-2 flex items-center">
+                            <Timer size={16} className="mr-2 text-cyan-400" />
+                            Distraction-Free Interface
+                          </h4>
+                          <p className="text-sm text-gray-300">
+                            Our minimal, eye-friendly design eliminates
+                            distractions while providing all the features needed
+                            for effective study timing.
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      How to Use This Study Stopwatch Effectively
-                    </h3>
-                    <p className="text-gray-300 mb-3">
-                      To get the most from our study stopwatch tool, follow
-                      these research-backed practices:
-                    </p>
-                    <ol className="list-decimal pl-5 text-gray-300 space-y-2">
-                      <li>
-                        Plan your study tasks before starting the stopwatch
-                      </li>
-                      <li>Set a target study time goal for each session</li>
-                      <li>Eliminate distractions before pressing start</li>
-                      <li>
-                        Record your completed sessions to track progress over
-                        time
-                      </li>
-                      <li>
-                        Use the built-in sound notifications to maintain
-                        awareness of time
-                      </li>
-                      <li>
-                        Gradually increase your focused study duration as your
-                        concentration improves
-                      </li>
-                    </ol>
-                    <p className="text-gray-300 mt-3">
-                      With consistent practice, you'll be able to extend your
-                      deep focus periods while maintaining high retention rates.
-                    </p>
-                  </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">
+                        How to Use This Study Stopwatch Effectively
+                      </h3>
+                      <p className="text-gray-300 mb-3">
+                        To get the most from our study stopwatch tool, follow
+                        these research-backed practices:
+                      </p>
+                      <ol className="list-decimal pl-5 text-gray-300 space-y-2">
+                        <li>
+                          Plan your study tasks before starting the stopwatch
+                        </li>
+                        <li>Set a target study time goal for each session</li>
+                        <li>Eliminate distractions before pressing start</li>
+                        <li>
+                          Record your completed sessions to track progress over
+                          time
+                        </li>
+                        <li>
+                          Use the built-in sound notifications to maintain
+                          awareness of time
+                        </li>
+                        <li>
+                          Gradually increase your focused study duration as your
+                          concentration improves
+                        </li>
+                      </ol>
+                      <p className="text-gray-300 mt-3">
+                        With consistent practice, you'll be able to extend your
+                        deep focus periods while maintaining high retention
+                        rates.
+                      </p>
+                    </div>
 
-                  <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-xl p-6 border border-blue-500/20">
-                    <h3 className="text-xl font-semibold text-white mb-3 text-center">
-                      Ready to Transform Your Study Sessions?
-                    </h3>
-                    <p className="text-gray-300 text-center">
-                      Start the stopwatch above and commit to focused, timed
-                      study sessions. Track your progress, build consistent
-                      study habits, and watch your productivity soar.
-                    </p>
+                    <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-xl p-6 border border-blue-500/20">
+                      <h3 className="text-xl font-semibold text-white mb-3 text-center">
+                        Ready to Transform Your Study Sessions?
+                      </h3>
+                      <p className="text-gray-300 text-center">
+                        Start the stopwatch above and commit to focused, timed
+                        study sessions. Track your progress, build consistent
+                        study habits, and watch your productivity soar.
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
             )}
           </div>
         </main>
 
         {!isFullView && <Footer />}
-      </div>
+      </PageLayout>
 
       <style>{`
         @keyframes spin-slow {

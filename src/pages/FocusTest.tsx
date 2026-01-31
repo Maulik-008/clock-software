@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import ParticleBackground from '../components/ParticleBackground';
+import PageLayout from '../components/PageLayout';
 
 type FocusType =
   | 'Deep Focus Learner'
@@ -239,8 +239,7 @@ const FocusTest = () => {
         keywords='focus test, study focus test, focus quiz, study timer recommendation, best study timer, pomodoro style quiz, find your focus type, study routine test'
         canonicalUrl='https://studyclock.com/focus-test'
       />
-      <div className='relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden text-white font-sans'>
-        <ParticleBackground />
+      <PageLayout className='text-white font-sans' showParticles>
         <Navigation />
 
         <main className='relative z-10 pt-28 pb-20 px-4 sm:px-6 lg:px-8 mx-auto max-w-4xl'>
@@ -567,7 +566,7 @@ const FocusTest = () => {
         </section>
 
         <Footer />
-      </div>
+      </PageLayout>
 
       <style>{`
         .animate-fade-in {

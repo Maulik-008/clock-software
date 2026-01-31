@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import ParticleBackground from '../components/ParticleBackground';
+import PageLayout from '../components/PageLayout';
 import {
   getPackages,
   savePackages,
@@ -179,8 +179,7 @@ const PomodoroPackages = () => {
         />
       </Helmet>
 
-      <div className='relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden text-gray-100'>
-        <ParticleBackground />
+      <PageLayout className='text-gray-100' showParticles>
         <Navigation />
 
         <main className='relative z-10 min-h-screen container mx-auto px-4 py-28 pb-16'>
@@ -222,7 +221,7 @@ const PomodoroPackages = () => {
         </main>
 
         <Footer />
-      </div>
+      </PageLayout>
     </>
   );
 };

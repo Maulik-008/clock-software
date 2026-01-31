@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import SEO from "../components/SEO";
+import PageLayout from "../components/PageLayout";
 
 const NotFound = () => {
   const location = useLocation();
@@ -21,7 +22,7 @@ const NotFound = () => {
         canonicalUrl="https://studyclock.com/404"
         noIndex={true}
       />
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black text-white">
+      <PageLayout className="flex items-center justify-center text-white">
         <div className="text-center max-w-md px-4">
           <h1 className="text-6xl font-bold mb-6 text-cyan-400">404</h1>
           <p className="text-xl text-gray-300 mb-6">
@@ -44,7 +45,7 @@ const NotFound = () => {
             </p>
           </div>
         </div>
-      </div>
+      </PageLayout>
     </>
   );
 };
